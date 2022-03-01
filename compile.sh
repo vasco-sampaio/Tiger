@@ -5,5 +5,5 @@ fi
 
 libtoolize
 ./bootstrap
-./configure CXXFLAGS='-std=c++20 -O0 -g -fno-inline -Werror -Wall -Wextra -pedantic'
+./configure CXXFLAGS='-std=c++20 -O0 -g -fno-inline'
 make -j4
