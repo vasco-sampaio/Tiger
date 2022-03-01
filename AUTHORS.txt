@@ -1,1 +1,4 @@
-FIXME: Who are you?
+Jean Fechter    <jean.fechter@epita.fr>
+Vasco Sampaio   <vasco.sampaio@epita.fr>
+Theo Crepin     <theo.crepin@epita.fr>
+Thibault Boutet <thibault.boutet@epita.fr>

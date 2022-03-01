@@ -11,22 +11,28 @@ namespace misc
 {
   inline symbol& symbol::operator=(const symbol& rhs)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    obj_ = rhs.obj_;
+    return *this;
   }
 
   inline bool symbol::operator==(const symbol& rhs) const
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    return unique::operator==(rhs);
   }
 
   inline bool symbol::operator!=(const symbol& rhs) const
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    return unique::operator!=(rhs);
   }
 
   inline std::ostream& operator<<(std::ostream& ostr, const symbol& the)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    ostr << the;
+    return ostr;
   }
 
 } // namespace misc
