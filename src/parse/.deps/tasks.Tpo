@@ -1,4 +1,5 @@
-src/tc.o: src/tc.cc /run/current-system/sw/include/stdc-predef.h \
+src/parse/tasks.o: src/parse/tasks.cc \
+ /run/current-system/sw/include/stdc-predef.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/cstdlib \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/x86_64-unknown-linux-gnu/bits/c++config.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/x86_64-unknown-linux-gnu/bits/os_defines.h \
@@ -48,17 +49,6 @@ src/tc.o: src/tc.cc /run/current-system/sw/include/stdc-predef.h \
  /run/current-system/sw/include/alloca.h \
  /run/current-system/sw/include/bits/stdlib-float.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/std_abs.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/exception \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/exception.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/exception_ptr.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/exception_defines.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/cxxabi_init_exception.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/typeinfo \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/hash_bytes.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/new \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/nested_exception.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/move.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/type_traits \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/iostream \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ostream \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ios \
@@ -75,6 +65,17 @@ src/tc.o: src/tc.cc /run/current-system/sw/include/stdc-predef.h \
  /run/current-system/sw/include/bits/types/__mbstate_t.h \
  /run/current-system/sw/include/bits/types/__FILE.h \
  /run/current-system/sw/include/bits/types/FILE.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/exception \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/exception.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/exception_ptr.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/exception_defines.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/cxxabi_init_exception.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/typeinfo \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/hash_bytes.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/new \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/nested_exception.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/move.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/type_traits \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/char_traits.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/stl_algobase.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/functexcept.h \
@@ -207,11 +208,40 @@ src/tc.o: src/tc.cc /run/current-system/sw/include/stdc-predef.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/stl_deque.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/deque.tcc \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/stl_stack.h \
- lib/misc/timer.hxx lib/misc/contract.hh src/task/task-register.hh \
+ lib/misc/timer.hxx lib/misc/contract.hh lib/misc/file-library.hh \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/filesystem \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/fs_fwd.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/chrono \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ratio \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ctime \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/parse_numbers.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/fs_path.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/locale \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/locale_facets_nonio.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/x86_64-unknown-linux-gnu/bits/time_members.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/x86_64-unknown-linux-gnu/bits/messages_members.h \
+ /run/current-system/sw/include/libintl.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/codecvt.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/locale_facets_nonio.tcc \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/locale_conv.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/unique_ptr.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/iomanip \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/quoted_string.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/codecvt \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ext/concurrence.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/shared_ptr.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/shared_ptr_base.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/allocated_ptr.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/refwrap.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/fs_dir.h \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/fs_ops.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/vector \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/stl_vector.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/stl_bvector.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/vector.tcc \
+ lib/misc/file-library.hxx src/object/tasks.hh src/task/libtask.hh \
+ src/task/boolean-task.hh src/task/simple-task.hh src/task/task.hh \
+ src/task/task-register.hh \
  /run/current-system/sw/include/boost/program_options.hpp \
  /run/current-system/sw/include/boost/program_options/options_description.hpp \
  /run/current-system/sw/include/boost/program_options/config.hpp \
@@ -245,7 +275,6 @@ src/tc.o: src/tc.cc /run/current-system/sw/include/stdc-predef.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/iterator \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/stream_iterator.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ranges \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/refwrap.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/pstl/glue_algorithm_defs.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/functional \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/std_function.h \
@@ -303,11 +332,6 @@ src/tc.o: src/tc.cc /run/current-system/sw/include/stdc-predef.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/memory \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/stl_raw_storage_iter.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/ranges_uninitialized.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ext/concurrence.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/unique_ptr.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/shared_ptr.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/shared_ptr_base.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/allocated_ptr.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/shared_ptr_atomic.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/atomic_base.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/atomic_lockfree_defines.h \
@@ -701,15 +725,6 @@ src/tc.o: src/tc.cc /run/current-system/sw/include/stdc-predef.h \
  /run/current-system/sw/include/boost/move/detail/std_ns_begin.hpp \
  /run/current-system/sw/include/boost/move/detail/std_ns_end.hpp \
  /run/current-system/sw/include/boost/lexical_cast/detail/converter_lexical_streams.hpp \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/locale \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/locale_facets_nonio.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ctime \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/x86_64-unknown-linux-gnu/bits/time_members.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/x86_64-unknown-linux-gnu/bits/messages_members.h \
- /run/current-system/sw/include/libintl.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/codecvt.h \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/locale_facets_nonio.tcc \
- /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/locale_conv.h \
  /run/current-system/sw/include/boost/lexical_cast/detail/lcast_char_constants.hpp \
  /run/current-system/sw/include/boost/lexical_cast/detail/lcast_unsigned_converters.hpp \
  /run/current-system/sw/include/boost/noncopyable.hpp \
@@ -1047,7 +1062,13 @@ src/tc.o: src/tc.cc /run/current-system/sw/include/stdc-predef.h \
  /run/current-system/sw/include/boost/program_options/detail/convert.hpp \
  /run/current-system/sw/include/boost/program_options/variables_map.hpp \
  /run/current-system/sw/include/boost/program_options/version.hpp \
- src/task/fwd.hh src/task/task-register.hxx
+ src/task/fwd.hh src/task/task-register.hxx src/task/task.hxx \
+ src/task/disjunctive-task.hh src/task/function-task.hh \
+ src/task/int-task.hh src/task/argument-task.hh \
+ src/task/multiple-string-task.hh src/task/string-task.hh \
+ src/parse/libparse.hh src/parse/fwd.hh lib/misc/variant.hh \
+ /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/variant \
+ lib/misc/variant.hxx src/parse/tasks.hh lib/misc/fwd.hh
 /run/current-system/sw/include/stdc-predef.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/cstdlib:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/x86_64-unknown-linux-gnu/bits/c++config.h:
@@ -1098,17 +1119,6 @@ src/tc.o: src/tc.cc /run/current-system/sw/include/stdc-predef.h \
 /run/current-system/sw/include/alloca.h:
 /run/current-system/sw/include/bits/stdlib-float.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/std_abs.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/exception:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/exception.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/exception_ptr.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/exception_defines.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/cxxabi_init_exception.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/typeinfo:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/hash_bytes.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/new:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/nested_exception.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/move.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/type_traits:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/iostream:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ostream:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ios:
@@ -1125,6 +1135,17 @@ src/tc.o: src/tc.cc /run/current-system/sw/include/stdc-predef.h \
 /run/current-system/sw/include/bits/types/__mbstate_t.h:
 /run/current-system/sw/include/bits/types/__FILE.h:
 /run/current-system/sw/include/bits/types/FILE.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/exception:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/exception.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/exception_ptr.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/exception_defines.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/cxxabi_init_exception.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/typeinfo:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/hash_bytes.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/new:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/nested_exception.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/move.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/type_traits:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/char_traits.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/stl_algobase.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/functexcept.h:
@@ -1261,11 +1282,44 @@ lib/misc/timer.hh:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/stl_stack.h:
 lib/misc/timer.hxx:
 lib/misc/contract.hh:
-src/task/task-register.hh:
+lib/misc/file-library.hh:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/filesystem:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/fs_fwd.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/chrono:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ratio:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ctime:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/parse_numbers.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/fs_path.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/locale:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/locale_facets_nonio.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/x86_64-unknown-linux-gnu/bits/time_members.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/x86_64-unknown-linux-gnu/bits/messages_members.h:
+/run/current-system/sw/include/libintl.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/codecvt.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/locale_facets_nonio.tcc:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/locale_conv.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/unique_ptr.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/iomanip:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/quoted_string.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/codecvt:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ext/concurrence.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/shared_ptr.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/shared_ptr_base.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/allocated_ptr.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/refwrap.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/fs_dir.h:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/fs_ops.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/vector:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/stl_vector.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/stl_bvector.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/vector.tcc:
+lib/misc/file-library.hxx:
+src/object/tasks.hh:
+src/task/libtask.hh:
+src/task/boolean-task.hh:
+src/task/simple-task.hh:
+src/task/task.hh:
+src/task/task-register.hh:
 /run/current-system/sw/include/boost/program_options.hpp:
 /run/current-system/sw/include/boost/program_options/options_description.hpp:
 /run/current-system/sw/include/boost/program_options/config.hpp:
@@ -1299,7 +1353,6 @@ src/task/task-register.hh:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/iterator:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/stream_iterator.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ranges:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/refwrap.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/pstl/glue_algorithm_defs.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/functional:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/std_function.h:
@@ -1357,11 +1410,6 @@ src/task/task-register.hh:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/memory:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/stl_raw_storage_iter.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/ranges_uninitialized.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ext/concurrence.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/unique_ptr.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/shared_ptr.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/shared_ptr_base.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/allocated_ptr.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/shared_ptr_atomic.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/atomic_base.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/atomic_lockfree_defines.h:
@@ -1755,15 +1803,6 @@ src/task/task-register.hh:
 /run/current-system/sw/include/boost/move/detail/std_ns_begin.hpp:
 /run/current-system/sw/include/boost/move/detail/std_ns_end.hpp:
 /run/current-system/sw/include/boost/lexical_cast/detail/converter_lexical_streams.hpp:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/locale:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/locale_facets_nonio.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/ctime:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/x86_64-unknown-linux-gnu/bits/time_members.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/x86_64-unknown-linux-gnu/bits/messages_members.h:
-/run/current-system/sw/include/libintl.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/codecvt.h:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/locale_facets_nonio.tcc:
-/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/locale_conv.h:
 /run/current-system/sw/include/boost/lexical_cast/detail/lcast_char_constants.hpp:
 /run/current-system/sw/include/boost/lexical_cast/detail/lcast_unsigned_converters.hpp:
 /run/current-system/sw/include/boost/noncopyable.hpp:
@@ -2103,3 +2142,17 @@ src/task/task-register.hh:
 /run/current-system/sw/include/boost/program_options/version.hpp:
 src/task/fwd.hh:
 src/task/task-register.hxx:
+src/task/task.hxx:
+src/task/disjunctive-task.hh:
+src/task/function-task.hh:
+src/task/int-task.hh:
+src/task/argument-task.hh:
+src/task/multiple-string-task.hh:
+src/task/string-task.hh:
+src/parse/libparse.hh:
+src/parse/fwd.hh:
+lib/misc/variant.hh:
+/nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/variant:
+lib/misc/variant.hxx:
+src/parse/tasks.hh:
+lib/misc/fwd.hh:
