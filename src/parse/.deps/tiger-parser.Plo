@@ -47,7 +47,6 @@ src/parse/tiger-parser.lo: src/parse/tiger-parser.cc \
  /run/current-system/sw/include/bits/struct_mutex.h \
  /run/current-system/sw/include/bits/struct_rwlock.h \
  /run/current-system/sw/include/alloca.h \
- /run/current-system/sw/include/bits/stdlib-bsearch.h \
  /run/current-system/sw/include/bits/stdlib-float.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/std_abs.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/fstream \
@@ -155,7 +154,6 @@ src/parse/tiger-parser.lo: src/parse/tiger-parser.cc \
  /run/current-system/sw/include/bits/types/struct_FILE.h \
  /run/current-system/sw/include/bits/types/cookie_io_functions_t.h \
  /run/current-system/sw/include/bits/stdio_lim.h \
- /run/current-system/sw/include/bits/stdio.h \
  /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/cerrno \
  /run/current-system/sw/include/errno.h \
  /run/current-system/sw/include/bits/errno.h \
@@ -1147,7 +1145,6 @@ src/parse/tiger-parser.lo: src/parse/tiger-parser.cc \
 /run/current-system/sw/include/bits/struct_mutex.h:
 /run/current-system/sw/include/bits/struct_rwlock.h:
 /run/current-system/sw/include/alloca.h:
-/run/current-system/sw/include/bits/stdlib-bsearch.h:
 /run/current-system/sw/include/bits/stdlib-float.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/bits/std_abs.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/fstream:
@@ -1255,7 +1252,6 @@ src/parse/tiger-parser.lo: src/parse/tiger-parser.cc \
 /run/current-system/sw/include/bits/types/struct_FILE.h:
 /run/current-system/sw/include/bits/types/cookie_io_functions_t.h:
 /run/current-system/sw/include/bits/stdio_lim.h:
-/run/current-system/sw/include/bits/stdio.h:
 /nix/store/xlh4fb3v83rn2l7y27png6c2w3mm1mwj-gcc-10.3.0/include/c++/10.3.0/cerrno:
 /run/current-system/sw/include/errno.h:
 /run/current-system/sw/include/bits/errno.h:

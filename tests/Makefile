@@ -163,7 +163,7 @@ CPPFLAGS =
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -g -O2 -std=c++20 -pipe
+CXXFLAGS = -std=c++20 -O0 -g -fno-inline -std=c++20 -pipe
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
