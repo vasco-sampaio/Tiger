@@ -26,6 +26,7 @@
 
   // DONE: Some code was deleted here.
   static std::string grown_string;
+  static std::string grown_comment;
 
 // Convenient shortcuts.
 #define TOKEN_VAL(Type, Value)                  \
@@ -58,6 +59,8 @@ int             [0-9]+
 
 blank           [ \t]+
 endofline       [\n\r]+
+letter          [a-zA-Z]
+digit           [0-9]
 %%
 %{
   // FIXME: Some code was deleted here (Local variables).
@@ -125,7 +128,39 @@ endofline       [\n\r]+
 "&"         {return TOKEN(AND);}
 "|"         {return TOKEN(OR);}
 ":="        {return TOKEN(ASSIGN);}
+"_chunks"   {return TOKEN(CHUNKS);}
+"_namety"   {return TOKEN(NAMETY);}
+"_cast"     {return TOKEN(CAST);}
 
+
+"\""        grown_string.clear(); BEGIN SC_STRING;
+
+<SC_STRING>{ /* Handling of the strings.  Initial " is eaten. */
+  "\"" {
+    BEGIN INITIAL; // Return to main context
+    return TOKEN_VAL(STRING, grown_string);
+  }
+  . {
+    grown_string.append(yytext);
+  }
+}
+
+"/*"       grown_comment.clear(); BEGIN SC_COMMENT;
+<SC_COMMENT>{ /* Handling of the strings.  Initial " is eaten. */
+  "*/" {
+    BEGIN INITIAL; // Return to main context
+    return TOKEN_VAL(STRING, grown_comment);
+  }
+  "/*" {
+      BEGIN SC_COMMENT;
+  }
+  . {
+    grown_comment.append(yytext);
+  }
+}
+"_main" {return TOKEN_VAL(ID, misc::symbol(yytext));}
+[a-zA-Z][a-zA-Z0-9_]+ {return TOKEN_VAL(ID, misc::symbol(yytext));}
+[_][a-zA-Z0-9_]+      {return TOKEN_VAL(ID, misc::symbol(yytext));}
 
 %%
 
