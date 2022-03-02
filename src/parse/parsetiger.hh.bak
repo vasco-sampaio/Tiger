@@ -39,7 +39,7 @@
 #ifndef YY_PARSE_SRC_PARSE_PARSETIGER_HH_INCLUDED
 # define YY_PARSE_SRC_PARSE_PARSETIGER_HH_INCLUDED
 // "%code requires" blocks.
-#line 50 "parse/parsetiger.yy"
+#line 48 "parse/parsetiger.yy"
 
 #include <string>
 #include <misc/algorithm.hh>
@@ -1948,7 +1948,7 @@ switch (yykind)
 
 
 // "%code provides" blocks.
-#line 66 "parse/parsetiger.yy"
+#line 64 "parse/parsetiger.yy"
 
   // Announce to Flex the prototype we want for lexing (member) function.
   # define YY_DECL_(Prefix)                               \

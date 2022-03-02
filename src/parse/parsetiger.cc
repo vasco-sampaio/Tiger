@@ -80,7 +80,7 @@ namespace
 
 
 // Unqualified %code blocks.
-#line 85 "parse/parsetiger.yy"
+#line 87 "parse/parsetiger.yy"
 
 # include <parse/scantiger.hh>
 # include <parse/tweast.hh>
@@ -307,10 +307,10 @@ namespace
 {
 #if PARSEDEBUG
   /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
-  const unsigned char yyrline[] =
+  const short yyrline[] =
   {
-       0,   182,   182,   185,   190,   209,   210,   221,   222,   226,
-     230,   231,   232,   236,   237,   241,   242,   246,   251,   254
+       0,   184,   184,   187,   192,   211,   212,   223,   224,   228,
+     232,   233,   234,   238,   239,   243,   244,   248,   253,   256
   };
 #endif
 
@@ -3463,19 +3463,19 @@ namespace parse {
     switch (yykind)
     {
       case symbol_kind::S_STRING: // "string"
-#line 72 "parse/parsetiger.yy"
+#line 74 "parse/parsetiger.yy"
                  { yyo << yyval.as < std::string > (); }
 #line 3469 "parse/parsetiger.cc"
         break;
 
       case symbol_kind::S_ID: // "identifier"
-#line 72 "parse/parsetiger.yy"
+#line 74 "parse/parsetiger.yy"
                  { yyo << yyval.as < misc::symbol > (); }
 #line 3475 "parse/parsetiger.cc"
         break;
 
       case symbol_kind::S_INT: // "integer"
-#line 72 "parse/parsetiger.yy"
+#line 74 "parse/parsetiger.yy"
                  { yyo << yyval.as < int > (); }
 #line 3481 "parse/parsetiger.cc"
         break;
@@ -3529,7 +3529,7 @@ namespace parse {
 
 } // parse
 #line 3532 "parse/parsetiger.cc"
-#line 257 "parse/parsetiger.yy"
+#line 259 "parse/parsetiger.yy"
 
 
 void
