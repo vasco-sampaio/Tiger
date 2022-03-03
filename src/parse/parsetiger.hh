@@ -413,8 +413,9 @@ namespace parse {
     TOK_TYPE = 305,                // "type"
     TOK_VAR = 306,                 // "var"
     TOK_WHILE = 307,               // "while"
-    TOK_CHUNKS = 308,              // "_chunks"
-    TOK_NAMETY = 309               // "_namety"
+    TOK_UMINUS = 308,              // UMINUS
+    TOK_CHUNKS = 309,              // "_chunks"
+    TOK_NAMETY = 310               // "_namety"
       };
     };
 
@@ -426,7 +427,7 @@ namespace parse {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 55, ///< Number of tokens.
+        YYNTOKENS = 56, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -481,19 +482,29 @@ namespace parse {
         S_TYPE = 50,                             // "type"
         S_VAR = 51,                              // "var"
         S_WHILE = 52,                            // "while"
-        S_CHUNKS = 53,                           // "_chunks"
-        S_NAMETY = 54,                           // "_namety"
-        S_YYACCEPT = 55,                         // $accept
-        S_program = 56,                          // program
-        S_exp = 57,                              // exp
-        S_chunks = 58,                           // chunks
-        S_tychunk = 59,                          // tychunk
-        S_tydec = 60,                            // tydec
-        S_ty = 61,                               // ty
-        S_tyfields = 62,                         // tyfields
-        S_63_tyfields_1 = 63,                    // tyfields.1
-        S_tyfield = 64,                          // tyfield
-        S_typeid = 65                            // typeid
+        S_UMINUS = 53,                           // UMINUS
+        S_CHUNKS = 54,                           // "_chunks"
+        S_NAMETY = 55,                           // "_namety"
+        S_YYACCEPT = 56,                         // $accept
+        S_program = 57,                          // program
+        S_rec_exps = 58,                         // rec_exps
+        S_exps = 59,                             // exps
+        S_record_creation = 60,                  // record_creation
+        S_record_init = 61,                      // record_init
+        S_function_param = 62,                   // function_param
+        S_method_call = 63,                      // method_call
+        S_exp = 64,                              // exp
+        S_lvalue = 65,                           // lvalue
+        S_vardec = 66,                           // vardec
+        S_fundec = 67,                           // fundec
+        S_chunks = 68,                           // chunks
+        S_tychunk = 69,                          // tychunk
+        S_tydec = 70,                            // tydec
+        S_ty = 71,                               // ty
+        S_tyfields = 72,                         // tyfields
+        S_73_tyfields_1 = 73,                    // tyfields.1
+        S_tyfield = 74,                          // tyfield
+        S_typeid = 75                            // typeid
       };
     };
 
@@ -1653,6 +1664,21 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_UMINUS (location_type l)
+      {
+        return symbol_type (token::TOK_UMINUS, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_UMINUS (const location_type& l)
+      {
+        return symbol_type (token::TOK_UMINUS, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_CHUNKS (location_type l)
       {
         return symbol_type (token::TOK_CHUNKS, std::move (l));
@@ -1798,10 +1824,11 @@ switch (yykind)
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
       35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
-      45,    46,    47,    48,    49,    50,    51,    52,    53,    54
+      45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
+      55
     };
     // Last valid token kind.
-    const int code_max = 309;
+    const int code_max = 310;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -1944,7 +1971,7 @@ switch (yykind)
 
 
 } // parse
-#line 1948 "parse/parsetiger.hh"
+#line 1975 "parse/parsetiger.hh"
 
 
 // "%code provides" blocks.
@@ -1956,7 +1983,7 @@ switch (yykind)
     (Prefix parselex)(::parse::TigerParser& tp)
   # define YY_DECL YY_DECL_(yyFlexLexer::)
 
-#line 1960 "parse/parsetiger.hh"
+#line 1987 "parse/parsetiger.hh"
 
 
 #endif // !YY_PARSE_SRC_PARSE_PARSETIGER_HH_INCLUDED

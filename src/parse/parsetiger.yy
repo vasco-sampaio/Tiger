@@ -16,7 +16,7 @@
 // conflict at runtime. Use %expect and %expect-rr to tell Bison about it.
   // DONE: Some code was deleted here (Other directives).
   %expect 0
-  %expect-rr 0
+  %expect-rr 1
 
 %define parse.error verbose
 %defines
@@ -165,6 +165,7 @@
 
 
   // FIXME: Some code was deleted here (Priorities/associativities).
+%precedence DO OF
 
 %left OR
 %left AND
@@ -172,12 +173,10 @@
 %left PLUS MINUS
 %left TIMES DIVIDE
 %precedence UMINUS
-
 %precedence ASSIGN
 
 %precedence THEN
 %precedence ELSE
-
 
 // Solving conflicts on:
 // let type foo = bar
@@ -185,7 +184,7 @@
 // which can be understood as a list of two TypeChunk containing
 // a unique TypeDec each, or a single TypeChunk containing two TypeDec.
 // We want the latter.
-%precedence CHUNKS
+%precedence CHUNKS 
 %precedence TYPE
   // FIXME: Some code was deleted here (Other declarations).
 
@@ -232,20 +231,20 @@ method_call:
 ;
 
 exp:
-  INT
+    INT
   // DONE: Some code was deleted here (More rules).
 |   STRING
 |   typeid LBRACK exp RBRACK OF exp
 |   typeid LBRACE record_creation RBRACE
-|   lvalue
+|   lvalue 
 |   ID LPAREN RPAREN                        
-|   ID LPAREN function_param RPAREN         
-|   MINUS exp                               %prec UMINUS
-|   exp PLUS exp
+|   ID LPAREN function_param RPAREN       
+|   MINUS exp                      %prec UMINUS
+|   exp PLUS exp                   
 |   exp MINUS exp
 |   exp TIMES exp
 |   exp DIVIDE exp
-|   exp EQ exp
+|   exp EQ exp                    
 |   exp NE exp
 |   exp GT exp
 |   exp LT exp
@@ -277,29 +276,6 @@ lvalue:
   | NE | GT | LT | GE | LE | AND | OR
 ;*/
 
-tydec_rec:
-  tydec
-| tydec tydec_rec  
-;
-
-fundec_rec:
-  fundec
-| fundec fundec_rec
-;
-
-chunk_rec:
-    chunk
-|   chunk chunk_rec  
-;
-
-chunk:
-    %empty
-|   tydec_rec         
-|   fundec_rec        
-|   vardec
-|   IMPORT STRING
-;
-
 vardec:
   VAR ID ASSIGN exp
 | VAR ID COLON typeid ASSIGN exp
@@ -330,7 +306,9 @@ chunks:
   %empty                  
 | tychunk   chunks        
   // DONE: Some code was deleted here (More rules).
-| chunk_rec
+| fundec  chunks
+| vardec    chunks
+| IMPORT STRING chunks
 ;
 
 /*--------------------.
@@ -343,6 +321,7 @@ tychunk:
   tydec %prec CHUNKS  
 | tydec tychunk       
 ;
+
 
 tydec:
   "type" ID "=" ty  
