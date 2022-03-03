@@ -1,4 +1,3 @@
-                                                            /* -*- C++ -*- */
 %option c++
 %option nounput
 %option debug
@@ -25,7 +24,9 @@
 #include <parse/parsetiger.hh>
 #include <parse/tiger-parser.hh>
 
-  // FIXME: Some code was deleted here.
+  // DONE: Some code was deleted here.
+  static std::string grown_string;
+  static std::string grown_comment;
 
 // Convenient shortcuts.
 #define TOKEN_VAL(Type, Value)                  \
@@ -54,7 +55,12 @@ YY_FLEX_NAMESPACE_BEGIN
 
 /* Abbreviations.  */
 int             [0-9]+
-  /* FIXME: Some code was deleted here. */
+/* DONE: Some code was deleted here. */
+
+blank           [ \t]+
+endofline       [\n\r]+
+letter          [a-zA-Z]
+digit           [0-9]
 %%
 %{
   // FIXME: Some code was deleted here (Local variables).
@@ -67,11 +73,95 @@ int             [0-9]+
 
 {int}         {
                 int val = 0;
-  // FIXME: Some code was deleted here (Decode, and check the value).
+  // DONE: Some code was deleted here (Decode, and check the value).
+                val = strtol(yytext, 0, 10);
                 return TOKEN_VAL(INT, val);
               }
 
-  /* FIXME: Some code was deleted here. */
+  /* DONE: Some code was deleted here. */
+{blank}
+{endofline}
+
+"array"     {return TOKEN(ARRAY);}
+"if"        {return TOKEN(IF);}
+"then"      {return TOKEN(THEN);}
+"else"      {return TOKEN(ELSE);}
+"while"     {return TOKEN(WHILE);}
+"for"       {return TOKEN(FOR);}
+"to"        {return TOKEN(TO);}
+"do"        {return TOKEN(DO);}
+"let"       {return TOKEN(LET);}
+"in"        {return TOKEN(IN);}
+"end"       {return TOKEN(END);}
+"of"        {return TOKEN(OF);}
+"break"     {return TOKEN(BREAK);}
+"nil"       {return TOKEN(NIL);}
+"function"  {return TOKEN(FUNCTION);}
+"var"       {return TOKEN(VAR);}
+"type"      {return TOKEN(TYPE);}
+"import"    {return TOKEN(IMPORT);}
+"primitive" {return TOKEN(PRIMITIVE);}
+"class"     {return TOKEN(CLASS);}
+"extends"   {return TOKEN(EXTENDS);}
+"method"    {return TOKEN(METHOD);}
+"new"       {return TOKEN(NEW);}
+","         {return TOKEN(COMMA);}
+":"         {return TOKEN(COLON);}
+";"         {return TOKEN(SEMI);}
+"("         {return TOKEN(LPAREN);}
+")"         {return TOKEN(RPAREN);}
+"{"         {return TOKEN(LBRACE);}
+"}"         {return TOKEN(RBRACE);}
+"["         {return TOKEN(LBRACK);}
+"]"         {return TOKEN(RBRACK);}
+"+"         {return TOKEN(PLUS);}
+"."         {return TOKEN(MINUS);}
+"-"         {return TOKEN(DOT);}
+"*"         {return TOKEN(TIMES);}
+"/"         {return TOKEN(DIVIDE);}
+"="         {return TOKEN(EQ);}
+"<>"        {return TOKEN(NE);}
+"<"         {return TOKEN(LT);}
+"<="        {return TOKEN(LE);}
+">"         {return TOKEN(GT);}
+">="        {return TOKEN(GE);}
+"&"         {return TOKEN(AND);}
+"|"         {return TOKEN(OR);}
+":="        {return TOKEN(ASSIGN);}
+"_chunks"   {return TOKEN(CHUNKS);}
+"_namety"   {return TOKEN(NAMETY);}
+"_cast"     {return TOKEN(CAST);}
+
+
+"\""        grown_string.clear(); BEGIN SC_STRING;
+
+<SC_STRING>{ /* Handling of the strings.  Initial " is eaten. */
+  "\"" {
+    BEGIN INITIAL; // Return to main context
+    return TOKEN_VAL(STRING, grown_string);
+  }
+  . {
+    grown_string.append(yytext);
+  }
+}
+
+"/*"       grown_comment.clear(); BEGIN SC_COMMENT;
+<SC_COMMENT>{ /* Handling of the strings.  Initial " is eaten. */
+  "*/" {
+    BEGIN INITIAL; // Return to main context
+    return TOKEN_VAL(STRING, grown_comment);
+  }
+  "/*" {
+      BEGIN SC_COMMENT;
+  }
+  . {
+    grown_comment.append(yytext);
+  }
+}
+"_main" {return TOKEN_VAL(ID, misc::symbol(yytext));}
+[a-zA-Z][a-zA-Z0-9_]+ {return TOKEN_VAL(ID, misc::symbol(yytext));}
+[_][a-zA-Z0-9_]+      {return TOKEN_VAL(ID, misc::symbol(yytext));}
+
 %%
 
 // Do not use %option noyywrap, because then flex generates the same
