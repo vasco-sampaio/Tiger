@@ -64,9 +64,10 @@ digit           [0-9]
 %%
 %{
   // FIXME: Some code was deleted here (Local variables).
-
   // Each time yylex is called.
+  tp.location_.columns(tp.location_.end.column - tp.location_.begin.column);
   tp.location_.step();
+  
 %}
 
  /* The rules.  */
@@ -79,8 +80,8 @@ digit           [0-9]
               }
 
   /* DONE: Some code was deleted here. */
-{blank}
-{endofline}
+{blank}     
+{endofline} {tp.location_.lines();}
 
 "array"     {return TOKEN(ARRAY);}
 "if"        {return TOKEN(IF);}
@@ -160,7 +161,26 @@ digit           [0-9]
 "_main" {return TOKEN_VAL(ID, misc::symbol(yytext));}
 [a-zA-Z][a-zA-Z0-9_]* {return TOKEN_VAL(ID, misc::symbol(yytext));}
 [_][a-zA-Z0-9_]+      {return TOKEN_VAL(ID, misc::symbol(yytext));}
-
+<<EOF>>                 {
+  if (grown_comment.size() > 0)
+{
+  do {                                                  
+    if (!tp.enable_extensions_p_)                       
+      tp.error_ << misc::error::error_type::scan        
+                << tp.location_                         
+                << ": unexpected end of file in a comment\n";     
+  } while (false);
+}
+return TOKEN(EOF);
+}
+.                     {
+  do {                                                  
+    if (!tp.enable_extensions_p_)                       
+      tp.error_ << misc::error::error_type::scan        
+                << tp.location_                         
+                << ": unrecognized token\n";     
+  } while (false);
+}
 %%
 
 // Do not use %option noyywrap, because then flex generates the same

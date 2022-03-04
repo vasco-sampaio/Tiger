@@ -3784,5 +3784,11 @@ void
 parse::parser::error(const location_type& l, const std::string& m)
 {
   // DONE: Some code was deleted here.
-  std::cerr << l << ": " << m << '\n';
+
+      tp.error_ << misc::error::error_type::parse
+                << l
+                << ": "
+                << m
+                << '\n';
+
 }

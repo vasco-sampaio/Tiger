@@ -31,7 +31,7 @@ namespace misc
   inline std::ostream& operator<<(std::ostream& ostr, const symbol& the)
   {
     // DONE: Some code was deleted here.
-    ostr << the;
+    ostr << the.get();
     return ostr;
   }
 

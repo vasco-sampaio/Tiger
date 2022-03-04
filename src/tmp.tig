@@ -1,8 +1,4 @@
-/* An array type and an array variable. */
-let
-  type  arrtype = array of int
-  var arr1 : arrtype := arrtype [10] of 0
+let var a : nil := ()
 in
-  arr1[2]
+  1
 end
-
