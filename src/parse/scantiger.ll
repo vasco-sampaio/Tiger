@@ -27,6 +27,7 @@
   // DONE: Some code was deleted here.
   static std::string grown_string;
   static std::string grown_comment;
+  int nested = 0;
 
 // Convenient shortcuts.
 #define TOKEN_VAL(Type, Value)                  \
@@ -63,11 +64,13 @@ letter          [a-zA-Z]
 digit           [0-9]
 %%
 %{
-  // FIXME: Some code was deleted here (Local variables).
+  // DONE: Some code was deleted here (Local variables).
   // Each time yylex is called.
-  tp.location_.columns(tp.location_.end.column - tp.location_.begin.column);
+
+  tp.location_.columns(yyleng);
   tp.location_.step();
   
+ 
 %}
 
  /* The rules.  */
@@ -80,8 +83,12 @@ digit           [0-9]
               }
 
   /* DONE: Some code was deleted here. */
-{blank}     
-{endofline} {tp.location_.lines();}
+{blank}
+{endofline} {
+  tp.location_.columns(yyleng);
+  tp.location_.step();
+  tp.location_.lines();
+  }
 
 "array"     {return TOKEN(ARRAY);}
 "if"        {return TOKEN(IF);}
@@ -150,10 +157,16 @@ digit           [0-9]
 <SC_COMMENT>{ /* Handling of the strings.  Initial " is eaten. */
   "*/" {
     BEGIN INITIAL; // Return to main context
+    if (nested == 0)
+      grown_comment.clear();
+    else
+      nested -= 1;
   }
   "/*" {
+    nested += 1;
       BEGIN SC_COMMENT;
   }
+
   . {
     grown_comment.append(yytext);
   }
