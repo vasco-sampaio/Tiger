@@ -27,6 +27,7 @@
   // DONE: Some code was deleted here.
   static std::string grown_string;
   static std::string grown_comment;
+  int nested = 0;
 
 // Convenient shortcuts.
 #define TOKEN_VAL(Type, Value)                  \
@@ -63,10 +64,13 @@ letter          [a-zA-Z]
 digit           [0-9]
 %%
 %{
-  // FIXME: Some code was deleted here (Local variables).
-
+  // DONE: Some code was deleted here (Local variables).
   // Each time yylex is called.
+
+  tp.location_.columns(yyleng);
   tp.location_.step();
+  
+ 
 %}
 
  /* The rules.  */
@@ -80,7 +84,11 @@ digit           [0-9]
 
   /* DONE: Some code was deleted here. */
 {blank}
-{endofline}
+{endofline} {
+  tp.location_.columns(yyleng);
+  tp.location_.step();
+  tp.location_.lines();
+  }
 
 "array"     {return TOKEN(ARRAY);}
 "if"        {return TOKEN(IF);}
@@ -148,20 +156,46 @@ digit           [0-9]
 "/*"       grown_comment.clear(); BEGIN SC_COMMENT;
 <SC_COMMENT>{ /* Handling of the strings.  Initial " is eaten. */
   "*/" {
-    BEGIN INITIAL; // Return to main context
-    return TOKEN_VAL(STRING, grown_comment);
+    
+    if (nested == 0)
+    {
+      grown_comment.clear();
+      BEGIN INITIAL; // Return to main context
+    }
+    else
+      nested -= 1;
   }
   "/*" {
-      BEGIN SC_COMMENT;
+    nested += 1;
   }
+
   . {
     grown_comment.append(yytext);
   }
 }
 "_main" {return TOKEN_VAL(ID, misc::symbol(yytext));}
-[a-zA-Z][a-zA-Z0-9_]+ {return TOKEN_VAL(ID, misc::symbol(yytext));}
+[a-zA-Z][a-zA-Z0-9_]* {return TOKEN_VAL(ID, misc::symbol(yytext));}
 [_][a-zA-Z0-9_]+      {return TOKEN_VAL(ID, misc::symbol(yytext));}
-
+<<EOF>>                 {
+  if (grown_comment.size() > 0)
+{
+  do {                                                  
+    if (!tp.enable_extensions_p_)                       
+      tp.error_ << misc::error::error_type::scan        
+                << tp.location_                         
+                << ": unexpected end of file in a comment\n";     
+  } while (false);
+}
+return TOKEN(EOF);
+}
+.                     {
+  do {                                                  
+    if (!tp.enable_extensions_p_)                       
+      tp.error_ << misc::error::error_type::scan        
+                << tp.location_                         
+                << ": unrecognized token\n";     
+  } while (false);
+}
 %%
 
 // Do not use %option noyywrap, because then flex generates the same

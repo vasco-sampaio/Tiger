@@ -1,0 +1,111 @@
+-    name: test01
+     input: samples/tc1/test01.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: unterminated-comment
+     input: samples/tc1/unterminated-comment.tig
+     checks:
+     - exitcode
+     retcode:
+       2
+
+-    name: type-nil
+     input: samples/tc1/type-nil.tig
+     checks:
+     - exitcode
+     retcode:
+       3
+
+-    name: no-path
+     input: samples/tc1/no-path.tig
+     checks:
+     - exitcode
+     retcode:
+       1
+
+-    name: a+a
+     input: samples/tc1/a+a.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: yaka1
+     input: samples/tc1/yaka1.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: yaka2
+     input: samples/tc1/yaka2.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: array-of-alias
+     input: samples/tc1/tests/good/array-of-alias.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: array
+     input: samples/tc1/tests/good/array.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: break-in-while
+     input: samples/tc1/tests/good/break-in-while.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: comments-nested
+     input: samples/tc1/tests/good/comments-nested.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: compare-record-and-nil
+     input: samples/tc1/tests/good/compare-record-and-nil.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: fact
+     input: samples/tc1/tests/good/fact.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: for-in-let
+     input: samples/tc1/tests/good/for-in-let.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: fun-vs-var
+     input: samples/tc1/tests/good/fun-vs-var.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: if
+     input: samples/tc1/tests/good/if.tig
+     checks:
+     - exitcode
+     retcode:
+       0
