@@ -1,3 +1,11 @@
+For the test-suite:
+
+cd
+python -m venv env/
+source env/bin/activate
+go to tiger folder
+pip install -r tests/requirements.txt
+
 
 Number of suppressed lines, suppressed chunks, average chunks size:
 .                             :  187  23   8

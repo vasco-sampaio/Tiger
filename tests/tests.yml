@@ -1,0 +1,34 @@
+-    name: test01
+     input: samples/tc1/test01.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: unterminated-comment
+     input: samples/tc1/unterminated-comment.tig
+     checks:
+     - exitcode
+     retcode:
+       2
+
+-    name: type-nil
+     input: samples/tc1/type-nil.tig
+     checks:
+     - exitcode
+     retcode:
+       3
+
+-    name: no-path
+     input: samples/tc1/no-path.tig
+     checks:
+     - exitcode
+     retcode:
+       1
+
+-    name: a+a
+     input: samples/tc1/a+a.tig
+     checks:
+     - exitcode
+     retcode:
+       0
