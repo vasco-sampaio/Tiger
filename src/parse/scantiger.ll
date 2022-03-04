@@ -149,7 +149,6 @@ digit           [0-9]
 <SC_COMMENT>{ /* Handling of the strings.  Initial " is eaten. */
   "*/" {
     BEGIN INITIAL; // Return to main context
-    return TOKEN_VAL(STRING, grown_comment);
   }
   "/*" {
       BEGIN SC_COMMENT;
@@ -159,7 +158,7 @@ digit           [0-9]
   }
 }
 "_main" {return TOKEN_VAL(ID, misc::symbol(yytext));}
-[a-zA-Z][a-zA-Z0-9_]+ {return TOKEN_VAL(ID, misc::symbol(yytext));}
+[a-zA-Z][a-zA-Z0-9_]* {return TOKEN_VAL(ID, misc::symbol(yytext));}
 [_][a-zA-Z0-9_]+      {return TOKEN_VAL(ID, misc::symbol(yytext));}
 
 %%

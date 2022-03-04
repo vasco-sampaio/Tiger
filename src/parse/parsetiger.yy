@@ -165,6 +165,8 @@
 
 
   // FIXME: Some code was deleted here (Priorities/associativities).
+%precedence CHUNKS
+%precedence TYPE
 %precedence DO OF
 
 %left OR
@@ -184,8 +186,7 @@
 // which can be understood as a list of two TypeChunk containing
 // a unique TypeDec each, or a single TypeChunk containing two TypeDec.
 // We want the latter.
-%precedence CHUNKS 
-%precedence TYPE
+
   // FIXME: Some code was deleted here (Other declarations).
 
 %start program
@@ -233,6 +234,7 @@ method_call:
 exp:
     INT
   // DONE: Some code was deleted here (More rules).
+|   NIL
 |   STRING
 |   typeid LBRACK exp RBRACK OF exp
 |   typeid LBRACE record_creation RBRACE
@@ -361,5 +363,5 @@ void
 parse::parser::error(const location_type& l, const std::string& m)
 {
   // DONE: Some code was deleted here.
-  std::cerr << l << m;
+  std::cerr << l << ": " << m << '\n';
 }
