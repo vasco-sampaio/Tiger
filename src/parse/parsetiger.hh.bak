@@ -39,7 +39,7 @@
 #ifndef YY_PARSE_SRC_PARSE_PARSETIGER_HH_INCLUDED
 # define YY_PARSE_SRC_PARSE_PARSETIGER_HH_INCLUDED
 // "%code requires" blocks.
-#line 50 "parse/parsetiger.yy"
+#line 51 "parse/parsetiger.yy"
 
 #include <string>
 #include <misc/algorithm.hh>
@@ -501,10 +501,11 @@ namespace parse {
         S_tychunk = 69,                          // tychunk
         S_tydec = 70,                            // tydec
         S_ty = 71,                               // ty
-        S_tyfields = 72,                         // tyfields
-        S_73_tyfields_1 = 73,                    // tyfields.1
-        S_tyfield = 74,                          // tyfield
-        S_typeid = 75                            // typeid
+        S_classfields = 72,                      // classfields
+        S_tyfields = 73,                         // tyfields
+        S_74_tyfields_1 = 74,                    // tyfields.1
+        S_tyfield = 75,                          // tyfield
+        S_typeid = 76                            // typeid
       };
     };
 
@@ -1971,11 +1972,11 @@ switch (yykind)
 
 
 } // parse
-#line 1975 "parse/parsetiger.hh"
+#line 1976 "parse/parsetiger.hh"
 
 
 // "%code provides" blocks.
-#line 66 "parse/parsetiger.yy"
+#line 67 "parse/parsetiger.yy"
 
   // Announce to Flex the prototype we want for lexing (member) function.
   # define YY_DECL_(Prefix)                               \
@@ -1983,7 +1984,7 @@ switch (yykind)
     (Prefix parselex)(::parse::TigerParser& tp)
   # define YY_DECL YY_DECL_(yyFlexLexer::)
 
-#line 1987 "parse/parsetiger.hh"
+#line 1988 "parse/parsetiger.hh"
 
 
 #endif // !YY_PARSE_SRC_PARSE_PARSETIGER_HH_INCLUDED
