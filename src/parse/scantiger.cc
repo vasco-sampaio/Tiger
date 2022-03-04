@@ -577,8 +577,8 @@ static const flex_int16_t yy_rule_linenum[64] =
       111,  112,  113,  114,  115,  116,  117,  118,  119,  120,
       121,  122,  123,  124,  125,  126,  127,  128,  129,  130,
       131,  132,  133,  134,  135,  136,  137,  138,  139,  140,
-      141,  142,  145,  148,  152,  157,  159,  166,  171,  175,
-      176,  177,  190
+      141,  142,  145,  148,  152,  157,  159,  169,  173,  177,
+      178,  179,  192
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -1227,24 +1227,26 @@ case 57:
 YY_RULE_SETUP
 #line 159 "src/parse/scantiger.ll"
 {
-    BEGIN INITIAL; // Return to main context
+    
     if (nested == 0)
+    {
       grown_comment.clear();
+      BEGIN INITIAL; // Return to main context
+    }
     else
       nested -= 1;
   }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 166 "src/parse/scantiger.ll"
+#line 169 "src/parse/scantiger.ll"
 {
     nested += 1;
-      BEGIN SC_COMMENT;
   }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 171 "src/parse/scantiger.ll"
+#line 173 "src/parse/scantiger.ll"
 {
     grown_comment.append(yytext);
   }
@@ -1252,23 +1254,23 @@ YY_RULE_SETUP
 
 case 60:
 YY_RULE_SETUP
-#line 175 "src/parse/scantiger.ll"
+#line 177 "src/parse/scantiger.ll"
 {return TOKEN_VAL(ID, misc::symbol(yytext));}
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 176 "src/parse/scantiger.ll"
+#line 178 "src/parse/scantiger.ll"
 {return TOKEN_VAL(ID, misc::symbol(yytext));}
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 177 "src/parse/scantiger.ll"
+#line 179 "src/parse/scantiger.ll"
 {return TOKEN_VAL(ID, misc::symbol(yytext));}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(SC_COMMENT):
 case YY_STATE_EOF(SC_STRING):
-#line 178 "src/parse/scantiger.ll"
+#line 180 "src/parse/scantiger.ll"
 {
   if (grown_comment.size() > 0)
 {
@@ -1284,7 +1286,7 @@ return TOKEN(EOF);
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 190 "src/parse/scantiger.ll"
+#line 192 "src/parse/scantiger.ll"
 {
   do {                                                  
     if (!tp.enable_extensions_p_)                       
@@ -1296,10 +1298,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 198 "src/parse/scantiger.ll"
+#line 200 "src/parse/scantiger.ll"
 ECHO;
 	YY_BREAK
-#line 1288 "src/parse/scantiger.cc"
+#line 1290 "src/parse/scantiger.cc"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2416,7 +2418,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 198 "src/parse/scantiger.ll"
+#line 200 "src/parse/scantiger.ll"
 
 
 // Do not use %option noyywrap, because then flex generates the same

@@ -15,8 +15,9 @@
 // In TC, we expect the GLR to resolve one Shift-Reduce and zero Reduce-Reduce
 // conflict at runtime. Use %expect and %expect-rr to tell Bison about it.
   // DONE: Some code was deleted here (Other directives).
-  %expect 0
-  %expect-rr 1
+
+%expect 0
+%expect-rr 1
 
 %define parse.error verbose
 %defines
@@ -167,6 +168,7 @@
   // FIXME: Some code was deleted here (Priorities/associativities).
 %precedence CHUNKS
 %precedence TYPE
+%precedence CLASS
 %precedence DO OF
 
 %left OR
@@ -197,8 +199,7 @@ program:
   exp
    
 | /* Parsing an imported file.  */
-  chunks
-   
+  chunks  
 ;
 
 rec_exps:
@@ -327,12 +328,23 @@ tychunk:
 
 tydec:
   "type" ID "=" ty  
+| CLASS ID LBRACE classfields RBRACE
+| CLASS ID EXTENDS typeid LBRACE classfields RBRACE
 ;
 
 ty:
   typeid               
 | "{" tyfields "}"     
-| "array" "of" typeid  
+| "array" "of" typeid 
+| CLASS LBRACE classfields RBRACE
+| CLASS EXTENDS typeid LBRACE classfields RBRACE
+;
+
+classfields:
+  %empty
+| vardec classfields
+| METHOD ID LPAREN tyfields RPAREN EQ exp classfields
+| METHOD ID LPAREN tyfields RPAREN COLON typeid EQ exp classfields
 ;
 
 tyfields:

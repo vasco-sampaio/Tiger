@@ -156,15 +156,17 @@ digit           [0-9]
 "/*"       grown_comment.clear(); BEGIN SC_COMMENT;
 <SC_COMMENT>{ /* Handling of the strings.  Initial " is eaten. */
   "*/" {
-    BEGIN INITIAL; // Return to main context
+    
     if (nested == 0)
+    {
       grown_comment.clear();
+      BEGIN INITIAL; // Return to main context
+    }
     else
       nested -= 1;
   }
   "/*" {
     nested += 1;
-      BEGIN SC_COMMENT;
   }
 
   . {
