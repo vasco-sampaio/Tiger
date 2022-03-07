@@ -28,6 +28,7 @@
   static std::string grown_string;
   static std::string grown_comment;
   int nested = 0;
+  int finished = 1;
 
 // Convenient shortcuts.
 #define TOKEN_VAL(Type, Value)                  \
@@ -78,7 +79,19 @@ digit           [0-9]
 {int}         {
                 int val = 0;
   // DONE: Some code was deleted here (Decode, and check the value).
-                val = strtol(yytext, 0, 10);
+                try
+                {
+                  val = std::stoi(yytext, 0, 10);
+                }
+                catch(const std::out_of_range&)
+                {
+                    do {                                                  
+                      if (!tp.enable_extensions_p_)                       
+                        tp.error_ << misc::error::error_type::scan        
+                        << tp.location_                         
+                        << ": int too big\n";     
+                    } while (false);
+                }
                 return TOKEN_VAL(INT, val);
               }
 
@@ -123,8 +136,8 @@ digit           [0-9]
 "["         {return TOKEN(LBRACK);}
 "]"         {return TOKEN(RBRACK);}
 "+"         {return TOKEN(PLUS);}
-"."         {return TOKEN(MINUS);}
-"-"         {return TOKEN(DOT);}
+"."         {return TOKEN(DOT);}
+"-"         {return TOKEN(MINUS);}
 "*"         {return TOKEN(TIMES);}
 "/"         {return TOKEN(DIVIDE);}
 "="         {return TOKEN(EQ);}
@@ -146,9 +159,11 @@ digit           [0-9]
 <SC_STRING>{ /* Handling of the strings.  Initial " is eaten. */
   "\"" {
     BEGIN INITIAL; // Return to main context
+    finished = 1;
     return TOKEN_VAL(STRING, grown_string);
   }
   . {
+    finished = 0;
     grown_string.append(yytext);
   }
 }
@@ -177,13 +192,13 @@ digit           [0-9]
 [a-zA-Z][a-zA-Z0-9_]* {return TOKEN_VAL(ID, misc::symbol(yytext));}
 [_][a-zA-Z0-9_]+      {return TOKEN_VAL(ID, misc::symbol(yytext));}
 <<EOF>>                 {
-  if (grown_comment.size() > 0)
+  if (grown_comment.size() > 0 || !finished)
 {
   do {                                                  
     if (!tp.enable_extensions_p_)                       
       tp.error_ << misc::error::error_type::scan        
                 << tp.location_                         
-                << ": unexpected end of file in a comment\n";     
+                << ": unexpected end of file in a comment or string\n";     
   } while (false);
 }
 return TOKEN(EOF);

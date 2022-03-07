@@ -171,6 +171,9 @@
 %precedence CLASS
 %precedence DO OF
 
+%precedence THEN
+%precedence ELSE
+
 %left OR
 %left AND
 %nonassoc GE LE EQ NE LT GT
@@ -179,8 +182,6 @@
 %precedence UMINUS
 %precedence ASSIGN
 
-%precedence THEN
-%precedence ELSE
 
 // Solving conflicts on:
 // let type foo = bar
@@ -213,7 +214,8 @@ exps:
 ;
 
 record_creation:
-  typeid EQ exp record_init
+  typeid EQ exp
+| typeid EQ exp record_init
 | %empty
 ;
 

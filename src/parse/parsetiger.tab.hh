@@ -36,10 +36,10 @@
 // especially those whose name start with YY_ or yy_.  They are
 // private implementation details that can be changed or removed.
 
-#ifndef YY_PARSE_SRC_PARSE_PARSETIGER_HH_INCLUDED
-# define YY_PARSE_SRC_PARSE_PARSETIGER_HH_INCLUDED
+#ifndef YY_PARSE_PARSETIGER_TAB_HH_INCLUDED
+# define YY_PARSE_PARSETIGER_TAB_HH_INCLUDED
 // "%code requires" blocks.
-#line 51 "parse/parsetiger.yy"
+#line 51 "parsetiger.yy"
 
 #include <string>
 #include <misc/algorithm.hh>
@@ -54,7 +54,7 @@
     ast_type parse(Tweast& input);
   }
 
-#line 58 "parse/parsetiger.hh"
+#line 58 "parsetiger.tab.hh"
 
 #include <algorithm>
 #include <cstddef> // ptrdiff_t
@@ -120,7 +120,7 @@
 #endif  /* ! defined PARSEDEBUG */
 
 namespace parse {
-#line 124 "parse/parsetiger.hh"
+#line 124 "parsetiger.tab.hh"
 
 
 
@@ -1972,11 +1972,11 @@ switch (yykind)
 
 
 } // parse
-#line 1976 "parse/parsetiger.hh"
+#line 1976 "parsetiger.tab.hh"
 
 
 // "%code provides" blocks.
-#line 67 "parse/parsetiger.yy"
+#line 67 "parsetiger.yy"
 
   // Announce to Flex the prototype we want for lexing (member) function.
   # define YY_DECL_(Prefix)                               \
@@ -1984,7 +1984,7 @@ switch (yykind)
     (Prefix parselex)(::parse::TigerParser& tp)
   # define YY_DECL YY_DECL_(yyFlexLexer::)
 
-#line 1988 "parse/parsetiger.hh"
+#line 1988 "parsetiger.tab.hh"
 
 
-#endif // !YY_PARSE_SRC_PARSE_PARSETIGER_HH_INCLUDED
+#endif // !YY_PARSE_PARSETIGER_TAB_HH_INCLUDED

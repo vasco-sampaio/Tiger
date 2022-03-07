@@ -1,3 +1,10 @@
+-    name: tmp
+     input: samples/tc1/tests/good/tmp.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
 -    name: test01
      input: samples/tc1/test01.tig
      checks:
@@ -105,6 +112,139 @@
 
 -    name: if
      input: samples/tc1/tests/good/if.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: string comma escape
+     input: samples/tc1/comma-escape.tig
+     checks:
+     - exitcode
+     retcode:
+       2
+
+-    name: unterminated string
+     input: samples/tc1/untermin-string.tig
+     checks:
+     - exitcode
+     retcode:
+       2
+
+-    name: int too big
+     input: samples/tc1/big-int.tig
+     checks:
+     - exitcode
+     retcode:
+       2
+
+-    name: local-vs-global-type.tig
+     input: samples/tc1/tests/good/local-vs-global-type.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: merge
+     input: samples/tc1/tests/good/merge.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: mutually-recursive-functions
+     input: samples/tc1/tests/good/mutually-recursive-functions.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: mutually-recursive-procedures
+     input: samples/tc1/tests/good/mutually-recursive-procedures.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: queens
+     input: samples/tc1/tests/good/queens.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: record
+     input: samples/tc1/tests/good/record.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: recursive-types
+     input: samples/tc1/tests/good/recursive-types.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: shadowing-functions
+     input: samples/tc1/tests/good/shadowing-functions.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: shadowing-types-separate
+     input: samples/tc1/tests/good/shadowing-types-separate.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: test27
+     input: samples/tc1/tests/good/test27.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: test30
+     input: samples/tc1/tests/good/test30.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: test37
+     input: samples/tc1/tests/good/test37.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: test42
+     input: samples/tc1/tests/good/test42.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: test44
+     input: samples/tc1/tests/good/test44.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: test64
+     input: samples/tc1/tests/good/test64.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: three-name-spaces
+     input: samples/tc1/tests/good/three-name-spaces.tig
      checks:
      - exitcode
      retcode:

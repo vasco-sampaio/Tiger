@@ -20,7 +20,7 @@ OK_TAG = f"[ {termcolor.colored('OK', 'green')} ]"
 KO_TAG = f"[ {termcolor.colored('KO', 'red')} ]"
 
 def run_shell(shell: str, stdin: str) -> sp.CompletedProcess:
-    return sp.run([shell, "-X", "--parse", "--parse-trace", stdin], capture_output=False, text=True)
+    return sp.run([shell, "-X", "--parse", stdin], capture_output=False, text=True)
 
 def perform_checks(expected, actual: sp.CompletedProcess, checks):
     assert "exitcode" not in checks or expected == actual.returncode, \
