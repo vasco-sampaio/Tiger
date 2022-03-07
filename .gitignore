@@ -1,5 +1,10 @@
 # http://www.gnu.org/software/automake
 
+*.lo
+*.Po
+*.Plo
+*.dirstamp
+
 Makefile.in
 /ar-lib
 /mdate-sh
