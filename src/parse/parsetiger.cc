@@ -80,12 +80,15 @@ namespace
 
 
 // Unqualified %code blocks.
-#line 88 "parse/parsetiger.yy"
+#line 112 "parse/parsetiger.yy"
 
 # include <parse/scantiger.hh>
 # include <parse/tweast.hh>
 # include <misc/separator.hh>
 # include <misc/symbol.hh>
+# include <ast/all.hh>
+# include <ast/libast.hh>
+# include <parse/tiger-driver.hh>
 
   namespace
   {
@@ -109,7 +112,7 @@ namespace
     return tp.scanner_->parselex(tp);
   }
 
-#line 113 "parse/parsetiger.cc"
+#line 116 "parse/parsetiger.cc"
 
 
 #include <cstdio>
@@ -309,15 +312,15 @@ namespace
   /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
   const short yyrline[] =
   {
-       0,   201,   201,   204,   208,   209,   213,   214,   218,   219,
-     220,   224,   225,   229,   230,   234,   235,   239,   241,   242,
-     243,   244,   245,   246,   247,   248,   249,   250,   251,   252,
-     253,   254,   255,   256,   257,   258,   259,   260,   261,   262,
-     263,   264,   265,   266,   267,   268,   269,   270,   271,   275,
-     276,   277,   286,   287,   291,   292,   293,   294,   312,   313,
-     315,   316,   317,   327,   328,   333,   334,   335,   339,   340,
-     341,   342,   343,   347,   348,   349,   350,   354,   355,   359,
-     360,   364,   369,   372
+       0,   239,   239,   242,   247,   248,   252,   253,   257,   258,
+     259,   263,   264,   268,   269,   273,   274,   278,   281,   282,
+     283,   284,   285,   286,   287,   288,   289,   290,   291,   292,
+     293,   294,   295,   296,   297,   298,   299,   300,   301,   302,
+     303,   304,   305,   306,   307,   308,   309,   310,   311,   315,
+     316,   317,   321,   322,   326,   327,   328,   329,   347,   348,
+     350,   351,   352,   362,   363,   368,   369,   370,   374,   375,
+     376,   377,   378,   382,   383,   384,   385,   389,   390,   394,
+     395,   399,   404,   407
   };
 #endif
 
@@ -987,6 +990,39 @@ namespace parse
     {
       switch (yy_accessing_symbol (lrState))
     {
+      case symbol_kind::S_chunks: // chunks
+        yyval.copy< ast::ChunkList* > (val);
+        break;
+
+      case symbol_kind::S_exp: // exp
+        yyval.copy< ast::Exp* > (val);
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        yyval.copy< ast::Field* > (val);
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        yyval.copy< ast::NameTy* > (val);
+        break;
+
+      case symbol_kind::S_ty: // ty
+        yyval.copy< ast::Ty* > (val);
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        yyval.copy< ast::TypeChunk* > (val);
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        yyval.copy< ast::TypeDec* > (val);
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        yyval.copy< ast::fields_type* > (val);
+        break;
+
       case symbol_kind::S_INT: // "integer"
         yyval.copy< int > (val);
         break;
@@ -1027,6 +1063,39 @@ namespace parse
           new (&yyval) value_type ();
           switch (yy_accessing_symbol (other.yylrState))
     {
+      case symbol_kind::S_chunks: // chunks
+        yyval.copy< ast::ChunkList* > (other.value ());
+        break;
+
+      case symbol_kind::S_exp: // exp
+        yyval.copy< ast::Exp* > (other.value ());
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        yyval.copy< ast::Field* > (other.value ());
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        yyval.copy< ast::NameTy* > (other.value ());
+        break;
+
+      case symbol_kind::S_ty: // ty
+        yyval.copy< ast::Ty* > (other.value ());
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        yyval.copy< ast::TypeChunk* > (other.value ());
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        yyval.copy< ast::TypeDec* > (other.value ());
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        yyval.copy< ast::fields_type* > (other.value ());
+        break;
+
       case symbol_kind::S_INT: // "integer"
         yyval.copy< int > (other.value ());
         break;
@@ -1060,6 +1129,39 @@ namespace parse
           // Value type destructor.
           switch (yykind)
     {
+      case symbol_kind::S_chunks: // chunks
+        yyval.template destroy< ast::ChunkList* > ();
+        break;
+
+      case symbol_kind::S_exp: // exp
+        yyval.template destroy< ast::Exp* > ();
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        yyval.template destroy< ast::Field* > ();
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        yyval.template destroy< ast::NameTy* > ();
+        break;
+
+      case symbol_kind::S_ty: // ty
+        yyval.template destroy< ast::Ty* > ();
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        yyval.template destroy< ast::TypeChunk* > ();
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        yyval.template destroy< ast::TypeDec* > ();
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        yyval.template destroy< ast::fields_type* > ();
+        break;
+
       case symbol_kind::S_INT: // "integer"
         yyval.template destroy< int > ();
         break;
@@ -1091,6 +1193,39 @@ namespace parse
       if (other.yyresolved)
         switch (yy_accessing_symbol (other.yylrState))
     {
+      case symbol_kind::S_chunks: // chunks
+        yyval.copy< ast::ChunkList* > (other.value ());
+        break;
+
+      case symbol_kind::S_exp: // exp
+        yyval.copy< ast::Exp* > (other.value ());
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        yyval.copy< ast::Field* > (other.value ());
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        yyval.copy< ast::NameTy* > (other.value ());
+        break;
+
+      case symbol_kind::S_ty: // ty
+        yyval.copy< ast::Ty* > (other.value ());
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        yyval.copy< ast::TypeChunk* > (other.value ());
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        yyval.copy< ast::TypeDec* > (other.value ());
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        yyval.copy< ast::fields_type* > (other.value ());
+        break;
+
       case symbol_kind::S_INT: // "integer"
         yyval.copy< int > (other.value ());
         break;
@@ -1440,6 +1575,39 @@ namespace
               YYASSERT (yys1->yylrState == yys0->yylrState);
               switch (yy_accessing_symbol (yys0->yylrState))
     {
+      case symbol_kind::S_chunks: // chunks
+        yys1->value ().copy< ast::ChunkList* > (yys0->value ());
+        break;
+
+      case symbol_kind::S_exp: // exp
+        yys1->value ().copy< ast::Exp* > (yys0->value ());
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        yys1->value ().copy< ast::Field* > (yys0->value ());
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        yys1->value ().copy< ast::NameTy* > (yys0->value ());
+        break;
+
+      case symbol_kind::S_ty: // ty
+        yys1->value ().copy< ast::Ty* > (yys0->value ());
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        yys1->value ().copy< ast::TypeChunk* > (yys0->value ());
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        yys1->value ().copy< ast::TypeDec* > (yys0->value ());
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        yys1->value ().copy< ast::fields_type* > (yys0->value ());
+        break;
+
       case symbol_kind::S_INT: // "integer"
         yys1->value ().copy< int > (yys0->value ());
         break;
@@ -1463,6 +1631,39 @@ namespace
               YYASSERT (yys0->yylrState == yys1->yylrState);
               switch (yy_accessing_symbol (yys1->yylrState))
     {
+      case symbol_kind::S_chunks: // chunks
+        yys0->value ().copy< ast::ChunkList* > (yys1->value ());
+        break;
+
+      case symbol_kind::S_exp: // exp
+        yys0->value ().copy< ast::Exp* > (yys1->value ());
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        yys0->value ().copy< ast::Field* > (yys1->value ());
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        yys0->value ().copy< ast::NameTy* > (yys1->value ());
+        break;
+
+      case symbol_kind::S_ty: // ty
+        yys0->value ().copy< ast::Ty* > (yys1->value ());
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        yys0->value ().copy< ast::TypeChunk* > (yys1->value ());
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        yys0->value ().copy< ast::TypeDec* > (yys1->value ());
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        yys0->value ().copy< ast::fields_type* > (yys1->value ());
+        break;
+
       case symbol_kind::S_INT: // "integer"
         yys0->value ().copy< int > (yys1->value ());
         break;
@@ -2080,6 +2281,39 @@ namespace
               new (&yys.value ()) value_type ();
               switch (yy_accessing_symbol (s->yylrState))
     {
+      case symbol_kind::S_chunks: // chunks
+        yys.value ().copy< ast::ChunkList* > (s->value ());
+        break;
+
+      case symbol_kind::S_exp: // exp
+        yys.value ().copy< ast::Exp* > (s->value ());
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        yys.value ().copy< ast::Field* > (s->value ());
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        yys.value ().copy< ast::NameTy* > (s->value ());
+        break;
+
+      case symbol_kind::S_ty: // ty
+        yys.value ().copy< ast::Ty* > (s->value ());
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        yys.value ().copy< ast::TypeChunk* > (s->value ());
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        yys.value ().copy< ast::TypeDec* > (s->value ());
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        yys.value ().copy< ast::fields_type* > (s->value ());
+        break;
+
       case symbol_kind::S_INT: // "integer"
         yys.value ().copy< int > (s->value ());
         break;
@@ -2429,6 +2663,39 @@ namespace parse
                 // Value type destructor.
                 switch (yytoken_to_shift)
     {
+      case symbol_kind::S_chunks: // chunks
+        this->yyla.value.template destroy< ast::ChunkList* > ();
+        break;
+
+      case symbol_kind::S_exp: // exp
+        this->yyla.value.template destroy< ast::Exp* > ();
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        this->yyla.value.template destroy< ast::Field* > ();
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        this->yyla.value.template destroy< ast::NameTy* > ();
+        break;
+
+      case symbol_kind::S_ty: // ty
+        this->yyla.value.template destroy< ast::Ty* > ();
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        this->yyla.value.template destroy< ast::TypeChunk* > ();
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        this->yyla.value.template destroy< ast::TypeDec* > ();
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        this->yyla.value.template destroy< ast::fields_type* > ();
+        break;
+
       case symbol_kind::S_INT: // "integer"
         this->yyla.value.template destroy< int > ();
         break;
@@ -2568,6 +2835,39 @@ namespace parse
                 // Value type destructor.
                 switch (this->yyla.kind ())
     {
+      case symbol_kind::S_chunks: // chunks
+        this->yyla.value.template destroy< ast::ChunkList* > ();
+        break;
+
+      case symbol_kind::S_exp: // exp
+        this->yyla.value.template destroy< ast::Exp* > ();
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        this->yyla.value.template destroy< ast::Field* > ();
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        this->yyla.value.template destroy< ast::NameTy* > ();
+        break;
+
+      case symbol_kind::S_ty: // ty
+        this->yyla.value.template destroy< ast::Ty* > ();
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        this->yyla.value.template destroy< ast::TypeChunk* > ();
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        this->yyla.value.template destroy< ast::TypeDec* > ();
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        this->yyla.value.template destroy< ast::fields_type* > ();
+        break;
+
       case symbol_kind::S_INT: // "integer"
         this->yyla.value.template destroy< int > ();
         break;
@@ -2768,6 +3068,39 @@ namespace parse
       (void) YYFILL (1-yyrhslen);
       switch (yylhsNonterm (yyrule))
     {
+      case symbol_kind::S_chunks: // chunks
+        (*yyvalp).emplace< ast::ChunkList* > ();
+        break;
+
+      case symbol_kind::S_exp: // exp
+        (*yyvalp).emplace< ast::Exp* > ();
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        (*yyvalp).emplace< ast::Field* > ();
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        (*yyvalp).emplace< ast::NameTy* > ();
+        break;
+
+      case symbol_kind::S_ty: // ty
+        (*yyvalp).emplace< ast::Ty* > ();
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        (*yyvalp).emplace< ast::TypeChunk* > ();
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        (*yyvalp).emplace< ast::TypeDec* > ();
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        (*yyvalp).emplace< ast::fields_type* > ();
+        break;
+
       case symbol_kind::S_INT: // "integer"
         (*yyvalp).emplace< int > ();
         break;
@@ -2798,8 +3131,188 @@ namespace parse
     #endif // YY_EXCEPTIONS
       switch (yyrule)
         {
+      case 2: // program: exp
+#line 240 "parse/parsetiger.yy"
+   { tp.ast_ = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().value ().as < ast::Exp* > (); }
+#line 3138 "parse/parsetiger.cc"
+    break;
 
-#line 2803 "parse/parsetiger.cc"
+  case 3: // program: chunks
+#line 243 "parse/parsetiger.yy"
+   { tp.ast_ = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().value ().as < ast::ChunkList* > (); }
+#line 3144 "parse/parsetiger.cc"
+    break;
+
+  case 17: // exp: "integer"
+#line 279 "parse/parsetiger.yy"
+   { (*yyvalp).as < ast::Exp* > () = tp.td_.make_IntExp((*yylocp), (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().value ().as < int > ()); }
+#line 3150 "parse/parsetiger.cc"
+    break;
+
+  case 26: // exp: exp "+" exp
+#line 289 "parse/parsetiger.yy"
+    { (*yyvalp).as < ast::Exp* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < ast::Exp* > (); }
+#line 3156 "parse/parsetiger.cc"
+    break;
+
+  case 27: // exp: exp "-" exp
+#line 290 "parse/parsetiger.yy"
+    { (*yyvalp).as < ast::Exp* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < ast::Exp* > (); }
+#line 3162 "parse/parsetiger.cc"
+    break;
+
+  case 28: // exp: exp "*" exp
+#line 291 "parse/parsetiger.yy"
+    { (*yyvalp).as < ast::Exp* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < ast::Exp* > (); }
+#line 3168 "parse/parsetiger.cc"
+    break;
+
+  case 29: // exp: exp "/" exp
+#line 292 "parse/parsetiger.yy"
+    { (*yyvalp).as < ast::Exp* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < ast::Exp* > (); }
+#line 3174 "parse/parsetiger.cc"
+    break;
+
+  case 30: // exp: exp "=" exp
+#line 293 "parse/parsetiger.yy"
+    { (*yyvalp).as < ast::Exp* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < ast::Exp* > (); }
+#line 3180 "parse/parsetiger.cc"
+    break;
+
+  case 31: // exp: exp "<>" exp
+#line 294 "parse/parsetiger.yy"
+    { (*yyvalp).as < ast::Exp* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < ast::Exp* > (); }
+#line 3186 "parse/parsetiger.cc"
+    break;
+
+  case 32: // exp: exp ">" exp
+#line 295 "parse/parsetiger.yy"
+    { (*yyvalp).as < ast::Exp* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < ast::Exp* > (); }
+#line 3192 "parse/parsetiger.cc"
+    break;
+
+  case 33: // exp: exp "<" exp
+#line 296 "parse/parsetiger.yy"
+    { (*yyvalp).as < ast::Exp* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < ast::Exp* > (); }
+#line 3198 "parse/parsetiger.cc"
+    break;
+
+  case 34: // exp: exp ">=" exp
+#line 297 "parse/parsetiger.yy"
+    { (*yyvalp).as < ast::Exp* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < ast::Exp* > (); }
+#line 3204 "parse/parsetiger.cc"
+    break;
+
+  case 35: // exp: exp "<=" exp
+#line 298 "parse/parsetiger.yy"
+    { (*yyvalp).as < ast::Exp* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < ast::Exp* > (); }
+#line 3210 "parse/parsetiger.cc"
+    break;
+
+  case 36: // exp: exp "&" exp
+#line 299 "parse/parsetiger.yy"
+    { (*yyvalp).as < ast::Exp* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < ast::Exp* > (); }
+#line 3216 "parse/parsetiger.cc"
+    break;
+
+  case 37: // exp: exp "|" exp
+#line 300 "parse/parsetiger.yy"
+    { (*yyvalp).as < ast::Exp* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < ast::Exp* > (); }
+#line 3222 "parse/parsetiger.cc"
+    break;
+
+  case 58: // chunks: %empty
+#line 347 "parse/parsetiger.yy"
+                          { (*yyvalp).as < ast::ChunkList* > () = tp.td_.make_ChunkList((*yylocp)); }
+#line 3228 "parse/parsetiger.cc"
+    break;
+
+  case 59: // chunks: tychunk chunks
+#line 348 "parse/parsetiger.yy"
+                          { (*yyvalp).as < ast::ChunkList* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().value ().as < ast::ChunkList* > (); (*yyvalp).as < ast::ChunkList* > ()->push_front((static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-1)].getState().value ().as < ast::TypeChunk* > ()); }
+#line 3234 "parse/parsetiger.cc"
+    break;
+
+  case 63: // tychunk: tydec
+#line 362 "parse/parsetiger.yy"
+                      { (*yyvalp).as < ast::TypeChunk* > () = tp.td_.make_TypeChunk(((static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().yyloc)); (*yyvalp).as < ast::TypeChunk* > ()->push_front(*(static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().value ().as < ast::TypeDec* > ()); }
+#line 3240 "parse/parsetiger.cc"
+    break;
+
+  case 64: // tychunk: tydec tychunk
+#line 363 "parse/parsetiger.yy"
+                      { (*yyvalp).as < ast::TypeChunk* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().value ().as < ast::TypeChunk* > (); (*yyvalp).as < ast::TypeChunk* > ()->push_front(*(static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-1)].getState().value ().as < ast::TypeDec* > ()); }
+#line 3246 "parse/parsetiger.cc"
+    break;
+
+  case 65: // tydec: "type" "identifier" "=" ty
+#line 368 "parse/parsetiger.yy"
+                   { (*yyvalp).as < ast::TypeDec* > () = tp.td_.make_TypeDec((*yylocp), (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < misc::symbol > (), (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().value ().as < ast::Ty* > ()); }
+#line 3252 "parse/parsetiger.cc"
+    break;
+
+  case 68: // ty: typeid
+#line 374 "parse/parsetiger.yy"
+                       { (*yyvalp).as < ast::Ty* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().value ().as < ast::NameTy* > (); }
+#line 3258 "parse/parsetiger.cc"
+    break;
+
+  case 69: // ty: "{" tyfields "}"
+#line 375 "parse/parsetiger.yy"
+                       { (*yyvalp).as < ast::Ty* > () = tp.td_.make_RecordTy((*yylocp), (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-1)].getState().value ().as < ast::fields_type* > ()); }
+#line 3264 "parse/parsetiger.cc"
+    break;
+
+  case 70: // ty: "array" "of" typeid
+#line 376 "parse/parsetiger.yy"
+                       { (*yyvalp).as < ast::Ty* > () = tp.td_.make_ArrayTy((*yylocp), (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().value ().as < ast::NameTy* > ()); }
+#line 3270 "parse/parsetiger.cc"
+    break;
+
+  case 77: // tyfields: %empty
+#line 389 "parse/parsetiger.yy"
+                       { (*yyvalp).as < ast::fields_type* > () = tp.td_.make_fields_type(); }
+#line 3276 "parse/parsetiger.cc"
+    break;
+
+  case 78: // tyfields: tyfields.1
+#line 390 "parse/parsetiger.yy"
+                       { (*yyvalp).as < ast::fields_type* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().value ().as < ast::fields_type* > (); }
+#line 3282 "parse/parsetiger.cc"
+    break;
+
+  case 79: // tyfields.1: tyfields.1 "," tyfield
+#line 394 "parse/parsetiger.yy"
+                         { (*yyvalp).as < ast::fields_type* > () = (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < ast::fields_type* > (); (*yyvalp).as < ast::fields_type* > ()->emplace_back((static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().value ().as < ast::Field* > ()); }
+#line 3288 "parse/parsetiger.cc"
+    break;
+
+  case 80: // tyfields.1: tyfield
+#line 395 "parse/parsetiger.yy"
+                         { (*yyvalp).as < ast::fields_type* > () = tp.td_.make_fields_type((static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().value ().as < ast::Field* > ()); }
+#line 3294 "parse/parsetiger.cc"
+    break;
+
+  case 81: // tyfield: "identifier" ":" typeid
+#line 399 "parse/parsetiger.yy"
+                    { (*yyvalp).as < ast::Field* > () = tp.td_.make_Field((*yylocp), (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().value ().as < misc::symbol > (), (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().value ().as < ast::NameTy* > ()); }
+#line 3300 "parse/parsetiger.cc"
+    break;
+
+  case 82: // typeid: "identifier"
+#line 404 "parse/parsetiger.yy"
+                        { (*yyvalp).as < ast::NameTy* > () = tp.td_.make_NameTy((*yylocp), (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (0)].getState().value ().as < misc::symbol > ()); }
+#line 3306 "parse/parsetiger.cc"
+    break;
+
+  case 83: // typeid: "_namety" "(" "integer" ")"
+#line 407 "parse/parsetiger.yy"
+                        { (*yyvalp).as < ast::NameTy* > () = metavar<ast::NameTy>(tp, (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-1)].getState().value ().as < int > ()); }
+#line 3312 "parse/parsetiger.cc"
+    break;
+
+
+#line 3316 "parse/parsetiger.cc"
 
           default: break;
         }
@@ -2923,6 +3436,39 @@ namespace parse
           // Value type destructor.
           switch (yylhsNonterm (yyrule))
     {
+      case symbol_kind::S_chunks: // chunks
+        val.template destroy< ast::ChunkList* > ();
+        break;
+
+      case symbol_kind::S_exp: // exp
+        val.template destroy< ast::Exp* > ();
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        val.template destroy< ast::Field* > ();
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        val.template destroy< ast::NameTy* > ();
+        break;
+
+      case symbol_kind::S_ty: // ty
+        val.template destroy< ast::Ty* > ();
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        val.template destroy< ast::TypeChunk* > ();
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        val.template destroy< ast::TypeDec* > ();
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        val.template destroy< ast::fields_type* > ();
+        break;
+
       case symbol_kind::S_INT: // "integer"
         val.template destroy< int > ();
         break;
@@ -3163,6 +3709,39 @@ namespace parse
                     // Value type destructor.
                     switch (yy_accessing_symbol (yys.yylrState))
     {
+      case symbol_kind::S_chunks: // chunks
+        yyval_other.template destroy< ast::ChunkList* > ();
+        break;
+
+      case symbol_kind::S_exp: // exp
+        yyval_other.template destroy< ast::Exp* > ();
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        yyval_other.template destroy< ast::Field* > ();
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        yyval_other.template destroy< ast::NameTy* > ();
+        break;
+
+      case symbol_kind::S_ty: // ty
+        yyval_other.template destroy< ast::Ty* > ();
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        yyval_other.template destroy< ast::TypeChunk* > ();
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        yyval_other.template destroy< ast::TypeDec* > ();
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        yyval_other.template destroy< ast::fields_type* > ();
+        break;
+
       case symbol_kind::S_INT: // "integer"
         yyval_other.template destroy< int > ();
         break;
@@ -3192,6 +3771,39 @@ namespace parse
           new (&yys.value ()) value_type ();
           switch (yy_accessing_symbol (yys.yylrState))
     {
+      case symbol_kind::S_chunks: // chunks
+        yys.value ().copy< ast::ChunkList* > (val);
+        break;
+
+      case symbol_kind::S_exp: // exp
+        yys.value ().copy< ast::Exp* > (val);
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        yys.value ().copy< ast::Field* > (val);
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        yys.value ().copy< ast::NameTy* > (val);
+        break;
+
+      case symbol_kind::S_ty: // ty
+        yys.value ().copy< ast::Ty* > (val);
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        yys.value ().copy< ast::TypeChunk* > (val);
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        yys.value ().copy< ast::TypeDec* > (val);
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        yys.value ().copy< ast::fields_type* > (val);
+        break;
+
       case symbol_kind::S_INT: // "integer"
         yys.value ().copy< int > (val);
         break;
@@ -3218,6 +3830,39 @@ namespace parse
       // Value type destructor.
       switch (yy_accessing_symbol (yys.yylrState))
     {
+      case symbol_kind::S_chunks: // chunks
+        val.template destroy< ast::ChunkList* > ();
+        break;
+
+      case symbol_kind::S_exp: // exp
+        val.template destroy< ast::Exp* > ();
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        val.template destroy< ast::Field* > ();
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        val.template destroy< ast::NameTy* > ();
+        break;
+
+      case symbol_kind::S_ty: // ty
+        val.template destroy< ast::Ty* > ();
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        val.template destroy< ast::TypeChunk* > ();
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        val.template destroy< ast::TypeDec* > ();
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        val.template destroy< ast::fields_type* > ();
+        break;
+
       case symbol_kind::S_INT: // "integer"
         val.template destroy< int > ();
         break;
@@ -3494,7 +4139,7 @@ namespace
 #endif
 
 namespace parse {
-#line 3498 "parse/parsetiger.cc"
+#line 4143 "parse/parsetiger.cc"
 
   /// Build a parser object.
   parser::parser (::parse::TigerParser& tp_yyarg)
@@ -3745,19 +4390,19 @@ namespace parse {
       case symbol_kind::S_STRING: // "string"
 #line 75 "parse/parsetiger.yy"
                  { yyo << yyval.as < std::string > (); }
-#line 3749 "parse/parsetiger.cc"
+#line 4394 "parse/parsetiger.cc"
         break;
 
       case symbol_kind::S_ID: // "identifier"
 #line 75 "parse/parsetiger.yy"
                  { yyo << yyval.as < misc::symbol > (); }
-#line 3755 "parse/parsetiger.cc"
+#line 4400 "parse/parsetiger.cc"
         break;
 
       case symbol_kind::S_INT: // "integer"
 #line 75 "parse/parsetiger.yy"
                  { yyo << yyval.as < int > (); }
-#line 3761 "parse/parsetiger.cc"
+#line 4406 "parse/parsetiger.cc"
         break;
 
       default:
@@ -3808,8 +4453,8 @@ namespace parse {
 
 
 } // parse
-#line 3812 "parse/parsetiger.cc"
-#line 375 "parse/parsetiger.yy"
+#line 4457 "parse/parsetiger.cc"
+#line 410 "parse/parsetiger.yy"
 
 
 void

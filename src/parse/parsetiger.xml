@@ -756,19 +756,19 @@
       <nonterminal symbol-number="61" name="record_init" type="" usefulness="useful"/>
       <nonterminal symbol-number="62" name="function_param" type="" usefulness="useful"/>
       <nonterminal symbol-number="63" name="method_call" type="" usefulness="useful"/>
-      <nonterminal symbol-number="64" name="exp" type="" usefulness="useful"/>
+      <nonterminal symbol-number="64" name="exp" type="ast::Exp*" usefulness="useful"/>
       <nonterminal symbol-number="65" name="lvalue" type="" usefulness="useful"/>
       <nonterminal symbol-number="66" name="vardec" type="" usefulness="useful"/>
       <nonterminal symbol-number="67" name="fundec" type="" usefulness="useful"/>
-      <nonterminal symbol-number="68" name="chunks" type="" usefulness="useful"/>
-      <nonterminal symbol-number="69" name="tychunk" type="" usefulness="useful"/>
-      <nonterminal symbol-number="70" name="tydec" type="" usefulness="useful"/>
-      <nonterminal symbol-number="71" name="ty" type="" usefulness="useful"/>
+      <nonterminal symbol-number="68" name="chunks" type="ast::ChunkList*" usefulness="useful"/>
+      <nonterminal symbol-number="69" name="tychunk" type="ast::TypeChunk*" usefulness="useful"/>
+      <nonterminal symbol-number="70" name="tydec" type="ast::TypeDec*" usefulness="useful"/>
+      <nonterminal symbol-number="71" name="ty" type="ast::Ty*" usefulness="useful"/>
       <nonterminal symbol-number="72" name="classfields" type="" usefulness="useful"/>
-      <nonterminal symbol-number="73" name="tyfields" type="" usefulness="useful"/>
-      <nonterminal symbol-number="74" name="tyfields.1" type="" usefulness="useful"/>
-      <nonterminal symbol-number="75" name="tyfield" type="" usefulness="useful"/>
-      <nonterminal symbol-number="76" name="typeid" type="" usefulness="useful"/>
+      <nonterminal symbol-number="73" name="tyfields" type="ast::fields_type*" usefulness="useful"/>
+      <nonterminal symbol-number="74" name="tyfields.1" type="ast::fields_type*" usefulness="useful"/>
+      <nonterminal symbol-number="75" name="tyfield" type="ast::Field*" usefulness="useful"/>
+      <nonterminal symbol-number="76" name="typeid" type="ast::NameTy*" usefulness="useful"/>
     </nonterminals>
   </grammar>
 

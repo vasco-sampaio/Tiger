@@ -79,6 +79,30 @@
 %token <int>            INT    "integer"
 
 
+/*--------------------------------.
+| Support for the non-terminals.  |
+`--------------------------------*/
+
+%code requires
+{
+# include <ast/fwd.hh>
+// Provide the declarations of the following classes for the
+// %destructor clauses below to work properly.
+# include <ast/exp.hh>
+# include <ast/var.hh>
+# include <ast/ty.hh>
+# include <ast/name-ty.hh>
+# include <ast/field.hh>
+# include <ast/field-init.hh>
+# include <ast/function-dec.hh>
+# include <ast/type-dec.hh>
+# include <ast/var-dec.hh>
+# include <ast/chunk.hh>
+# include <ast/chunk-list.hh>
+}
+
+  // FIXME: Some code was deleted here (Printers and destructors).
+
 
 /*-----------------------------------------.
 | Code output in the implementation file.  |
@@ -90,6 +114,9 @@
 # include <parse/tweast.hh>
 # include <misc/separator.hh>
 # include <misc/symbol.hh>
+# include <ast/all.hh>
+# include <ast/libast.hh>
+# include <parse/tiger-driver.hh>
 
   namespace
   {
@@ -164,8 +191,19 @@
        WHILE        "while"
        EOF 0        "end of file"
 
+%type <ast::Exp*>             exp
+%type <ast::ChunkList*>       chunks
 
-  // FIXME: Some code was deleted here (Priorities/associativities).
+%type <ast::TypeChunk*>       tychunk
+%type <ast::TypeDec*>         tydec
+%type <ast::NameTy*>          typeid
+%type <ast::Ty*>              ty
+
+%type <ast::Field*>           tyfield
+%type <ast::fields_type*>     tyfields tyfields.1
+  // FIXME: Some code was deleted here (More %types).
+
+  // DONE: Some code was deleted here (Priorities/associativities).
 %precedence CHUNKS
 %precedence TYPE
 
@@ -191,7 +229,7 @@
 // a unique TypeDec each, or a single TypeChunk containing two TypeDec.
 // We want the latter.
 
-  // FIXME: Some code was deleted here (Other declarations).
+  // DONE: Some code was deleted here (Other declarations).
 
 %start program
 
@@ -199,9 +237,10 @@
 program:
   /* Parsing a source program.  */
   exp
-   
+   { tp.ast_ = $1; }
 | /* Parsing an imported file.  */
-  chunks  
+  chunks
+   { tp.ast_ = $1; }
 ;
 
 rec_exps:
@@ -236,21 +275,22 @@ method_call:
 ;
 
 exp:
-    INT
+  INT
+   { $$ = tp.td_.make_IntExp(@$, $1); }
   // DONE: Some code was deleted here (More rules).
 |   NIL
 |   STRING
 |   typeid LBRACK exp RBRACK OF exp
 |   typeid LBRACE record_creation RBRACE
-|   lvalue 
-|   ID LPAREN RPAREN                        
-|   ID LPAREN function_param RPAREN       
+|   lvalue
+|   ID LPAREN RPAREN
+|   ID LPAREN function_param RPAREN
 |   MINUS exp                      %prec UMINUS
-|   exp PLUS exp                   
+|   exp PLUS exp
 |   exp MINUS exp
 |   exp TIMES exp
 |   exp DIVIDE exp
-|   exp EQ exp                    
+|   exp EQ exp
 |   exp NE exp
 |   exp GT exp
 |   exp LT exp
@@ -260,8 +300,8 @@ exp:
 |   exp OR exp
 |   LPAREN exps RPAREN
 |   lvalue ASSIGN exp
-|   IF exp THEN exp                       
-|   IF exp THEN exp ELSE exp               
+|   IF exp THEN exp
+|   IF exp THEN exp ELSE exp
 |   WHILE exp DO exp
 |   FOR ID ASSIGN exp TO exp DO exp
 |   BREAK
@@ -276,11 +316,6 @@ lvalue:
 |   lvalue DOT ID
 |   lvalue LBRACK exp RBRACK
 ;
-
-/*op:
-  PLUS | MINUS | TIMES | DIVIDE | EQ 
-  | NE | GT | LT | GE | LE | AND | OR
-;*/
 
 vardec:
   VAR ID ASSIGN exp
@@ -309,8 +344,8 @@ chunks:
             ..
         end
      which is why we end the recursion with a %empty. */
-  %empty                  
-| tychunk   chunks        
+  %empty                  { $$ = tp.td_.make_ChunkList(@$); }
+| tychunk   chunks        { $$ = $2; $$->push_front($1); }
   // DONE: Some code was deleted here (More rules).
 | fundec  chunks
 | vardec    chunks
@@ -324,21 +359,21 @@ chunks:
 tychunk:
   /* Use `%prec CHUNKS' to do context-dependent precedence and resolve a
      shift-reduce conflict. */
-  tydec %prec CHUNKS  
-| tydec tychunk       
+  tydec %prec CHUNKS  { $$ = tp.td_.make_TypeChunk(@1); $$->push_front(*$1); }
+| tydec tychunk       { $$ = $2; $$->push_front(*$1); }
 ;
 
 
 tydec:
-  "type" ID "=" ty  
+  "type" ID "=" ty { $$ = tp.td_.make_TypeDec(@$, $2, $4); }
 | CLASS ID LBRACE classfields RBRACE
 | CLASS ID EXTENDS typeid LBRACE classfields RBRACE
 ;
 
 ty:
-  typeid               
-| "{" tyfields "}"     
-| "array" "of" typeid 
+  typeid               { $$ = $1; }
+| "{" tyfields "}"     { $$ = tp.td_.make_RecordTy(@$, $2); }
+| "array" "of" typeid  { $$ = tp.td_.make_ArrayTy(@$, $3); }
 | CLASS LBRACE classfields RBRACE
 | CLASS EXTENDS typeid LBRACE classfields RBRACE
 ;
@@ -351,25 +386,25 @@ classfields:
 ;
 
 tyfields:
-  %empty               
-| tyfields.1           
+  %empty               { $$ = tp.td_.make_fields_type(); }
+| tyfields.1           { $$ = $1; }
 ;
 
 tyfields.1:
-  tyfields.1 "," tyfield 
-| tyfield                
+  tyfields.1 "," tyfield { $$ = $1; $$->emplace_back($3); }
+| tyfield                { $$ = tp.td_.make_fields_type($1); }
 ;
 
 tyfield:
-  ID ":" typeid     
+  ID ":" typeid     { $$ = tp.td_.make_Field(@$, $1, $3); }
 ;
 
 %token NAMETY "_namety";
 typeid:
-  ID                    
+  ID                    { $$ = tp.td_.make_NameTy(@$, $1); }
   /* This is a metavariable. It it used internally by TWEASTs to retrieve
      already parsed nodes when given an input to parse. */
-| NAMETY "(" INT ")"    
+| NAMETY "(" INT ")"    { $$ = metavar<ast::NameTy>(tp, $3); }
 ;
 
 %%
@@ -378,11 +413,11 @@ void
 parse::parser::error(const location_type& l, const std::string& m)
 {
   // DONE: Some code was deleted here.
-                                                         
-      tp.error_ << misc::error::error_type::parse        
+
+      tp.error_ << misc::error::error_type::parse
                 << l
-                << ": "                       
+                << ": "
                 << m
-                << '\n';     
+                << '\n';
 
 }
