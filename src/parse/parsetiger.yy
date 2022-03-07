@@ -168,6 +168,7 @@
   // FIXME: Some code was deleted here (Priorities/associativities).
 %precedence CHUNKS
 %precedence TYPE
+
 %precedence CLASS
 %precedence DO OF
 
@@ -204,8 +205,8 @@ program:
 ;
 
 rec_exps:
-  SEMI exp
-| %empty
+  %empty
+| SEMI exps
 ;
 
 exps:

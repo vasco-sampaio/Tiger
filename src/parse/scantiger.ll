@@ -10,6 +10,8 @@
 #include <regex>
 #include <string>
 
+#include <sstream>
+
 #include <boost/lexical_cast.hpp>
 
 #include <misc/contract.hh>
@@ -27,6 +29,7 @@
   // DONE: Some code was deleted here.
   static std::string grown_string;
   static std::string grown_comment;
+  std::stringstream sstream;
   int nested = 0;
   int finished = 1;
 
@@ -162,6 +165,45 @@ digit           [0-9]
     finished = 1;
     return TOKEN_VAL(STRING, grown_string);
   }
+
+  "\\"[abfrntv] {
+    finished = 0;
+    sstream << misc::escape(yytext);
+    grown_string.append(sstream.str());
+  }
+
+  "\\"[0-7]{3} {
+    finished = 0;
+    grown_string.append(std::to_string(std::stoi(++yytext, 0, 8)));
+  }
+
+  "\\x"[0-9A-Fa-f]{2} {
+    finished = 0;
+    yytext += 2;
+    grown_string.append(std::to_string(std::stoi(yytext, 0, 16)));
+  }
+
+  "\\\\" {
+    finished = 0;
+    sstream << misc::escape(yytext);
+    grown_string.append(sstream.str());
+  }
+
+  "\\\"" {
+    finished = 0;
+    sstream << misc::escape(yytext);
+    grown_string.append(sstream.str());
+  }
+
+  "\\". {
+    do {                                                  
+    if (!tp.enable_extensions_p_)                       
+      tp.error_ << misc::error::error_type::scan        
+                << tp.location_                         
+                << ": invalid escape\n";     
+    } while (false);
+  }
+
   . {
     finished = 0;
     grown_string.append(yytext);

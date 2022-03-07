@@ -68,8 +68,8 @@
   <a name="rule_1" id="rule_1">  1</a> <span class="i">program</span> → <span class="i">exp</span>
   <a name="rule_2" id="rule_2">  2</a>         | <span class="i">chunks</span>
 
-  <a name="rule_3" id="rule_3">  3</a> <span class="i">rec_exps</span> → <b>";"</b> <span class="i">exp</span>
-  <a name="rule_4" id="rule_4">  4</a>          | %empty
+  <a name="rule_3" id="rule_3">  3</a> <span class="i">rec_exps</span> → %empty
+  <a name="rule_4" id="rule_4">  4</a>          | <b>";"</b> <span class="i">exps</span>
 
   <a name="rule_5" id="rule_5">  5</a> <span class="i">exps</span> → <span class="i">exp</span> <span class="i">rec_exps</span>
   <a name="rule_6" id="rule_6">  6</a>      | %empty
@@ -216,7 +216,7 @@
   <li><b>"}"</b> (298) <a href="#rule_20">20</a> <a href="#rule_65">65</a> <a href="#rule_66">66</a> <a href="#rule_68">68</a> <a href="#rule_70">70</a> <a href="#rule_71">71</a></li>
   <li><b>"]"</b> (299) <a href="#rule_19">19</a> <a href="#rule_50">50</a></li>
   <li><b>")"</b> (300) <a href="#rule_22">22</a> <a href="#rule_23">23</a> <a href="#rule_37">37</a> <a href="#rule_46">46</a> <a href="#rule_47">47</a> <a href="#rule_53">53</a> <a href="#rule_54">54</a> <a href="#rule_55">55</a> <a href="#rule_56">56</a> <a href="#rule_74">74</a> <a href="#rule_75">75</a> <a href="#rule_82">82</a></li>
-  <li><b>";"</b> (301) <a href="#rule_3">3</a></li>
+  <li><b>";"</b> (301) <a href="#rule_4">4</a></li>
   <li><b>"then"</b> (302) <a href="#rule_39">39</a> <a href="#rule_40">40</a></li>
   <li><b>"*"</b> (303) <a href="#rule_27">27</a></li>
   <li><b>"to"</b> (304) <a href="#rule_42">42</a></li>
@@ -251,7 +251,7 @@
   <li><b>exps</b> (59)
     <ul>
       <li>on left: <a href="#rule_5">5</a> <a href="#rule_6">6</a></li>
-      <li>on right: <a href="#rule_37">37</a> <a href="#rule_44">44</a></li>
+      <li>on right: <a href="#rule_4">4</a> <a href="#rule_37">37</a> <a href="#rule_44">44</a></li>
     </ul>
   </li>
   <li><b>record_creation</b> (60)
@@ -281,7 +281,7 @@
   <li><b>exp</b> (64)
     <ul>
       <li>on left: <a href="#rule_16">16</a> <a href="#rule_17">17</a> <a href="#rule_18">18</a> <a href="#rule_19">19</a> <a href="#rule_20">20</a> <a href="#rule_21">21</a> <a href="#rule_22">22</a> <a href="#rule_23">23</a> <a href="#rule_24">24</a> <a href="#rule_25">25</a> <a href="#rule_26">26</a> <a href="#rule_27">27</a> <a href="#rule_28">28</a> <a href="#rule_29">29</a> <a href="#rule_30">30</a> <a href="#rule_31">31</a> <a href="#rule_32">32</a> <a href="#rule_33">33</a> <a href="#rule_34">34</a> <a href="#rule_35">35</a> <a href="#rule_36">36</a> <a href="#rule_37">37</a> <a href="#rule_38">38</a> <a href="#rule_39">39</a> <a href="#rule_40">40</a> <a href="#rule_41">41</a> <a href="#rule_42">42</a> <a href="#rule_43">43</a> <a href="#rule_44">44</a> <a href="#rule_45">45</a> <a href="#rule_46">46</a> <a href="#rule_47">47</a></li>
-      <li>on right: <a href="#rule_1">1</a> <a href="#rule_3">3</a> <a href="#rule_5">5</a> <a href="#rule_7">7</a> <a href="#rule_8">8</a> <a href="#rule_10">10</a> <a href="#rule_11">11</a> <a href="#rule_12">12</a> <a href="#rule_13">13</a> <a href="#rule_14">14</a> <a href="#rule_19">19</a> <a href="#rule_24">24</a> <a href="#rule_25">25</a> <a href="#rule_26">26</a> <a href="#rule_27">27</a> <a href="#rule_28">28</a> <a href="#rule_29">29</a> <a href="#rule_30">30</a> <a href="#rule_31">31</a> <a href="#rule_32">32</a> <a href="#rule_33">33</a> <a href="#rule_34">34</a> <a href="#rule_35">35</a> <a href="#rule_36">36</a> <a href="#rule_38">38</a> <a href="#rule_39">39</a> <a href="#rule_40">40</a> <a href="#rule_41">41</a> <a href="#rule_42">42</a> <a href="#rule_47">47</a> <a href="#rule_50">50</a> <a href="#rule_51">51</a> <a href="#rule_52">52</a> <a href="#rule_53">53</a> <a href="#rule_54">54</a> <a href="#rule_74">74</a> <a href="#rule_75">75</a></li>
+      <li>on right: <a href="#rule_1">1</a> <a href="#rule_5">5</a> <a href="#rule_7">7</a> <a href="#rule_8">8</a> <a href="#rule_10">10</a> <a href="#rule_11">11</a> <a href="#rule_12">12</a> <a href="#rule_13">13</a> <a href="#rule_14">14</a> <a href="#rule_19">19</a> <a href="#rule_24">24</a> <a href="#rule_25">25</a> <a href="#rule_26">26</a> <a href="#rule_27">27</a> <a href="#rule_28">28</a> <a href="#rule_29">29</a> <a href="#rule_30">30</a> <a href="#rule_31">31</a> <a href="#rule_32">32</a> <a href="#rule_33">33</a> <a href="#rule_34">34</a> <a href="#rule_35">35</a> <a href="#rule_36">36</a> <a href="#rule_38">38</a> <a href="#rule_39">39</a> <a href="#rule_40">40</a> <a href="#rule_41">41</a> <a href="#rule_42">42</a> <a href="#rule_47">47</a> <a href="#rule_50">50</a> <a href="#rule_51">51</a> <a href="#rule_52">52</a> <a href="#rule_53">53</a> <a href="#rule_54">54</a> <a href="#rule_74">74</a> <a href="#rule_75">75</a></li>
     </ul>
   </li>
   <li><b>lvalue</b> (65)
@@ -1221,8 +1221,8 @@
 
 <h3><a name="state_37" id="state_37"></a>State 37</h3>
 
-<p class="pre">  <a href="#rule_3">  3</a> <span class="i">rec_exps</span> → <span class="dot">•</span> <b>";"</b> <span class="i">exp</span>
-  <a href="#rule_4">  4</a>          | <span class="dot">•</span> %empty  ["end", ")"]
+<p class="pre">  <a href="#rule_3">  3</a> <span class="i">rec_exps</span> → <span class="dot">•</span> %empty  ["end", ")"]
+  <a href="#rule_4">  4</a>          | <span class="dot">•</span> <b>";"</b> <span class="i">exps</span>
   <a href="#rule_5">  5</a> <span class="i">exps</span> → <span class="i">exp</span> <span class="dot">•</span> <span class="i">rec_exps</span>
   <a href="#rule_25"> 25</a> <span class="i">exp</span> → <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
   <a href="#rule_26"> 26</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"-"</b> <span class="i">exp</span>
@@ -1251,7 +1251,7 @@
     ";"   <a href="#state_79">shift, and go to state 79</a>
     "*"   <a href="#state_58">shift, and go to state 58</a>
 
-    $default  <a href="#rule_4">reduce using rule 4</a> (rec_exps)
+    $default  <a href="#rule_3">reduce using rule 3</a> (rec_exps)
 
     rec_exps  <a href="#state_80">go to state 80</a>
 </p>
@@ -2626,7 +2626,9 @@
 
 <h3><a name="state_79" id="state_79"></a>State 79</h3>
 
-<p class="pre">  <a href="#rule_3">  3</a> <span class="i">rec_exps</span> → <b>";"</b> <span class="dot">•</span> <span class="i">exp</span>
+<p class="pre">  <a href="#rule_4">  4</a> <span class="i">rec_exps</span> → <b>";"</b> <span class="dot">•</span> <span class="i">exps</span>
+  <a href="#rule_5">  5</a> <span class="i">exps</span> → <span class="dot">•</span> <span class="i">exp</span> <span class="i">rec_exps</span>
+  <a href="#rule_6">  6</a>      | <span class="dot">•</span> %empty  ["end", ")"]
   <a href="#rule_16"> 16</a> <span class="i">exp</span> → <span class="dot">•</span> <b>"integer"</b>
   <a href="#rule_17"> 17</a>     | <span class="dot">•</span> <b>"nil"</b>
   <a href="#rule_18"> 18</a>     | <span class="dot">•</span> <b>"string"</b>
@@ -2679,7 +2681,10 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_118">go to state 118</a>
+    $default  <a href="#rule_6">reduce using rule 6</a> (exps)
+
+    exps    <a href="#state_118">go to state 118</a>
+    exp     <a href="#state_37">go to state 37</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_28">go to state 28</a>
 </p>
@@ -3706,34 +3711,9 @@
 
 <h3><a name="state_118" id="state_118"></a>State 118</h3>
 
-<p class="pre">  <a href="#rule_3">  3</a> <span class="i">rec_exps</span> → <b>";"</b> <span class="i">exp</span> <span class="dot">•</span>  ["end", ")"]
-  <a href="#rule_25"> 25</a> <span class="i">exp</span> → <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
-  <a href="#rule_26"> 26</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"-"</b> <span class="i">exp</span>
-  <a href="#rule_27"> 27</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"*"</b> <span class="i">exp</span>
-  <a href="#rule_28"> 28</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"/"</b> <span class="i">exp</span>
-  <a href="#rule_29"> 29</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"="</b> <span class="i">exp</span>
-  <a href="#rule_30"> 30</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"&lt;&gt;"</b> <span class="i">exp</span>
-  <a href="#rule_31"> 31</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"&gt;"</b> <span class="i">exp</span>
-  <a href="#rule_32"> 32</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"&lt;"</b> <span class="i">exp</span>
-  <a href="#rule_33"> 33</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"&gt;="</b> <span class="i">exp</span>
-  <a href="#rule_34"> 34</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"&lt;="</b> <span class="i">exp</span>
-  <a href="#rule_35"> 35</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"&amp;"</b> <span class="i">exp</span>
-  <a href="#rule_36"> 36</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"|"</b> <span class="i">exp</span>
+<p class="pre">  <a href="#rule_4">  4</a> <span class="i">rec_exps</span> → <b>";"</b> <span class="i">exps</span> <span class="dot">•</span>
 
-    "&amp;"   <a href="#state_47">shift, and go to state 47</a>
-    "/"   <a href="#state_48">shift, and go to state 48</a>
-    "="   <a href="#state_49">shift, and go to state 49</a>
-    "&gt;="  <a href="#state_50">shift, and go to state 50</a>
-    "&gt;"   <a href="#state_51">shift, and go to state 51</a>
-    "&lt;="  <a href="#state_52">shift, and go to state 52</a>
-    "&lt;"   <a href="#state_53">shift, and go to state 53</a>
-    "-"   <a href="#state_54">shift, and go to state 54</a>
-    "&lt;&gt;"  <a href="#state_55">shift, and go to state 55</a>
-    "|"   <a href="#state_56">shift, and go to state 56</a>
-    "+"   <a href="#state_57">shift, and go to state 57</a>
-    "*"   <a href="#state_58">shift, and go to state 58</a>
-
-    $default  <a href="#rule_3">reduce using rule 3</a> (rec_exps)
+    $default  <a href="#rule_4">reduce using rule 4</a> (rec_exps)
 </p>
 
 <h3><a name="state_119" id="state_119"></a>State 119</h3>

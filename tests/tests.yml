@@ -249,3 +249,24 @@
      - exitcode
      retcode:
        0
+
+-    name: aEscape
+     input: samples/tc1/aEscape.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: oct hex
+     input: samples/tc1/oct-hex.tig
+     checks:
+     - exitcode
+     retcode:
+       0
+
+-    name: oct fail
+     input: samples/tc1/oct-fail.tig
+     checks:
+     - exitcode
+     retcode:
+       2
