@@ -347,6 +347,7 @@ namespace parse {
       // tydec
       char dummy7[sizeof (ast::TypeDec*)];
 
+      // record_creation
       // tyfields
       // tyfields.1
       char dummy8[sizeof (ast::fields_type*)];
@@ -611,6 +612,7 @@ namespace parse {
         value.move< ast::TypeDec* > (std::move (that.value));
         break;
 
+      case symbol_kind::S_record_creation: // record_creation
       case symbol_kind::S_tyfields: // tyfields
       case symbol_kind::S_74_tyfields_1: // tyfields.1
         value.move< ast::fields_type* > (std::move (that.value));
@@ -846,6 +848,7 @@ namespace parse {
         value.copy< ast::TypeDec* > (that.value);
         break;
 
+      case symbol_kind::S_record_creation: // record_creation
       case symbol_kind::S_tyfields: // tyfields
       case symbol_kind::S_74_tyfields_1: // tyfields.1
         value.copy< ast::fields_type* > (that.value);
@@ -905,6 +908,7 @@ namespace parse {
         value.move< ast::TypeDec* > (std::move (that.value));
         break;
 
+      case symbol_kind::S_record_creation: // record_creation
       case symbol_kind::S_tyfields: // tyfields
       case symbol_kind::S_74_tyfields_1: // tyfields.1
         value.move< ast::fields_type* > (std::move (that.value));
@@ -975,6 +979,7 @@ switch (yykind)
         value.template destroy< ast::TypeDec* > ();
         break;
 
+      case symbol_kind::S_record_creation: // record_creation
       case symbol_kind::S_tyfields: // tyfields
       case symbol_kind::S_74_tyfields_1: // tyfields.1
         value.template destroy< ast::fields_type* > ();
@@ -2161,6 +2166,7 @@ switch (yykind)
         value.copy< ast::TypeDec* > (YY_MOVE (that.value));
         break;
 
+      case symbol_kind::S_record_creation: // record_creation
       case symbol_kind::S_tyfields: // tyfields
       case symbol_kind::S_74_tyfields_1: // tyfields.1
         value.copy< ast::fields_type* > (YY_MOVE (that.value));
@@ -2230,6 +2236,7 @@ switch (yykind)
         value.move< ast::TypeDec* > (YY_MOVE (s.value));
         break;
 
+      case symbol_kind::S_record_creation: // record_creation
       case symbol_kind::S_tyfields: // tyfields
       case symbol_kind::S_74_tyfields_1: // tyfields.1
         value.move< ast::fields_type* > (YY_MOVE (s.value));
@@ -2323,7 +2330,7 @@ switch (yykind)
 
 
 } // parse
-#line 2327 "parse/parsetiger.hh"
+#line 2334 "parse/parsetiger.hh"
 
 
 // "%code provides" blocks.
@@ -2335,7 +2342,7 @@ switch (yykind)
     (Prefix parselex)(::parse::TigerParser& tp)
   # define YY_DECL YY_DECL_(yyFlexLexer::)
 
-#line 2339 "parse/parsetiger.hh"
+#line 2346 "parse/parsetiger.hh"
 
 
 #endif // !YY_PARSE_SRC_PARSE_PARSETIGER_HH_INCLUDED

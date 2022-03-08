@@ -199,9 +199,9 @@
 %type <ast::NameTy*>          typeid
 %type <ast::Ty*>              ty
 
-%type <ast::Field*>           tyfield
-%type <ast::fields_type*>     tyfields tyfields.1
-  // FIXME: Some code was deleted here (More %types).
+%type <ast::Field*>           tyfield 
+%type <ast::fields_type*>     tyfields tyfields.1 record_creation
+  // DONE: Some code was deleted here (More %types).
 
   // DONE: Some code was deleted here (Priorities/associativities).
 %precedence CHUNKS
@@ -236,11 +236,9 @@
 %%
 program:
   /* Parsing a source program.  */
-  exp
-   { tp.ast_ = $1; }
+  exp         { tp.ast_ = $1; }
 | /* Parsing an imported file.  */
-  chunks
-   { tp.ast_ = $1; }
+  chunks      { tp.ast_ = $1; }
 ;
 
 rec_exps:
@@ -254,9 +252,9 @@ exps:
 ;
 
 record_creation:
-  typeid EQ exp
+  %empty 
+| typeid EQ exp
 | typeid EQ exp record_init
-| %empty
 ;
 
 record_init:
@@ -275,33 +273,32 @@ method_call:
 ;
 
 exp:
-  INT
-   { $$ = tp.td_.make_IntExp(@$, $1); }
+    INT         { $$ = tp.td_.make_IntExp(@$, $1); }
   // DONE: Some code was deleted here (More rules).
-|   NIL
-|   STRING
-|   typeid LBRACK exp RBRACK OF exp
-|   typeid LBRACE record_creation RBRACE
-|   lvalue
-|   ID LPAREN RPAREN
+|   NIL         { $$ = tp.td_.make_NilExp(@$); }
+|   STRING      { $$ = tp.td_.make_StringExp(@$, $1); }
+|   typeid LBRACK exp RBRACK OF exp   { $$ = tp.td_.make_ArrayExp(@$, $1, $3, $6); }
+|   typeid LBRACE record_creation RBRACE //{ $$ = tp.td_.make_RecordExp(@$, $1, $3); }
+|   lvalue      
+|   ID LPAREN RPAREN    
 |   ID LPAREN function_param RPAREN
 |   MINUS exp                      %prec UMINUS
-|   exp PLUS exp
-|   exp MINUS exp
-|   exp TIMES exp
-|   exp DIVIDE exp
-|   exp EQ exp
-|   exp NE exp
-|   exp GT exp
-|   exp LT exp
-|   exp GE exp
-|   exp LE exp
+|   exp PLUS exp      { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::add, $3); }
+|   exp MINUS exp     { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::sub, $3); }
+|   exp TIMES exp     { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::mul, $3); }
+|   exp DIVIDE exp    { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::div, $3); }
+|   exp EQ exp        { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::eq, $3); }
+|   exp NE exp        { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::ne, $3); }
+|   exp GT exp        { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::gt, $3); }
+|   exp LT exp        { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::lt, $3); }
+|   exp GE exp        { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::ge, $3); }
+|   exp LE exp        { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::le, $3); }
 |   exp AND exp
 |   exp OR exp
 |   LPAREN exps RPAREN
 |   lvalue ASSIGN exp
-|   IF exp THEN exp
-|   IF exp THEN exp ELSE exp
+|   IF exp THEN exp  { $$ = tp.td_.make_IfExp(@$, $2, $4); }
+|   IF exp THEN exp ELSE exp { $$ = tp.td_.make_IfExp(@$, $2, $4, $6); }
 |   WHILE exp DO exp
 |   FOR ID ASSIGN exp TO exp DO exp
 |   BREAK

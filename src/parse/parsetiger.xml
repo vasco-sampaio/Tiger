@@ -54,9 +54,7 @@
       <rule number="7" usefulness="useful">
         <lhs>record_creation</lhs>
         <rhs>
-          <symbol>typeid</symbol>
-          <symbol>&quot;=&quot;</symbol>
-          <symbol>exp</symbol>
+          <empty/>
         </rhs>
       </rule>
       <rule number="8" usefulness="useful">
@@ -65,13 +63,15 @@
           <symbol>typeid</symbol>
           <symbol>&quot;=&quot;</symbol>
           <symbol>exp</symbol>
-          <symbol>record_init</symbol>
         </rhs>
       </rule>
       <rule number="9" usefulness="useful">
         <lhs>record_creation</lhs>
         <rhs>
-          <empty/>
+          <symbol>typeid</symbol>
+          <symbol>&quot;=&quot;</symbol>
+          <symbol>exp</symbol>
+          <symbol>record_init</symbol>
         </rhs>
       </rule>
       <rule number="10" usefulness="useful">
@@ -752,7 +752,7 @@
       <nonterminal symbol-number="57" name="program" type="" usefulness="useful"/>
       <nonterminal symbol-number="58" name="rec_exps" type="" usefulness="useful"/>
       <nonterminal symbol-number="59" name="exps" type="" usefulness="useful"/>
-      <nonterminal symbol-number="60" name="record_creation" type="" usefulness="useful"/>
+      <nonterminal symbol-number="60" name="record_creation" type="ast::fields_type*" usefulness="useful"/>
       <nonterminal symbol-number="61" name="record_init" type="" usefulness="useful"/>
       <nonterminal symbol-number="62" name="function_param" type="" usefulness="useful"/>
       <nonterminal symbol-number="63" name="method_call" type="" usefulness="useful"/>
@@ -3260,13 +3260,13 @@
 
     <state number="66">
       <itemset>
-        <item rule-number="7" dot="0"/>
-        <item rule-number="8" dot="0"/>
-        <item rule-number="9" dot="0">
+        <item rule-number="7" dot="0">
           <lookaheads>
             <symbol>&quot;}&quot;</symbol>
           </lookaheads>
         </item>
+        <item rule-number="8" dot="0"/>
+        <item rule-number="9" dot="0"/>
         <item rule-number="20" dot="2"/>
         <item rule-number="81" dot="0"/>
         <item rule-number="82" dot="0"/>
@@ -3280,7 +3280,7 @@
         </transitions>
         <errors/>
         <reductions>
-          <reduction symbol="$default" rule="9" enabled="true"/>
+          <reduction symbol="$default" rule="7" enabled="true"/>
         </reductions>
       </actions>
       <solved-conflicts/>
@@ -5121,8 +5121,8 @@
 
     <state number="103">
       <itemset>
-        <item rule-number="7" dot="1"/>
         <item rule-number="8" dot="1"/>
+        <item rule-number="9" dot="1"/>
       </itemset>
       <actions>
         <transitions>
@@ -5887,8 +5887,8 @@
 
     <state number="132">
       <itemset>
-        <item rule-number="7" dot="2"/>
         <item rule-number="8" dot="2"/>
+        <item rule-number="9" dot="2"/>
         <item rule-number="16" dot="0"/>
         <item rule-number="17" dot="0"/>
         <item rule-number="18" dot="0"/>
@@ -6484,12 +6484,12 @@
 
     <state number="153">
       <itemset>
-        <item rule-number="7" dot="3">
+        <item rule-number="8" dot="3">
           <lookaheads>
             <symbol>&quot;}&quot;</symbol>
           </lookaheads>
         </item>
-        <item rule-number="8" dot="3"/>
+        <item rule-number="9" dot="3"/>
         <item rule-number="10" dot="0"/>
         <item rule-number="11" dot="0"/>
         <item rule-number="25" dot="1"/>
@@ -6524,7 +6524,7 @@
         </transitions>
         <errors/>
         <reductions>
-          <reduction symbol="$default" rule="7" enabled="true"/>
+          <reduction symbol="$default" rule="8" enabled="true"/>
         </reductions>
       </actions>
       <solved-conflicts/>
@@ -7086,13 +7086,13 @@
 
     <state number="172">
       <itemset>
-        <item rule-number="8" dot="4"/>
+        <item rule-number="9" dot="4"/>
       </itemset>
       <actions>
         <transitions/>
         <errors/>
         <reductions>
-          <reduction symbol="$default" rule="8" enabled="true"/>
+          <reduction symbol="$default" rule="9" enabled="true"/>
         </reductions>
       </actions>
       <solved-conflicts/>
