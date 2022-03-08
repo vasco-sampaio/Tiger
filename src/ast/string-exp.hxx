@@ -9,5 +9,7 @@
 
 namespace ast
 {
-  // FIXME: Some code was deleted here.
+  // DONE: Some code was deleted here.
+  inline const std::string& StringExp::string_get() const { return string_; }
+  inline std::string& StringExp::string_get() { return string_; }
 } // namespace ast

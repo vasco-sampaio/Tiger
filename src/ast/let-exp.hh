@@ -14,7 +14,23 @@ namespace ast
   /// LetExp.
   class LetExp : public Exp
   {
-    // FIXME: Some code was deleted here.
+    public:
+    LetExp(const Location& location, ChunkList* decs, Exp* body);
+    LetExp(const LetExp&) = delete;
+    LetExp& operator=(const LetExp&) = delete;
+    ~LetExp() override;
+    void accept(ConstVisitor& v) const override;
+    void accept(Visitor& v) override;
+
+
+    const ChunkList& decs_get() const;
+    ChunkList& decs_get();
+    const Exp& body_get() const;
+    Exp& body_get();
+
+  protected:
+    ChunkList* decs_;
+    Exp* body_;
   };
 } // namespace ast
 #include <ast/let-exp.hxx>
