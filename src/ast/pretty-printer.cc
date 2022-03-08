@@ -3,6 +3,7 @@
  ** \brief Implementation of ast::PrettyPrinter.
  */
 
+#include <cstddef>
 #include <ast/all.hh>
 #include <ast/libast.hh>
 #include <ast/pretty-printer.hh>
@@ -51,5 +52,45 @@ namespace ast
   }
 
   // FIXME: Some code was deleted here.
+  void PrettyPrinter::operator()(const IntExp& e) { ostr_ << e.value_get(); }
 
+  void PrettyPrinter::operator()(const StringExp& e)
+  {
+    ostr_ << e.string_get();
+  }
+
+  void PrettyPrinter::operator()(const ObjectExp& e)
+  {
+    ostr_ << e.type_name_get();
+  }
+
+  void PrettyPrinter::operator()(const CallExp& e)
+  {
+    ostr_ << e.name_get() << '(';
+    auto begin = e.args_get().begin();
+    ostr_ << *begin;
+    while (begin != e.args_get().end())
+      {
+        ostr_ << ',' << *begin;
+        begin++;
+      }
+    ostr_ << ')';
+  }
+
+  void PrettyPrinter::operator()(const IfExp& e)
+  {
+    ostr_ << "if" << '(' << e.test_get() << ')' << " then" << misc::iendl
+          << e.then_clause_get() << misc::decindent;
+    if (e.else_clause_get() != nullptr)
+      {
+        ostr_ << misc::decindent << "else" << misc::iendl
+              << *(e.else_clause_get()) << misc::decindent;
+      }
+  }
+
+  void PrettyPrinter::operator()(const WhileExp& e)
+  {
+    ostr_ << "while" << '(' << e.test_get() << ')' << " do" << misc::iendl
+          << e.body_get() << misc::decindent;
+  }
 } // namespace ast

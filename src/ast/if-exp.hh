@@ -31,8 +31,8 @@ namespace ast
     Exp& test_get();
     const Exp& then_clause_get() const;
     Exp& then_clause_get();
-    const Exp& else_clause_get() const;
-    Exp& else_clause_get();
+    const Exp* else_clause_get() const;
+    Exp* else_clause_get();
 
   protected:
     Exp* test_;
