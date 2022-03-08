@@ -9,5 +9,13 @@
 
 namespace ast
 {
-  // FIXME: Some code was deleted here.
+   // DONE: Some code was deleted here.
+  inline const Exp& IfExp::test_get() const { return *test_; }
+  inline Exp& IfExp::test_get() { return *test_; }
+
+  inline const Exp& IfExp::then_clause_get() const { return *thenclause_; }
+  inline Exp& IfExp::then_clause_get() { return *thenclause_; }
+
+  inline const Exp& IfExp::else_clause_get() const { return *elseclause_; }
+  inline Exp& IfExp::else_clause_get() { return *elseclause_; }
 } // namespace ast

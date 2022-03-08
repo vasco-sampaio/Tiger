@@ -8,5 +8,20 @@
 
 namespace ast
 {
-  // FIXME: Some code was deleted here.
+  // DONE: Some code was deleted here.
+  AssignExp::AssignExp(const Location& location, Var* var, Exp* exp)
+    : Exp(location)
+    , var_(var)
+    , exp_(exp)
+  {}
+
+  AssignExp::~AssignExp()
+  {
+    delete exp_;
+    delete var_;
+  }
+
+  void AssignExp::accept(ConstVisitor& v) const { v(*this); }
+
+  void AssignExp::accept(Visitor& v) { v(*this); }
 } // namespace ast

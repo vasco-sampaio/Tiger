@@ -53,8 +53,24 @@
   {
     ast_type parse(Tweast& input);
   }
+#line 87 "parse/parsetiger.yy"
 
-#line 58 "parse/parsetiger.hh"
+# include <ast/fwd.hh>
+// Provide the declarations of the following classes for the
+// %destructor clauses below to work properly.
+# include <ast/exp.hh>
+# include <ast/var.hh>
+# include <ast/ty.hh>
+# include <ast/name-ty.hh>
+# include <ast/field.hh>
+# include <ast/field-init.hh>
+# include <ast/function-dec.hh>
+# include <ast/type-dec.hh>
+# include <ast/var-dec.hh>
+# include <ast/chunk.hh>
+# include <ast/chunk-list.hh>
+
+#line 74 "parse/parsetiger.hh"
 
 #include <algorithm>
 #include <cstddef> // ptrdiff_t
@@ -120,7 +136,7 @@
 #endif  /* ! defined PARSEDEBUG */
 
 namespace parse {
-#line 124 "parse/parsetiger.hh"
+#line 140 "parse/parsetiger.hh"
 
 
 
@@ -310,14 +326,39 @@ namespace parse {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
+      // chunks
+      char dummy1[sizeof (ast::ChunkList*)];
+
+      // exp
+      char dummy2[sizeof (ast::Exp*)];
+
+      // tyfield
+      char dummy3[sizeof (ast::Field*)];
+
+      // typeid
+      char dummy4[sizeof (ast::NameTy*)];
+
+      // ty
+      char dummy5[sizeof (ast::Ty*)];
+
+      // tychunk
+      char dummy6[sizeof (ast::TypeChunk*)];
+
+      // tydec
+      char dummy7[sizeof (ast::TypeDec*)];
+
+      // tyfields
+      // tyfields.1
+      char dummy8[sizeof (ast::fields_type*)];
+
       // "integer"
-      char dummy1[sizeof (int)];
+      char dummy9[sizeof (int)];
 
       // "identifier"
-      char dummy2[sizeof (misc::symbol)];
+      char dummy10[sizeof (misc::symbol)];
 
       // "string"
-      char dummy3[sizeof (std::string)];
+      char dummy11[sizeof (std::string)];
     };
 
     /// The size of the largest semantic type.
@@ -542,6 +583,39 @@ namespace parse {
       {
         switch (this->kind ())
     {
+      case symbol_kind::S_chunks: // chunks
+        value.move< ast::ChunkList* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_exp: // exp
+        value.move< ast::Exp* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        value.move< ast::Field* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        value.move< ast::NameTy* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ty: // ty
+        value.move< ast::Ty* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        value.move< ast::TypeChunk* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        value.move< ast::TypeDec* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        value.move< ast::fields_type* > (std::move (that.value));
+        break;
+
       case symbol_kind::S_INT: // "integer"
         value.move< int > (std::move (that.value));
         break;
@@ -573,6 +647,118 @@ namespace parse {
 #else
       basic_symbol (typename Base::kind_type t, const location_type& l)
         : Base (t)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ast::ChunkList*&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ast::ChunkList*& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ast::Exp*&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ast::Exp*& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ast::Field*&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ast::Field*& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ast::NameTy*&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ast::NameTy*& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ast::Ty*&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ast::Ty*& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ast::TypeChunk*&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ast::TypeChunk*& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ast::TypeDec*&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ast::TypeDec*& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ast::fields_type*&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ast::fields_type*& v, const location_type& l)
+        : Base (t)
+        , value (v)
         , location (l)
       {}
 #endif
@@ -632,6 +818,39 @@ namespace parse {
         Base::operator= (that);
         switch (this->kind ())
     {
+      case symbol_kind::S_chunks: // chunks
+        value.copy< ast::ChunkList* > (that.value);
+        break;
+
+      case symbol_kind::S_exp: // exp
+        value.copy< ast::Exp* > (that.value);
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        value.copy< ast::Field* > (that.value);
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        value.copy< ast::NameTy* > (that.value);
+        break;
+
+      case symbol_kind::S_ty: // ty
+        value.copy< ast::Ty* > (that.value);
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        value.copy< ast::TypeChunk* > (that.value);
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        value.copy< ast::TypeDec* > (that.value);
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        value.copy< ast::fields_type* > (that.value);
+        break;
+
       case symbol_kind::S_INT: // "integer"
         value.copy< int > (that.value);
         break;
@@ -658,6 +877,39 @@ namespace parse {
         Base::operator= (std::move (that));
         switch (this->kind ())
     {
+      case symbol_kind::S_chunks: // chunks
+        value.move< ast::ChunkList* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_exp: // exp
+        value.move< ast::Exp* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        value.move< ast::Field* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        value.move< ast::NameTy* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ty: // ty
+        value.move< ast::Ty* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        value.move< ast::TypeChunk* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        value.move< ast::TypeDec* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        value.move< ast::fields_type* > (std::move (that.value));
+        break;
+
       case symbol_kind::S_INT: // "integer"
         value.move< int > (std::move (that.value));
         break;
@@ -695,6 +947,39 @@ namespace parse {
         // Value type destructor.
 switch (yykind)
     {
+      case symbol_kind::S_chunks: // chunks
+        value.template destroy< ast::ChunkList* > ();
+        break;
+
+      case symbol_kind::S_exp: // exp
+        value.template destroy< ast::Exp* > ();
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        value.template destroy< ast::Field* > ();
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        value.template destroy< ast::NameTy* > ();
+        break;
+
+      case symbol_kind::S_ty: // ty
+        value.template destroy< ast::Ty* > ();
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        value.template destroy< ast::TypeChunk* > ();
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        value.template destroy< ast::TypeDec* > ();
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        value.template destroy< ast::fields_type* > ();
+        break;
+
       case symbol_kind::S_INT: // "integer"
         value.template destroy< int > ();
         break;
@@ -1848,6 +2133,39 @@ switch (yykind)
   {
     switch (this->kind ())
     {
+      case symbol_kind::S_chunks: // chunks
+        value.copy< ast::ChunkList* > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_exp: // exp
+        value.copy< ast::Exp* > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        value.copy< ast::Field* > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        value.copy< ast::NameTy* > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_ty: // ty
+        value.copy< ast::Ty* > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        value.copy< ast::TypeChunk* > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        value.copy< ast::TypeDec* > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        value.copy< ast::fields_type* > (YY_MOVE (that.value));
+        break;
+
       case symbol_kind::S_INT: // "integer"
         value.copy< int > (YY_MOVE (that.value));
         break;
@@ -1884,6 +2202,39 @@ switch (yykind)
     super_type::move (s);
     switch (this->kind ())
     {
+      case symbol_kind::S_chunks: // chunks
+        value.move< ast::ChunkList* > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_exp: // exp
+        value.move< ast::Exp* > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_tyfield: // tyfield
+        value.move< ast::Field* > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_typeid: // typeid
+        value.move< ast::NameTy* > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_ty: // ty
+        value.move< ast::Ty* > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_tychunk: // tychunk
+        value.move< ast::TypeChunk* > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_tydec: // tydec
+        value.move< ast::TypeDec* > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_tyfields: // tyfields
+      case symbol_kind::S_74_tyfields_1: // tyfields.1
+        value.move< ast::fields_type* > (YY_MOVE (s.value));
+        break;
+
       case symbol_kind::S_INT: // "integer"
         value.move< int > (YY_MOVE (s.value));
         break;
@@ -1972,7 +2323,7 @@ switch (yykind)
 
 
 } // parse
-#line 1976 "parse/parsetiger.hh"
+#line 2327 "parse/parsetiger.hh"
 
 
 // "%code provides" blocks.
@@ -1984,7 +2335,7 @@ switch (yykind)
     (Prefix parselex)(::parse::TigerParser& tp)
   # define YY_DECL YY_DECL_(yyFlexLexer::)
 
-#line 1988 "parse/parsetiger.hh"
+#line 2339 "parse/parsetiger.hh"
 
 
 #endif // !YY_PARSE_SRC_PARSE_PARSETIGER_HH_INCLUDED
