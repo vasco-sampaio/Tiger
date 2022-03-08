@@ -16,6 +16,9 @@ namespace ast
   inline const Exp& IfExp::then_clause_get() const { return *thenclause_; }
   inline Exp& IfExp::then_clause_get() { return *thenclause_; }
 
-  inline const Exp& IfExp::else_clause_get() const { return *elseclause_; }
-  inline Exp& IfExp::else_clause_get() { return *elseclause_; }
+  inline const Exp* IfExp::else_clause_get() const 
+  { 
+    return elseclause_;
+  }
+  inline Exp* IfExp::else_clause_get() { return elseclause_; }
 } // namespace ast
