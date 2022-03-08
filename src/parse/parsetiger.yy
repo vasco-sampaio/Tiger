@@ -295,7 +295,7 @@ exp:
 |   exp LE exp        { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::le, $3); }
 |   exp AND exp
 |   exp OR exp
-|   LPAREN exps RPAREN
+|   LPAREN exps RPAREN 
 |   lvalue ASSIGN exp
 |   IF exp THEN exp  { $$ = tp.td_.make_IfExp(@$, $2, $4); }
 |   IF exp THEN exp ELSE exp { $$ = tp.td_.make_IfExp(@$, $2, $4, $6); }
