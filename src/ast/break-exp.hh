@@ -12,7 +12,18 @@ namespace ast
   /// BreakExp.
   class BreakExp : public Exp
   {
-    // FIXME: Some code was deleted here.
+     // DONE: Some code was deleted here.
+    public:
+    
+    BreakExp(const Location& location);
+    BreakExp(const BreakExp&) = delete;
+    BreakExp& operator=(const BreakExp&) = delete;
+    
+    // ~BreakExp() override;
+   
+    void accept(ConstVisitor& v) const override;
+   
+    void accept(Visitor& v) override;
   };
 } // namespace ast
 #include <ast/break-exp.hxx>
