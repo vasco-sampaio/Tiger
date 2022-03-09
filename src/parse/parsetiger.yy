@@ -204,8 +204,10 @@
 %type <ast::fields_type*>     tyfields tyfields.1
   // DONE: Some code was deleted here (More %types).
 %type <ast::Var*>             lvalue
-%type <ast::exps_type*>        function_param
-%type <ast::fieldinits_type*>  record_creation record_init
+%type <ast::exps_type*>       function_param
+%type <ast::fieldinits_type*> record_creation record_init
+%type <ast::FunctionDec*>     fundec
+%type <ast::VarDec*>          vardec
 
   // DONE: Some code was deleted here (Priorities/associativities).
 %precedence CHUNKS
@@ -313,8 +315,8 @@ lvalue:
 ;
 
 vardec:
-  VAR ID ASSIGN exp
-| VAR ID COLON typeid ASSIGN exp
+  VAR ID ASSIGN exp { $$ = tp.td_.make_VarDec(@$, $2, nullptr, $4); }
+| VAR ID COLON typeid ASSIGN exp { $$ = tp.td_.make_VarDec(@$, $2, $4, $6); }
 ;
 
 fundec:
@@ -323,6 +325,7 @@ fundec:
 |   PRIMITIVE ID LPAREN tyfields RPAREN
 |   PRIMITIVE ID LPAREN tyfields RPAREN COLON typeid
 ;
+
 
 /*---------------.
 | Declarations.  |
@@ -342,8 +345,8 @@ chunks:
   %empty                  { $$ = tp.td_.make_ChunkList(@$); }
 | tychunk  chunks         { $$ = $2; $$->push_front($1); }
   // DONE: Some code was deleted here (More rules).
-| fundec   chunks         { $$ = $2} 
-| vardec   chunks        
+| fundec   chunks 
+| vardec   chunks
 | IMPORT STRING chunks
 ;
 

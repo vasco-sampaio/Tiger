@@ -193,10 +193,10 @@ Nonterminals, with rules where they appear
     lvalue <ast::Var*> (63)
         on left: 46 47 48
         on right: 17 35 44 45 47 48
-    vardec (64)
+    vardec <ast::VarDec*> (64)
         on left: 49 50
         on right: 58 71
-    fundec (65)
+    fundec <ast::FunctionDec*> (65)
         on left: 51 52 53 54
         on right: 57
     chunks <ast::ChunkList*> (66)
