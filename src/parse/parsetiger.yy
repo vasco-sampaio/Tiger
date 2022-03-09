@@ -190,8 +190,9 @@
        VAR          "var"
        WHILE        "while"
        EOF 0        "end of file"
+      
 
-%type <ast::Exp*>             exp
+%type <ast::Exp*>             exp exps
 %type <ast::ChunkList*>       chunks
 
 %type <ast::TypeChunk*>       tychunk
@@ -200,8 +201,11 @@
 %type <ast::Ty*>              ty
 
 %type <ast::Field*>           tyfield 
-%type <ast::fields_type*>     tyfields tyfields.1 record_creation
+%type <ast::fields_type*>     tyfields tyfields.1
   // DONE: Some code was deleted here (More %types).
+%type <ast::Var*>             lvalue
+%type <ast::exps_type*>        function_param
+%type <ast::fieldinits_type*>  record_creation record_init
 
   // DONE: Some code was deleted here (Priorities/associativities).
 %precedence CHUNKS
@@ -241,35 +245,26 @@ program:
   chunks      { tp.ast_ = $1; }
 ;
 
-rec_exps:
-  %empty
-| SEMI exps
-;
 
 exps:
-    exp rec_exps
-|   %empty
+   exp
+|  exp SEMI exps
 ;
 
 record_creation:
-  %empty 
-| typeid EQ exp
-| typeid EQ exp record_init
+  ID EQ exp { $$ = tp.td_.make_fieldinits_type<ast::fieldinits_type>({tp.td_.make_FieldInit(@$, $1, $3)}); }
+| ID EQ exp record_init { $$ = tp.td_.make_fieldinits_type<ast::fieldinits_type>(*$4); 
+                          $$->push_back({tp.td_.make_FieldInit(@$, $1, $3)}); }
 ;
 
 record_init:
-  COMMA ID EQ exp
-| COMMA ID EQ exp record_init
+  COMMA ID EQ exp             { $$->push_back({tp.td_.make_FieldInit(@$, $2, $4)}); }
+| COMMA ID EQ exp record_init { $$ = $5; $$->push_back({tp.td_.make_FieldInit(@$, $2, $4)}); }
 ;
 
 function_param:
-  exp
-| exp COMMA function_param
-;
-
-method_call:
-    COMMA exp
-|   %empty
+  exp    { $$ = tp.td_.make_exps_type<std::vector<ast::Exp*>>(*$$); }
+| exp COMMA function_param { $$ = $3; $$->push_back($1); }
 ;
 
 exp:
@@ -278,11 +273,12 @@ exp:
 |   NIL         { $$ = tp.td_.make_NilExp(@$); }
 |   STRING      { $$ = tp.td_.make_StringExp(@$, $1); }
 |   typeid LBRACK exp RBRACK OF exp   { $$ = tp.td_.make_ArrayExp(@$, $1, $3, $6); }
-|   typeid LBRACE record_creation RBRACE //{ $$ = tp.td_.make_RecordExp(@$, $1, $3); }
-|   lvalue      
-|   ID LPAREN RPAREN    
-|   ID LPAREN function_param RPAREN
-|   MINUS exp                      %prec UMINUS
+|   typeid LBRACE RBRACE                  { $$ = tp.td_.make_RecordExp(@$, $1, nullptr); }
+|   typeid LBRACE record_creation RBRACE  { $$ = tp.td_.make_RecordExp(@$, $1, $3); }
+|   lvalue      { $$ = $1; }
+|   ID LPAREN RPAREN   { $$ = tp.td_.make_CallExp(@$, $1, nullptr); }
+|   ID LPAREN function_param RPAREN { $$ = tp.td_.make_CallExp(@$, $1, $3); }
+|   MINUS exp  %prec UMINUS { $$ = tp.td_.make_OpExp(@$, tp.td_.make_IntExp(@1, 0), ast::OpExp::Oper::sub, $2); }
 |   exp PLUS exp      { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::add, $3); }
 |   exp MINUS exp     { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::sub, $3); }
 |   exp TIMES exp     { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::mul, $3); }
@@ -295,27 +291,29 @@ exp:
 |   exp LE exp        { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::le, $3); }
 |   exp AND exp
 |   exp OR exp
-|   LPAREN exps RPAREN 
-|   lvalue ASSIGN exp
+|   LPAREN RPAREN       { $$ = tp.td_.make_SeqExp(@$, nullptr); }
+|   LPAREN exps RPAREN  { $$ = tp.td_.make_SeqExp(@$, tp.td_.make_exps_type($2)); }
+|   lvalue ASSIGN exp { $$ = tp.td_.make_AssignExp(@$, $1, $3); }
 |   IF exp THEN exp  { $$ = tp.td_.make_IfExp(@$, $2, $4); }
 |   IF exp THEN exp ELSE exp { $$ = tp.td_.make_IfExp(@$, $2, $4, $6); }
-|   WHILE exp DO exp
-|   FOR ID ASSIGN exp TO exp DO exp
-|   BREAK
-|   LET chunks IN exps END
-|   NEW typeid
-|   lvalue DOT ID LPAREN RPAREN
-|   lvalue DOT ID LPAREN exp method_call RPAREN
+|   WHILE exp DO exp  { $$ = tp.td_.make_WhileExp(@$, $2, $4); }
+|   FOR ID ASSIGN exp TO exp DO exp { $$ = tp.td_.make_ForExp(@$, tp.td_.make_VarDec(@2, $2, tp.td_.make_NameTy(@2, misc::symbol("int")), $4), $6, $8); }
+|   BREAK { $$ = tp.td_.make_BreakExp(@$); }
+|   LET chunks IN END { $$ = tp.td_.make_LetExp(@$, $2, nullptr); }
+|   LET chunks IN exps END { $$ = tp.td_.make_LetExp(@$, $2, $4); }
+|   NEW typeid  { $$ = tp.td_.make_ObjectExp(@$, $2); }
+|   lvalue DOT ID LPAREN RPAREN { $$ = tp.td_.make_MethodCallExp(@$, $3, nullptr, $1); }
+|   lvalue DOT ID LPAREN function_param RPAREN  { $$ = tp.td_.make_MethodCallExp(@$, $3, $5, $1); }
 ;
 
 lvalue:
-    ID
-|   lvalue DOT ID
-|   lvalue LBRACK exp RBRACK
+    ID { $$ = tp.td_.make_SimpleVar(@$, $1); }
+|   lvalue DOT ID { $$ = tp.td_.make_FieldVar(@$, $1, $3); }
+|   lvalue LBRACK exp RBRACK { $$ = tp.td_.make_SubscriptVar(@$, $1, $3); }
 ;
 
 vardec:
-  VAR ID ASSIGN exp
+  VAR ID ASSIGN exp 
 | VAR ID COLON typeid ASSIGN exp
 ;
 
@@ -344,8 +342,8 @@ chunks:
   %empty                  { $$ = tp.td_.make_ChunkList(@$); }
 | tychunk   chunks        { $$ = $2; $$->push_front($1); }
   // DONE: Some code was deleted here (More rules).
-| fundec  chunks
-| vardec    chunks
+| fundec  chunks          
+| vardec    chunks        
 | IMPORT STRING chunks
 ;
 
