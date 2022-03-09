@@ -6,6 +6,7 @@
 
 #include <ast/all.hh>
 #include <ast/libast.hh>
+#include "type-dec.hh"
 
 using namespace ast;
 
@@ -72,6 +73,22 @@ int main()
 
   std::cout << "First custom test \n";
   {
+    auto exps = new exps_type{new SimpleVar(loc, "a")};
 
+    auto formals =
+      new TypeChunk::Ds{new TypeDec(loc, "int", new Ty(loc)};
+
+    TypeDec* typedec =
+      new TypeDec(loc, "my_int", formals);
+
+    TypeChunk* type_chunk = new TypeChunk(loc);
+    type_chunk->emplace_back(*typedec);
+
+    ChunkList* chunks = new ChunkList(loc);
+    chunks->emplace_back(type_chunk);
+
+    Exp* exp = new LetExp(loc, chunks, new CallExp(loc, "f", new exps_type()));
+    std::cout << *exp << '\n';
+    delete exp;
   }
 }

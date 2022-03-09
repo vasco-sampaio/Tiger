@@ -205,7 +205,8 @@ namespace ast
     ostr_ << misc::decindent << misc::iendl << "in " << misc::incindent;
     e.body_get().accept(*this);
     ostr_ << misc::decindent << misc::iendl << "end" << misc::iendl;
- }
+  }
+
   void PrettyPrinter::operator()(const VarChunk& e)
   {
     size_t size = e.decs_get().size();
@@ -225,11 +226,42 @@ namespace ast
     ostr_ << " : ";
     e.type_name_get()->accept(*this);
     if (e.init_get())
-    {
-      ostr_ << " = ";
-      e.init_get()->accept(*this);
-    }
-      
+      {
+        ostr_ << " = ";
+        e.init_get()->accept(*this);
+      }
+  }
+
+  void PrettyPrinter::operator()(const ChunkList& e)
+  {
+    size_t size = e.chunks_get().size();
+    size_t i = 0;
+    for (auto k : e.chunks_get())
+      {
+        k->accept(*this);
+        if (i != size - 1)
+          ostr_ << misc::iendl;
+        i++;
+      }
+  }
+
+  void PrettyPrinter::operator()(const TypeDec& e)
+  {
+    ostr_ << "type " << e.name_get() << " = ";
+    e.ty_get().accept(*this);
+  }
+
+  void PrettyPrinter::operator()(const TypeChunk& e)
+  {
+    size_t size = e.decs_get().size();
+    size_t i = 0;
+    for (auto k : e.decs_get())
+      {
+        k->accept(*this);
+        if (i != size - 1)
+          ostr_ << misc::iendl;
+        i++;
+      }
   }
 
 } // namespace ast

@@ -45,9 +45,9 @@ namespace ast
     void operator()(const BreakExp& e) override; //
     void operator()(const LetExp& e) override;
     void operator()(const OpExp& e) override;
-    /*void operator()(const ChunkList& e) override;
+    void operator()(const ChunkList& e) override;
     void operator()(const TypeChunk& e) override;
-    void operator()(const TypeDec& e) override;
+    void operator()(const TypeDec& e) override;/*
     void operator()(const RecordTy& e) override;
     void operator()(const ArrayTy& e) override;
     void operator()(const Field& e) override;*/
@@ -59,7 +59,7 @@ namespace ast
     void operator()(const MethodChunk& e) override;
     void operator()(const MethodDec& e) override;*/
     void operator()(const FunctionDec& e) override;
-    //oid operator()(const FunctionChunk& e) override;
+    //void operator()(const FunctionChunk& e) override;
     /// \}
 
   private:
