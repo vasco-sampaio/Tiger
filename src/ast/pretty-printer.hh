@@ -25,25 +25,25 @@ namespace ast
 
     /// Visit methods.
     /// \{
-    void operator()(const SimpleVar& e) override;
-    void operator()(const FieldVar& e) override;
-    void operator()(const SubscriptVar& e) override;
-    void operator()(const CastExp& e) override;
+    void operator()(const SimpleVar& e) override; //
+    //void operator()(const FieldVar& e) override;
+    void operator()(const SubscriptVar& e) override; //
+    void operator()(const CastExp& e) override; //
     // DONE: Some code was deleted here.
-    void operator()(const IntExp& e) override;
-    void operator()(const StringExp& e) override;
+    void operator()(const IntExp& e) override; //
+    void operator()(const StringExp& e) override; //
     void operator()(const ObjectExp& e) override;
-    void operator()(const CallExp& e) override;
-    /*void operator()(const MethodCallExp& e) override;
-    void operator()(const RecordExp& e) override;
-    void operator()(const NilExp& e) override;
-    void operator()(const SeqExp& e) override;
-    void operator()(const AssignExp& e) override;
-    */void operator()(const IfExp& e) override;
+    //void operator()(const CallExp& e) override;
+    //void operator()(const MethodCallExp& e) override;
+    //void operator()(const RecordExp& e) override;
+    void operator()(const NilExp& e) override; //
+    //void operator()(const SeqExp& e) override;
+    void operator()(const AssignExp& e) override; //
+    void operator()(const IfExp& e) override;
     void operator()(const WhileExp& e) override;
-   /*void operator()(const ForExp& e) override;
-    void operator()(const BreakExp& e) override;
-    void operator()(const LetExp& e) override;
+    void operator()(const ForExp& e) override;
+    void operator()(const BreakExp& e) override; //
+    /*void operator()(const LetExp& e) override;
     void operator()(const OpExp& e) override;
     void operator()(const ChunkList& e) override;
     void operator()(const TypeChunk& e) override;
@@ -59,8 +59,8 @@ namespace ast
     void operator()(const MethodChunk& e) override;
     void operator()(const MethodDec& e) override;
     void operator()(const FunctionDec& e) override;
-    void operator()(const FunctionChunk& e) override;
-    *//// \}
+    void operator()(const FunctionChunk& e) override;*/
+    /// \}
 
   private:
     // Factor pretty-printing of RecordExp and RecordTy.

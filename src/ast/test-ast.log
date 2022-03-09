@@ -1,1 +1,2 @@
-FAIL src/ast/test-ast (exit status: 139)
+First custom test 
+PASS src/ast/test-ast (exit status: 0)
