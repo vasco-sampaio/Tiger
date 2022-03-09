@@ -129,7 +129,7 @@ namespace ast
   {
     std::string op = "";
     switch (e.oper_get())
-    {
+      {
       case OpExp::Oper::add:
         op = "+";
         break;
@@ -162,7 +162,7 @@ namespace ast
         break;
       default:
         op = "+";
-    }
+      }
     e.left_get().accept(*this);
     ostr_ << ' ' << op << ' ';
     e.right_get().accept(*this);
@@ -175,12 +175,12 @@ namespace ast
     size_t size = e.args_get().size();
     size_t i = 0;
     for (auto k : e.args_get())
-    {
-      k->accept(*this);
-      if (i != size - 1)
-        ostr_ << ", ";
-      i++;
-    }
+      {
+        k->accept(*this);
+        if (i != size - 1)
+          ostr_ << ", ";
+        i++;
+      }
     ostr_ << ')';
   }
 
@@ -195,5 +195,16 @@ namespace ast
     e.body_get()->accept(*this);
     ostr_ << misc::decindent;
   }
+
+  void PrettyPrinter::operator()(const NameTy& e) { ostr_ << e.name_get(); }
+
+  void PrettyPrinter::operator()(const LetExp& e)
+  {
+    ostr_ << "let" << misc::incindent << misc::iendl;
+    e.decs_get().accept(*this);
+    ostr_ << misc::decindent << misc::iendl << "in " << misc::incindent;
+    e.body_get().accept(*this);
+    ostr_ << misc::decindent << misc::iendl << "end" << misc::iendl;
+ }
 
 } // namespace ast
