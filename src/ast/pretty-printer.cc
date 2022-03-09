@@ -32,7 +32,7 @@ namespace ast
     : ostr_(ostr)
   {}
 
-  void PrettyPrinter::operator()(const SimpleVar& e) { e.name_get(); }
+  void PrettyPrinter::operator()(const SimpleVar& e) { ostr_ << e.name_get(); }
 
   /*void PrettyPrinter::operator()(const FieldVar& e)
   {
@@ -49,8 +49,8 @@ namespace ast
   void PrettyPrinter::operator()(const CastExp& e)
   {
     ostr_ << "_cast(";
-    e.exp_get().accept(*this); 
-    ostr_<< ", ";
+    e.exp_get().accept(*this);
+    ostr_ << ", ";
     e.ty_get();
     ostr_ << ')';
   }
@@ -114,5 +114,21 @@ namespace ast
   }
 
   void PrettyPrinter::operator()(const BreakExp& e) { ostr_ << "break"; }
+
+  void PrettyPrinter::operator()(const SeqExp& e)
+  {
+    for (auto& x : e.exps_get())
+      {
+        x->accept(*this);
+        ostr_ << misc::iendl;
+      }
+  }
+
+  void PrettyPrinter::operator()(const OpExp& e)
+  {
+    e.left_get().accept(*this);
+    ostr_ << ' ' << "+" << ' ';
+    e.right_get().accept(*this);
+  }
 
 } // namespace ast

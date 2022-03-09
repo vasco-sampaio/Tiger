@@ -1,2 +1,10 @@
+First test...
+a := 5
+a + 1
+
+Second test...
+a
+Third test...
+a
 First custom test 
 PASS src/ast/test-ast (exit status: 0)

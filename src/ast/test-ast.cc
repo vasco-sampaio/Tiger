@@ -12,7 +12,7 @@ using namespace ast;
 int main()
 {
   const Location& loc = Location();
-/*
+
   std::cout << "First test...\n";
   {
     auto exps = new exps_type{
@@ -69,7 +69,7 @@ int main()
     std::cout << *exp << '\n';
     delete exp;
   }
-*/
+
   std::cout << "First custom test \n";
   {
 
