@@ -70,16 +70,15 @@ int main()
     std::cout << *exp << '\n';
     delete exp;
   }
-
+/*
   std::cout << "First custom test \n";
   {
-    auto exps = new exps_type{new SimpleVar(loc, "a")};
-
     auto formals =
-      new TypeChunk::Ds{new TypeDec(loc, "int", new Ty(loc)};
+      new TypeChunk::Ds{new TypeDec(loc, "my_int", new NameTy(loc, "int")),
+                        new TypeDec(loc, "my_str", new NameTy(loc, "string"))};
 
     TypeDec* typedec =
-      new TypeDec(loc, "my_int", formals);
+      new TypeDec(loc, "decs", new TypeChunk(loc, formals));
 
     TypeChunk* type_chunk = new TypeChunk(loc);
     type_chunk->emplace_back(*typedec);
@@ -90,5 +89,5 @@ int main()
     Exp* exp = new LetExp(loc, chunks, new CallExp(loc, "f", new exps_type()));
     std::cout << *exp << '\n';
     delete exp;
-  }
+  }*/
 }

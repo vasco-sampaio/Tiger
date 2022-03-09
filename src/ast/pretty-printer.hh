@@ -47,12 +47,12 @@ namespace ast
     void operator()(const OpExp& e) override;
     void operator()(const ChunkList& e) override;
     void operator()(const TypeChunk& e) override;
-    void operator()(const TypeDec& e) override;/*
-    void operator()(const RecordTy& e) override;
+    void operator()(const TypeDec& e) override;
+    //void operator()(const RecordTy& e) override;
     void operator()(const ArrayTy& e) override;
-    void operator()(const Field& e) override;*/
+    //void operator()(const Field& e) override;
     void operator()(const NameTy& e) override;
-    /*void operator()(const FieldInit& e) override;
+    void operator()(const FieldInit& e) override;/*
     void operator()(const ClassTy& e) override;
     */void operator()(const VarChunk& e) override;
     void operator()(const VarDec& e) override;/*

@@ -264,4 +264,18 @@ namespace ast
       }
   }
 
+  void PrettyPrinter::operator()(const ArrayTy& e)
+  {
+    ostr_ << "array of ";
+    e.base_type_get().accept(*this);
+  }
+
+  void PrettyPrinter::operator()(const FieldInit& e)
+  {
+    ostr_ << "{ " << e.name_get();
+    ostr_ << " = ";
+    e.init_get().accept(*this);
+    ostr_ << " }";
+  }
+
 } // namespace ast

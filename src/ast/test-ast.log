@@ -14,5 +14,4 @@ let
 in f ()
 end
 
-First custom test 
 PASS src/ast/test-ast (exit status: 0)
