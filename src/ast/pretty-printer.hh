@@ -33,7 +33,7 @@ namespace ast
     void operator()(const IntExp& e) override; //
     void operator()(const StringExp& e) override; //
     void operator()(const ObjectExp& e) override;
-    //void operator()(const CallExp& e) override;
+    void operator()(const CallExp& e) override;
     //void operator()(const MethodCallExp& e) override;
     //void operator()(const RecordExp& e) override;
     void operator()(const NilExp& e) override; //
@@ -57,9 +57,9 @@ namespace ast
     void operator()(const VarChunk& e) override;
     void operator()(const VarDec& e) override;
     void operator()(const MethodChunk& e) override;
-    void operator()(const MethodDec& e) override;
+    void operator()(const MethodDec& e) override;*/
     void operator()(const FunctionDec& e) override;
-    void operator()(const FunctionChunk& e) override;*/
+    //oid operator()(const FunctionChunk& e) override;
     /// \}
 
   private:

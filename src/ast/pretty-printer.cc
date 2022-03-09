@@ -10,6 +10,7 @@
 #include <misc/escape.hh>
 #include <misc/indent.hh>
 #include <misc/separator.hh>
+#include "dec.hh"
 
 namespace ast
 {
@@ -126,9 +127,73 @@ namespace ast
 
   void PrettyPrinter::operator()(const OpExp& e)
   {
+    std::string op = "";
+    switch (e.oper_get())
+    {
+      case OpExp::Oper::add:
+        op = "+";
+        break;
+      case OpExp::Oper::sub:
+        op = "-";
+        break;
+      case OpExp::Oper::mul:
+        op = "*";
+        break;
+      case OpExp::Oper::div:
+        op = "/";
+        break;
+      case OpExp::Oper::eq:
+        op = "=";
+        break;
+      case OpExp::Oper::ne:
+        op = "<>";
+        break;
+      case OpExp::Oper::lt:
+        op = "<";
+        break;
+      case OpExp::Oper::le:
+        op = ">=";
+        break;
+      case OpExp::Oper::gt:
+        op = ">";
+        break;
+      case OpExp::Oper::ge:
+        op = ">=";
+        break;
+      default:
+        op = "+";
+    }
     e.left_get().accept(*this);
-    ostr_ << ' ' << "+" << ' ';
+    ostr_ << ' ' << op << ' ';
     e.right_get().accept(*this);
+  }
+
+  void PrettyPrinter::operator()(const CallExp& e)
+  {
+    ostr_ << e.name_get();
+    ostr_ << " (";
+    size_t size = e.args_get().size();
+    size_t i = 0;
+    for (auto k : e.args_get())
+    {
+      k->accept(*this);
+      if (i != size - 1)
+        ostr_ << ", ";
+      i++;
+    }
+    ostr_ << ')';
+  }
+
+  void PrettyPrinter::operator()(const FunctionDec& e)
+  {
+    ostr_ << "function " << e.name_get() << " (" << misc::incindent;
+    e.formals_get().accept(*this);
+
+    ostr_ << ") : ";
+    e.result_get()->accept(*this);
+    ostr_ << " = ";
+    e.body_get()->accept(*this);
+    ostr_ << misc::decindent;
   }
 
 } // namespace ast
