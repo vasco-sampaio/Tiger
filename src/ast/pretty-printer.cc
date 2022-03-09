@@ -206,5 +206,30 @@ namespace ast
     e.body_get().accept(*this);
     ostr_ << misc::decindent << misc::iendl << "end" << misc::iendl;
  }
+  void PrettyPrinter::operator()(const VarChunk& e)
+  {
+    size_t size = e.decs_get().size();
+    size_t i = 0;
+    for (auto k : e.decs_get())
+      {
+        k->accept(*this);
+        if (i != size - 1)
+          ostr_ << ", ";
+        i++;
+      }
+  }
+
+  void PrettyPrinter::operator()(const VarDec& e)
+  {
+    ostr_ << e.name_get();
+    ostr_ << " : ";
+    e.type_name_get()->accept(*this);
+    if (e.init_get())
+    {
+      ostr_ << " = ";
+      e.init_get()->accept(*this);
+    }
+      
+  }
 
 } // namespace ast

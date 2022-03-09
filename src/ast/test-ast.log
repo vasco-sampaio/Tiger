@@ -10,7 +10,7 @@ end
 
 Third test...
 let
-  function f (intint) : int = g (a)
+  function f (a : int, b : int) : int = g (a)
 in f ()
 end
 
