@@ -313,7 +313,7 @@ lvalue:
 ;
 
 vardec:
-  VAR ID ASSIGN exp 
+  VAR ID ASSIGN exp
 | VAR ID COLON typeid ASSIGN exp
 ;
 
@@ -340,10 +340,10 @@ chunks:
         end
      which is why we end the recursion with a %empty. */
   %empty                  { $$ = tp.td_.make_ChunkList(@$); }
-| tychunk   chunks        { $$ = $2; $$->push_front($1); }
+| tychunk  chunks         { $$ = $2; $$->push_front($1); }
   // DONE: Some code was deleted here (More rules).
-| fundec  chunks          
-| vardec    chunks        
+| fundec   chunks         { $$ = $2} 
+| vardec   chunks        
 | IMPORT STRING chunks
 ;
 
