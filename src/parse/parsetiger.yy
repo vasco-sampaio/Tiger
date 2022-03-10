@@ -193,7 +193,7 @@
       
 
 %type <ast::Exp*>             exp exps
-%type <ast::ChunkList*>       chunks
+%type <ast::ChunkList*>       chunks classfields
 
 %type <ast::TypeChunk*>       tychunk
 %type <ast::TypeDec*>         tydec
@@ -209,7 +209,9 @@
 %type <ast::FunctionDec*>     fundec
 %type <ast::VarDec*>          vardec funfield
 %type <ast::FunctionChunk*>   funchunk
-%type <ast::VarChunk*>  varchunk funfields funfields.1
+%type <ast::VarChunk*>        varchunk funfields funfields.1     
+%type <ast::MethodChunk*>     classfield
+%type <ast::ChunkInterface*>  classfields.1
 
   // DONE: Some code was deleted here (Priorities/associativities).
 %precedence CHUNKS
@@ -398,7 +400,7 @@ tychunk:
 
 tydec:
   "type" ID "=" ty { $$ = tp.td_.make_TypeDec(@$, $2, $4); }
-| CLASS ID LBRACE classfields RBRACE
+| CLASS ID LBRACE classfields RBRACE 
 | CLASS ID EXTENDS typeid LBRACE classfields RBRACE
 ;
 
@@ -406,15 +408,23 @@ ty:
   typeid               { $$ = $1; }
 | "{" tyfields "}"     { $$ = tp.td_.make_RecordTy(@$, $2); }
 | "array" "of" typeid  { $$ = tp.td_.make_ArrayTy(@$, $3); }
-| CLASS LBRACE classfields RBRACE
-| CLASS EXTENDS typeid LBRACE classfields RBRACE
+| CLASS LBRACE RBRACE { $$ = tp.td_.make_ClassTy(@$, nullptr, nullptr); }
+| CLASS LBRACE classfields RBRACE { $$ = tp.td_.make_ClassTy(@$, nullptr, $3); }
+| CLASS EXTENDS typeid LBRACE RBRACE  { $$ = tp.td_.make_ClassTy(@$, $3, nullptr); }
+| CLASS EXTENDS typeid LBRACE classfields RBRACE  { $$ = tp.td_.make_ClassTy(@$, $3, $5); }
 ;
 
 classfields:
-  %empty
-| vardec classfields
-| METHOD ID LPAREN tyfields RPAREN EQ exp classfields
-| METHOD ID LPAREN tyfields RPAREN COLON typeid EQ exp classfields
+  classfields.1 { $$ = tp.td_.make_ChunkList(@$); $$->push_front($1); }
+| classfields.1 classfields { $$ = $2; $$->push_front($1); }
+
+classfields.1:
+  varchunk { $$ = $1; }
+| classfield { $$ = $1; }
+
+classfield:
+  METHOD ID LPAREN funfields RPAREN EQ exp  { $$ = tp.td_.make_MethodChunk(@1); $$->push_front(*tp.td_.make_MethodDec(@$, $2, $4, nullptr, $7)); }
+| METHOD ID LPAREN funfields RPAREN COLON typeid EQ exp { $$ = tp.td_.make_MethodChunk(@1); $$->push_front(*tp.td_.make_MethodDec(@$, $2, $4, $7, $9)); }
 ;
 
 tyfields:

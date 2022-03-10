@@ -326,65 +326,72 @@ namespace parse {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
+      // classfields.1
+      char dummy1[sizeof (ast::ChunkInterface*)];
+
       // chunks
-      char dummy1[sizeof (ast::ChunkList*)];
+      // classfields
+      char dummy2[sizeof (ast::ChunkList*)];
 
       // exps
       // exp
-      char dummy2[sizeof (ast::Exp*)];
+      char dummy3[sizeof (ast::Exp*)];
 
       // tyfield
-      char dummy3[sizeof (ast::Field*)];
+      char dummy4[sizeof (ast::Field*)];
 
       // funchunk
-      char dummy4[sizeof (ast::FunctionChunk*)];
+      char dummy5[sizeof (ast::FunctionChunk*)];
 
       // fundec
-      char dummy5[sizeof (ast::FunctionDec*)];
+      char dummy6[sizeof (ast::FunctionDec*)];
+
+      // classfield
+      char dummy7[sizeof (ast::MethodChunk*)];
 
       // typeid
-      char dummy6[sizeof (ast::NameTy*)];
+      char dummy8[sizeof (ast::NameTy*)];
 
       // ty
-      char dummy7[sizeof (ast::Ty*)];
+      char dummy9[sizeof (ast::Ty*)];
 
       // tychunk
-      char dummy8[sizeof (ast::TypeChunk*)];
+      char dummy10[sizeof (ast::TypeChunk*)];
 
       // tydec
-      char dummy9[sizeof (ast::TypeDec*)];
+      char dummy11[sizeof (ast::TypeDec*)];
 
       // lvalue
-      char dummy10[sizeof (ast::Var*)];
+      char dummy12[sizeof (ast::Var*)];
 
       // funfields
       // funfields.1
       // varchunk
-      char dummy11[sizeof (ast::VarChunk*)];
+      char dummy13[sizeof (ast::VarChunk*)];
 
       // vardec
       // funfield
-      char dummy12[sizeof (ast::VarDec*)];
+      char dummy14[sizeof (ast::VarDec*)];
 
       // function_param
-      char dummy13[sizeof (ast::exps_type*)];
+      char dummy15[sizeof (ast::exps_type*)];
 
       // record_creation
       // record_init
-      char dummy14[sizeof (ast::fieldinits_type*)];
+      char dummy16[sizeof (ast::fieldinits_type*)];
 
       // tyfields
       // tyfields.1
-      char dummy15[sizeof (ast::fields_type*)];
+      char dummy17[sizeof (ast::fields_type*)];
 
       // "integer"
-      char dummy16[sizeof (int)];
+      char dummy18[sizeof (int)];
 
       // "identifier"
-      char dummy17[sizeof (misc::symbol)];
+      char dummy19[sizeof (misc::symbol)];
 
       // "string"
-      char dummy18[sizeof (std::string)];
+      char dummy20[sizeof (std::string)];
     };
 
     /// The size of the largest semantic type.
@@ -572,10 +579,12 @@ namespace parse {
         S_tydec = 73,                            // tydec
         S_ty = 74,                               // ty
         S_classfields = 75,                      // classfields
-        S_tyfields = 76,                         // tyfields
-        S_77_tyfields_1 = 77,                    // tyfields.1
-        S_tyfield = 78,                          // tyfield
-        S_typeid = 79                            // typeid
+        S_76_classfields_1 = 76,                 // classfields.1
+        S_classfield = 77,                       // classfield
+        S_tyfields = 78,                         // tyfields
+        S_79_tyfields_1 = 79,                    // tyfields.1
+        S_tyfield = 80,                          // tyfield
+        S_typeid = 81                            // typeid
       };
     };
 
@@ -612,7 +621,12 @@ namespace parse {
       {
         switch (this->kind ())
     {
+      case symbol_kind::S_76_classfields_1: // classfields.1
+        value.move< ast::ChunkInterface* > (std::move (that.value));
+        break;
+
       case symbol_kind::S_chunks: // chunks
+      case symbol_kind::S_classfields: // classfields
         value.move< ast::ChunkList* > (std::move (that.value));
         break;
 
@@ -631,6 +645,10 @@ namespace parse {
 
       case symbol_kind::S_fundec: // fundec
         value.move< ast::FunctionDec* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_classfield: // classfield
+        value.move< ast::MethodChunk* > (std::move (that.value));
         break;
 
       case symbol_kind::S_typeid: // typeid
@@ -674,7 +692,7 @@ namespace parse {
         break;
 
       case symbol_kind::S_tyfields: // tyfields
-      case symbol_kind::S_77_tyfields_1: // tyfields.1
+      case symbol_kind::S_79_tyfields_1: // tyfields.1
         value.move< ast::fields_type* > (std::move (that.value));
         break;
 
@@ -709,6 +727,20 @@ namespace parse {
 #else
       basic_symbol (typename Base::kind_type t, const location_type& l)
         : Base (t)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ast::ChunkInterface*&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ast::ChunkInterface*& v, const location_type& l)
+        : Base (t)
+        , value (v)
         , location (l)
       {}
 #endif
@@ -777,6 +809,20 @@ namespace parse {
       {}
 #else
       basic_symbol (typename Base::kind_type t, const ast::FunctionDec*& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ast::MethodChunk*&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ast::MethodChunk*& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
@@ -978,7 +1024,12 @@ namespace parse {
         Base::operator= (that);
         switch (this->kind ())
     {
+      case symbol_kind::S_76_classfields_1: // classfields.1
+        value.copy< ast::ChunkInterface* > (that.value);
+        break;
+
       case symbol_kind::S_chunks: // chunks
+      case symbol_kind::S_classfields: // classfields
         value.copy< ast::ChunkList* > (that.value);
         break;
 
@@ -997,6 +1048,10 @@ namespace parse {
 
       case symbol_kind::S_fundec: // fundec
         value.copy< ast::FunctionDec* > (that.value);
+        break;
+
+      case symbol_kind::S_classfield: // classfield
+        value.copy< ast::MethodChunk* > (that.value);
         break;
 
       case symbol_kind::S_typeid: // typeid
@@ -1040,7 +1095,7 @@ namespace parse {
         break;
 
       case symbol_kind::S_tyfields: // tyfields
-      case symbol_kind::S_77_tyfields_1: // tyfields.1
+      case symbol_kind::S_79_tyfields_1: // tyfields.1
         value.copy< ast::fields_type* > (that.value);
         break;
 
@@ -1070,7 +1125,12 @@ namespace parse {
         Base::operator= (std::move (that));
         switch (this->kind ())
     {
+      case symbol_kind::S_76_classfields_1: // classfields.1
+        value.move< ast::ChunkInterface* > (std::move (that.value));
+        break;
+
       case symbol_kind::S_chunks: // chunks
+      case symbol_kind::S_classfields: // classfields
         value.move< ast::ChunkList* > (std::move (that.value));
         break;
 
@@ -1089,6 +1149,10 @@ namespace parse {
 
       case symbol_kind::S_fundec: // fundec
         value.move< ast::FunctionDec* > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_classfield: // classfield
+        value.move< ast::MethodChunk* > (std::move (that.value));
         break;
 
       case symbol_kind::S_typeid: // typeid
@@ -1132,7 +1196,7 @@ namespace parse {
         break;
 
       case symbol_kind::S_tyfields: // tyfields
-      case symbol_kind::S_77_tyfields_1: // tyfields.1
+      case symbol_kind::S_79_tyfields_1: // tyfields.1
         value.move< ast::fields_type* > (std::move (that.value));
         break;
 
@@ -1173,7 +1237,12 @@ namespace parse {
         // Value type destructor.
 switch (yykind)
     {
+      case symbol_kind::S_76_classfields_1: // classfields.1
+        value.template destroy< ast::ChunkInterface* > ();
+        break;
+
       case symbol_kind::S_chunks: // chunks
+      case symbol_kind::S_classfields: // classfields
         value.template destroy< ast::ChunkList* > ();
         break;
 
@@ -1192,6 +1261,10 @@ switch (yykind)
 
       case symbol_kind::S_fundec: // fundec
         value.template destroy< ast::FunctionDec* > ();
+        break;
+
+      case symbol_kind::S_classfield: // classfield
+        value.template destroy< ast::MethodChunk* > ();
         break;
 
       case symbol_kind::S_typeid: // typeid
@@ -1235,7 +1308,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_tyfields: // tyfields
-      case symbol_kind::S_77_tyfields_1: // tyfields.1
+      case symbol_kind::S_79_tyfields_1: // tyfields.1
         value.template destroy< ast::fields_type* > ();
         break;
 
@@ -2392,7 +2465,12 @@ switch (yykind)
   {
     switch (this->kind ())
     {
+      case symbol_kind::S_76_classfields_1: // classfields.1
+        value.copy< ast::ChunkInterface* > (YY_MOVE (that.value));
+        break;
+
       case symbol_kind::S_chunks: // chunks
+      case symbol_kind::S_classfields: // classfields
         value.copy< ast::ChunkList* > (YY_MOVE (that.value));
         break;
 
@@ -2411,6 +2489,10 @@ switch (yykind)
 
       case symbol_kind::S_fundec: // fundec
         value.copy< ast::FunctionDec* > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_classfield: // classfield
+        value.copy< ast::MethodChunk* > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_typeid: // typeid
@@ -2454,7 +2536,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_tyfields: // tyfields
-      case symbol_kind::S_77_tyfields_1: // tyfields.1
+      case symbol_kind::S_79_tyfields_1: // tyfields.1
         value.copy< ast::fields_type* > (YY_MOVE (that.value));
         break;
 
@@ -2494,7 +2576,12 @@ switch (yykind)
     super_type::move (s);
     switch (this->kind ())
     {
+      case symbol_kind::S_76_classfields_1: // classfields.1
+        value.move< ast::ChunkInterface* > (YY_MOVE (s.value));
+        break;
+
       case symbol_kind::S_chunks: // chunks
+      case symbol_kind::S_classfields: // classfields
         value.move< ast::ChunkList* > (YY_MOVE (s.value));
         break;
 
@@ -2513,6 +2600,10 @@ switch (yykind)
 
       case symbol_kind::S_fundec: // fundec
         value.move< ast::FunctionDec* > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_classfield: // classfield
+        value.move< ast::MethodChunk* > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_typeid: // typeid
@@ -2556,7 +2647,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_tyfields: // tyfields
-      case symbol_kind::S_77_tyfields_1: // tyfields.1
+      case symbol_kind::S_79_tyfields_1: // tyfields.1
         value.move< ast::fields_type* > (YY_MOVE (s.value));
         break;
 
@@ -2648,7 +2739,7 @@ switch (yykind)
 
 
 } // parse
-#line 2652 "parse/parsetiger.hh"
+#line 2743 "parse/parsetiger.hh"
 
 
 // "%code provides" blocks.
@@ -2660,7 +2751,7 @@ switch (yykind)
     (Prefix parselex)(::parse::TigerParser& tp)
   # define YY_DECL YY_DECL_(yyFlexLexer::)
 
-#line 2664 "parse/parsetiger.hh"
+#line 2755 "parse/parsetiger.hh"
 
 
 #endif // !YY_PARSE_SRC_PARSE_PARSETIGER_HH_INCLUDED

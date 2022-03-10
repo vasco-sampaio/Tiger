@@ -158,24 +158,30 @@
   <a name="rule_74" id="rule_74"> 74</a> <span class="i">ty</span> → <span class="i">typeid</span>
   <a name="rule_75" id="rule_75"> 75</a>    | <b>"{"</b> <span class="i">tyfields</span> <b>"}"</b>
   <a name="rule_76" id="rule_76"> 76</a>    | <b>"array"</b> <b>"of"</b> <span class="i">typeid</span>
-  <a name="rule_77" id="rule_77"> 77</a>    | <b>"class"</b> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
-  <a name="rule_78" id="rule_78"> 78</a>    | <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
+  <a name="rule_77" id="rule_77"> 77</a>    | <b>"class"</b> <b>"{"</b> <b>"}"</b>
+  <a name="rule_78" id="rule_78"> 78</a>    | <b>"class"</b> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
+  <a name="rule_79" id="rule_79"> 79</a>    | <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <b>"}"</b>
+  <a name="rule_80" id="rule_80"> 80</a>    | <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
 
-  <a name="rule_79" id="rule_79"> 79</a> <span class="i">classfields</span> → %empty
-  <a name="rule_80" id="rule_80"> 80</a>             | <span class="i">vardec</span> <span class="i">classfields</span>
-  <a name="rule_81" id="rule_81"> 81</a>             | <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a name="rule_82" id="rule_82"> 82</a>             | <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
+  <a name="rule_81" id="rule_81"> 81</a> <span class="i">classfields</span> → <span class="i">classfields.1</span>
+  <a name="rule_82" id="rule_82"> 82</a>             | <span class="i">classfields.1</span> <span class="i">classfields</span>
 
-  <a name="rule_83" id="rule_83"> 83</a> <span class="i">tyfields</span> → %empty
-  <a name="rule_84" id="rule_84"> 84</a>          | <span class="i">tyfields.1</span>
+  <a name="rule_83" id="rule_83"> 83</a> <span class="i">classfields.1</span> → <span class="i">varchunk</span>
+  <a name="rule_84" id="rule_84"> 84</a>               | <span class="i">classfield</span>
 
-  <a name="rule_85" id="rule_85"> 85</a> <span class="i">tyfields.1</span> → <span class="i">tyfields.1</span> <b>","</b> <span class="i">tyfield</span>
-  <a name="rule_86" id="rule_86"> 86</a>            | <span class="i">tyfield</span>
+  <a name="rule_85" id="rule_85"> 85</a> <span class="i">classfield</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span>
+  <a name="rule_86" id="rule_86"> 86</a>            | <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
 
-  <a name="rule_87" id="rule_87"> 87</a> <span class="i">tyfield</span> → <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span>
+  <a name="rule_87" id="rule_87"> 87</a> <span class="i">tyfields</span> → %empty
+  <a name="rule_88" id="rule_88"> 88</a>          | <span class="i">tyfields.1</span>
 
-  <a name="rule_88" id="rule_88"> 88</a> <span class="i">typeid</span> → <b>"identifier"</b>
-  <a name="rule_89" id="rule_89"> 89</a>        | <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a name="rule_89" id="rule_89"> 89</a> <span class="i">tyfields.1</span> → <span class="i">tyfields.1</span> <b>","</b> <span class="i">tyfield</span>
+  <a name="rule_90" id="rule_90"> 90</a>            | <span class="i">tyfield</span>
+
+  <a name="rule_91" id="rule_91"> 91</a> <span class="i">tyfield</span> → <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span>
+
+  <a name="rule_92" id="rule_92"> 92</a> <span class="i">typeid</span> → <b>"identifier"</b>
+  <a name="rule_93" id="rule_93"> 93</a>        | <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 </p>
 
 <h3><a name="terminals" id="terminals"></a> Terminals, with rules where they appear</h3>
@@ -184,23 +190,23 @@
   <li><b>"end of file"</b> (0) <a href="#rule_0">0</a></li>
   <li><b>error</b> (256)</li>
   <li><b>"string"</b> &lt;std::string&gt; (258) <a href="#rule_13">13</a> <a href="#rule_68">68</a></li>
-  <li><b>"identifier"</b> &lt;misc::symbol&gt; (259) <a href="#rule_5">5</a> <a href="#rule_6">6</a> <a href="#rule_7">7</a> <a href="#rule_8">8</a> <a href="#rule_18">18</a> <a href="#rule_19">19</a> <a href="#rule_39">39</a> <a href="#rule_44">44</a> <a href="#rule_45">45</a> <a href="#rule_46">46</a> <a href="#rule_47">47</a> <a href="#rule_49">49</a> <a href="#rule_50">50</a> <a href="#rule_51">51</a> <a href="#rule_52">52</a> <a href="#rule_53">53</a> <a href="#rule_54">54</a> <a href="#rule_59">59</a> <a href="#rule_71">71</a> <a href="#rule_72">72</a> <a href="#rule_73">73</a> <a href="#rule_81">81</a> <a href="#rule_82">82</a> <a href="#rule_87">87</a> <a href="#rule_88">88</a></li>
-  <li><b>"integer"</b> &lt;int&gt; (260) <a href="#rule_11">11</a> <a href="#rule_89">89</a></li>
+  <li><b>"identifier"</b> &lt;misc::symbol&gt; (259) <a href="#rule_5">5</a> <a href="#rule_6">6</a> <a href="#rule_7">7</a> <a href="#rule_8">8</a> <a href="#rule_18">18</a> <a href="#rule_19">19</a> <a href="#rule_39">39</a> <a href="#rule_44">44</a> <a href="#rule_45">45</a> <a href="#rule_46">46</a> <a href="#rule_47">47</a> <a href="#rule_49">49</a> <a href="#rule_50">50</a> <a href="#rule_51">51</a> <a href="#rule_52">52</a> <a href="#rule_53">53</a> <a href="#rule_54">54</a> <a href="#rule_59">59</a> <a href="#rule_71">71</a> <a href="#rule_72">72</a> <a href="#rule_73">73</a> <a href="#rule_85">85</a> <a href="#rule_86">86</a> <a href="#rule_91">91</a> <a href="#rule_92">92</a></li>
+  <li><b>"integer"</b> &lt;int&gt; (260) <a href="#rule_11">11</a> <a href="#rule_93">93</a></li>
   <li><b>"&amp;"</b> (261) <a href="#rule_31">31</a></li>
   <li><b>"array"</b> (262) <a href="#rule_76">76</a></li>
   <li><b>":="</b> (263) <a href="#rule_35">35</a> <a href="#rule_39">39</a> <a href="#rule_49">49</a> <a href="#rule_50">50</a></li>
   <li><b>"break"</b> (264) <a href="#rule_40">40</a></li>
   <li><b>"_cast"</b> (265)</li>
-  <li><b>"class"</b> (266) <a href="#rule_72">72</a> <a href="#rule_73">73</a> <a href="#rule_77">77</a> <a href="#rule_78">78</a></li>
-  <li><b>":"</b> (267) <a href="#rule_50">50</a> <a href="#rule_52">52</a> <a href="#rule_54">54</a> <a href="#rule_59">59</a> <a href="#rule_82">82</a> <a href="#rule_87">87</a></li>
-  <li><b>","</b> (268) <a href="#rule_7">7</a> <a href="#rule_8">8</a> <a href="#rule_10">10</a> <a href="#rule_57">57</a> <a href="#rule_85">85</a></li>
+  <li><b>"class"</b> (266) <a href="#rule_72">72</a> <a href="#rule_73">73</a> <a href="#rule_77">77</a> <a href="#rule_78">78</a> <a href="#rule_79">79</a> <a href="#rule_80">80</a></li>
+  <li><b>":"</b> (267) <a href="#rule_50">50</a> <a href="#rule_52">52</a> <a href="#rule_54">54</a> <a href="#rule_59">59</a> <a href="#rule_86">86</a> <a href="#rule_91">91</a></li>
+  <li><b>","</b> (268) <a href="#rule_7">7</a> <a href="#rule_8">8</a> <a href="#rule_10">10</a> <a href="#rule_57">57</a> <a href="#rule_89">89</a></li>
   <li><b>"/"</b> (269) <a href="#rule_24">24</a></li>
   <li><b>"do"</b> (270) <a href="#rule_38">38</a> <a href="#rule_39">39</a></li>
   <li><b>"."</b> (271) <a href="#rule_44">44</a> <a href="#rule_45">45</a> <a href="#rule_47">47</a></li>
   <li><b>"else"</b> (272) <a href="#rule_37">37</a></li>
   <li><b>"end"</b> (273) <a href="#rule_41">41</a> <a href="#rule_42">42</a></li>
-  <li><b>"="</b> (274) <a href="#rule_5">5</a> <a href="#rule_6">6</a> <a href="#rule_7">7</a> <a href="#rule_8">8</a> <a href="#rule_25">25</a> <a href="#rule_51">51</a> <a href="#rule_52">52</a> <a href="#rule_71">71</a> <a href="#rule_81">81</a> <a href="#rule_82">82</a></li>
-  <li><b>"extends"</b> (275) <a href="#rule_73">73</a> <a href="#rule_78">78</a></li>
+  <li><b>"="</b> (274) <a href="#rule_5">5</a> <a href="#rule_6">6</a> <a href="#rule_7">7</a> <a href="#rule_8">8</a> <a href="#rule_25">25</a> <a href="#rule_51">51</a> <a href="#rule_52">52</a> <a href="#rule_71">71</a> <a href="#rule_85">85</a> <a href="#rule_86">86</a></li>
+  <li><b>"extends"</b> (275) <a href="#rule_73">73</a> <a href="#rule_79">79</a> <a href="#rule_80">80</a></li>
   <li><b>"for"</b> (276) <a href="#rule_39">39</a></li>
   <li><b>"function"</b> (277) <a href="#rule_51">51</a> <a href="#rule_52">52</a></li>
   <li><b>"&gt;="</b> (278) <a href="#rule_29">29</a></li>
@@ -208,14 +214,14 @@
   <li><b>"if"</b> (280) <a href="#rule_36">36</a> <a href="#rule_37">37</a></li>
   <li><b>"import"</b> (281) <a href="#rule_68">68</a></li>
   <li><b>"in"</b> (282) <a href="#rule_41">41</a> <a href="#rule_42">42</a></li>
-  <li><b>"{"</b> (283) <a href="#rule_15">15</a> <a href="#rule_16">16</a> <a href="#rule_72">72</a> <a href="#rule_73">73</a> <a href="#rule_75">75</a> <a href="#rule_77">77</a> <a href="#rule_78">78</a></li>
+  <li><b>"{"</b> (283) <a href="#rule_15">15</a> <a href="#rule_16">16</a> <a href="#rule_72">72</a> <a href="#rule_73">73</a> <a href="#rule_75">75</a> <a href="#rule_77">77</a> <a href="#rule_78">78</a> <a href="#rule_79">79</a> <a href="#rule_80">80</a></li>
   <li><b>"["</b> (284) <a href="#rule_14">14</a> <a href="#rule_48">48</a></li>
   <li><b>"&lt;="</b> (285) <a href="#rule_30">30</a></li>
   <li><b>"let"</b> (286) <a href="#rule_41">41</a> <a href="#rule_42">42</a></li>
-  <li><b>"("</b> (287) <a href="#rule_18">18</a> <a href="#rule_19">19</a> <a href="#rule_33">33</a> <a href="#rule_34">34</a> <a href="#rule_44">44</a> <a href="#rule_45">45</a> <a href="#rule_51">51</a> <a href="#rule_52">52</a> <a href="#rule_53">53</a> <a href="#rule_54">54</a> <a href="#rule_81">81</a> <a href="#rule_82">82</a> <a href="#rule_89">89</a></li>
+  <li><b>"("</b> (287) <a href="#rule_18">18</a> <a href="#rule_19">19</a> <a href="#rule_33">33</a> <a href="#rule_34">34</a> <a href="#rule_44">44</a> <a href="#rule_45">45</a> <a href="#rule_51">51</a> <a href="#rule_52">52</a> <a href="#rule_53">53</a> <a href="#rule_54">54</a> <a href="#rule_85">85</a> <a href="#rule_86">86</a> <a href="#rule_93">93</a></li>
   <li><b>"&lt;"</b> (288) <a href="#rule_28">28</a></li>
   <li><b>"-"</b> (289) <a href="#rule_20">20</a> <a href="#rule_22">22</a></li>
-  <li><b>"method"</b> (290) <a href="#rule_81">81</a> <a href="#rule_82">82</a></li>
+  <li><b>"method"</b> (290) <a href="#rule_85">85</a> <a href="#rule_86">86</a></li>
   <li><b>"&lt;&gt;"</b> (291) <a href="#rule_26">26</a></li>
   <li><b>"new"</b> (292) <a href="#rule_43">43</a></li>
   <li><b>"nil"</b> (293) <a href="#rule_12">12</a></li>
@@ -223,9 +229,9 @@
   <li><b>"|"</b> (295) <a href="#rule_32">32</a></li>
   <li><b>"+"</b> (296) <a href="#rule_21">21</a></li>
   <li><b>"primitive"</b> (297) <a href="#rule_53">53</a> <a href="#rule_54">54</a></li>
-  <li><b>"}"</b> (298) <a href="#rule_15">15</a> <a href="#rule_16">16</a> <a href="#rule_72">72</a> <a href="#rule_73">73</a> <a href="#rule_75">75</a> <a href="#rule_77">77</a> <a href="#rule_78">78</a></li>
+  <li><b>"}"</b> (298) <a href="#rule_15">15</a> <a href="#rule_16">16</a> <a href="#rule_72">72</a> <a href="#rule_73">73</a> <a href="#rule_75">75</a> <a href="#rule_77">77</a> <a href="#rule_78">78</a> <a href="#rule_79">79</a> <a href="#rule_80">80</a></li>
   <li><b>"]"</b> (299) <a href="#rule_14">14</a> <a href="#rule_48">48</a></li>
-  <li><b>")"</b> (300) <a href="#rule_18">18</a> <a href="#rule_19">19</a> <a href="#rule_33">33</a> <a href="#rule_34">34</a> <a href="#rule_44">44</a> <a href="#rule_45">45</a> <a href="#rule_51">51</a> <a href="#rule_52">52</a> <a href="#rule_53">53</a> <a href="#rule_54">54</a> <a href="#rule_81">81</a> <a href="#rule_82">82</a> <a href="#rule_89">89</a></li>
+  <li><b>")"</b> (300) <a href="#rule_18">18</a> <a href="#rule_19">19</a> <a href="#rule_33">33</a> <a href="#rule_34">34</a> <a href="#rule_44">44</a> <a href="#rule_45">45</a> <a href="#rule_51">51</a> <a href="#rule_52">52</a> <a href="#rule_53">53</a> <a href="#rule_54">54</a> <a href="#rule_85">85</a> <a href="#rule_86">86</a> <a href="#rule_93">93</a></li>
   <li><b>";"</b> (301) <a href="#rule_4">4</a></li>
   <li><b>"then"</b> (302) <a href="#rule_36">36</a> <a href="#rule_37">37</a></li>
   <li><b>"*"</b> (303) <a href="#rule_23">23</a></li>
@@ -235,7 +241,7 @@
   <li><b>"while"</b> (307) <a href="#rule_38">38</a></li>
   <li><b>UMINUS</b> (308)</li>
   <li><b>"_chunks"</b> (309)</li>
-  <li><b>"_namety"</b> (310) <a href="#rule_89">89</a></li>
+  <li><b>"_namety"</b> (310) <a href="#rule_93">93</a></li>
 </ul>
 
 <h3><a name="nonterminals" id="nonterminals"></a> Nonterminals, with rules where they appear</h3>
@@ -279,7 +285,7 @@
   <li><b>exp</b> &lt;ast::Exp*&gt; (62)
     <ul>
       <li>on left: <a href="#rule_11">11</a> <a href="#rule_12">12</a> <a href="#rule_13">13</a> <a href="#rule_14">14</a> <a href="#rule_15">15</a> <a href="#rule_16">16</a> <a href="#rule_17">17</a> <a href="#rule_18">18</a> <a href="#rule_19">19</a> <a href="#rule_20">20</a> <a href="#rule_21">21</a> <a href="#rule_22">22</a> <a href="#rule_23">23</a> <a href="#rule_24">24</a> <a href="#rule_25">25</a> <a href="#rule_26">26</a> <a href="#rule_27">27</a> <a href="#rule_28">28</a> <a href="#rule_29">29</a> <a href="#rule_30">30</a> <a href="#rule_31">31</a> <a href="#rule_32">32</a> <a href="#rule_33">33</a> <a href="#rule_34">34</a> <a href="#rule_35">35</a> <a href="#rule_36">36</a> <a href="#rule_37">37</a> <a href="#rule_38">38</a> <a href="#rule_39">39</a> <a href="#rule_40">40</a> <a href="#rule_41">41</a> <a href="#rule_42">42</a> <a href="#rule_43">43</a> <a href="#rule_44">44</a> <a href="#rule_45">45</a></li>
-      <li>on right: <a href="#rule_1">1</a> <a href="#rule_3">3</a> <a href="#rule_4">4</a> <a href="#rule_5">5</a> <a href="#rule_6">6</a> <a href="#rule_7">7</a> <a href="#rule_8">8</a> <a href="#rule_9">9</a> <a href="#rule_10">10</a> <a href="#rule_14">14</a> <a href="#rule_20">20</a> <a href="#rule_21">21</a> <a href="#rule_22">22</a> <a href="#rule_23">23</a> <a href="#rule_24">24</a> <a href="#rule_25">25</a> <a href="#rule_26">26</a> <a href="#rule_27">27</a> <a href="#rule_28">28</a> <a href="#rule_29">29</a> <a href="#rule_30">30</a> <a href="#rule_31">31</a> <a href="#rule_32">32</a> <a href="#rule_35">35</a> <a href="#rule_36">36</a> <a href="#rule_37">37</a> <a href="#rule_38">38</a> <a href="#rule_39">39</a> <a href="#rule_48">48</a> <a href="#rule_49">49</a> <a href="#rule_50">50</a> <a href="#rule_51">51</a> <a href="#rule_52">52</a> <a href="#rule_81">81</a> <a href="#rule_82">82</a></li>
+      <li>on right: <a href="#rule_1">1</a> <a href="#rule_3">3</a> <a href="#rule_4">4</a> <a href="#rule_5">5</a> <a href="#rule_6">6</a> <a href="#rule_7">7</a> <a href="#rule_8">8</a> <a href="#rule_9">9</a> <a href="#rule_10">10</a> <a href="#rule_14">14</a> <a href="#rule_20">20</a> <a href="#rule_21">21</a> <a href="#rule_22">22</a> <a href="#rule_23">23</a> <a href="#rule_24">24</a> <a href="#rule_25">25</a> <a href="#rule_26">26</a> <a href="#rule_27">27</a> <a href="#rule_28">28</a> <a href="#rule_29">29</a> <a href="#rule_30">30</a> <a href="#rule_31">31</a> <a href="#rule_32">32</a> <a href="#rule_35">35</a> <a href="#rule_36">36</a> <a href="#rule_37">37</a> <a href="#rule_38">38</a> <a href="#rule_39">39</a> <a href="#rule_48">48</a> <a href="#rule_49">49</a> <a href="#rule_50">50</a> <a href="#rule_51">51</a> <a href="#rule_52">52</a> <a href="#rule_85">85</a> <a href="#rule_86">86</a></li>
     </ul>
   </li>
   <li><b>lvalue</b> &lt;ast::Var*&gt; (63)
@@ -291,7 +297,7 @@
   <li><b>vardec</b> &lt;ast::VarDec*&gt; (64)
     <ul>
       <li>on left: <a href="#rule_49">49</a> <a href="#rule_50">50</a></li>
-      <li>on right: <a href="#rule_62">62</a> <a href="#rule_63">63</a> <a href="#rule_80">80</a></li>
+      <li>on right: <a href="#rule_62">62</a> <a href="#rule_63">63</a></li>
     </ul>
   </li>
   <li><b>fundec</b> &lt;ast::FunctionDec*&gt; (65)
@@ -303,7 +309,7 @@
   <li><b>funfields</b> &lt;ast::VarChunk*&gt; (66)
     <ul>
       <li>on left: <a href="#rule_55">55</a> <a href="#rule_56">56</a></li>
-      <li>on right: <a href="#rule_51">51</a> <a href="#rule_52">52</a> <a href="#rule_53">53</a> <a href="#rule_54">54</a></li>
+      <li>on right: <a href="#rule_51">51</a> <a href="#rule_52">52</a> <a href="#rule_53">53</a> <a href="#rule_54">54</a> <a href="#rule_85">85</a> <a href="#rule_86">86</a></li>
     </ul>
   </li>
   <li><b>funfields.1</b> &lt;ast::VarChunk*&gt; (67)
@@ -327,7 +333,7 @@
   <li><b>varchunk</b> &lt;ast::VarChunk*&gt; (70)
     <ul>
       <li>on left: <a href="#rule_62">62</a> <a href="#rule_63">63</a></li>
-      <li>on right: <a href="#rule_63">63</a> <a href="#rule_67">67</a></li>
+      <li>on right: <a href="#rule_63">63</a> <a href="#rule_67">67</a> <a href="#rule_83">83</a></li>
     </ul>
   </li>
   <li><b>chunks</b> &lt;ast::ChunkList*&gt; (71)
@@ -350,38 +356,50 @@
   </li>
   <li><b>ty</b> &lt;ast::Ty*&gt; (74)
     <ul>
-      <li>on left: <a href="#rule_74">74</a> <a href="#rule_75">75</a> <a href="#rule_76">76</a> <a href="#rule_77">77</a> <a href="#rule_78">78</a></li>
+      <li>on left: <a href="#rule_74">74</a> <a href="#rule_75">75</a> <a href="#rule_76">76</a> <a href="#rule_77">77</a> <a href="#rule_78">78</a> <a href="#rule_79">79</a> <a href="#rule_80">80</a></li>
       <li>on right: <a href="#rule_71">71</a></li>
     </ul>
   </li>
-  <li><b>classfields</b> (75)
+  <li><b>classfields</b> &lt;ast::ChunkList*&gt; (75)
     <ul>
-      <li>on left: <a href="#rule_79">79</a> <a href="#rule_80">80</a> <a href="#rule_81">81</a> <a href="#rule_82">82</a></li>
-      <li>on right: <a href="#rule_72">72</a> <a href="#rule_73">73</a> <a href="#rule_77">77</a> <a href="#rule_78">78</a> <a href="#rule_80">80</a> <a href="#rule_81">81</a> <a href="#rule_82">82</a></li>
+      <li>on left: <a href="#rule_81">81</a> <a href="#rule_82">82</a></li>
+      <li>on right: <a href="#rule_72">72</a> <a href="#rule_73">73</a> <a href="#rule_78">78</a> <a href="#rule_80">80</a> <a href="#rule_82">82</a></li>
     </ul>
   </li>
-  <li><b>tyfields</b> &lt;ast::fields_type*&gt; (76)
+  <li><b>classfields.1</b> &lt;ast::ChunkInterface*&gt; (76)
     <ul>
       <li>on left: <a href="#rule_83">83</a> <a href="#rule_84">84</a></li>
-      <li>on right: <a href="#rule_75">75</a> <a href="#rule_81">81</a> <a href="#rule_82">82</a></li>
+      <li>on right: <a href="#rule_81">81</a> <a href="#rule_82">82</a></li>
     </ul>
   </li>
-  <li><b>tyfields.1</b> &lt;ast::fields_type*&gt; (77)
+  <li><b>classfield</b> &lt;ast::MethodChunk*&gt; (77)
     <ul>
       <li>on left: <a href="#rule_85">85</a> <a href="#rule_86">86</a></li>
-      <li>on right: <a href="#rule_84">84</a> <a href="#rule_85">85</a></li>
+      <li>on right: <a href="#rule_84">84</a></li>
     </ul>
   </li>
-  <li><b>tyfield</b> &lt;ast::Field*&gt; (78)
+  <li><b>tyfields</b> &lt;ast::fields_type*&gt; (78)
     <ul>
-      <li>on left: <a href="#rule_87">87</a></li>
-      <li>on right: <a href="#rule_85">85</a> <a href="#rule_86">86</a></li>
+      <li>on left: <a href="#rule_87">87</a> <a href="#rule_88">88</a></li>
+      <li>on right: <a href="#rule_75">75</a></li>
     </ul>
   </li>
-  <li><b>typeid</b> &lt;ast::NameTy*&gt; (79)
+  <li><b>tyfields.1</b> &lt;ast::fields_type*&gt; (79)
     <ul>
-      <li>on left: <a href="#rule_88">88</a> <a href="#rule_89">89</a></li>
-      <li>on right: <a href="#rule_14">14</a> <a href="#rule_15">15</a> <a href="#rule_16">16</a> <a href="#rule_43">43</a> <a href="#rule_50">50</a> <a href="#rule_52">52</a> <a href="#rule_54">54</a> <a href="#rule_59">59</a> <a href="#rule_73">73</a> <a href="#rule_74">74</a> <a href="#rule_76">76</a> <a href="#rule_78">78</a> <a href="#rule_82">82</a> <a href="#rule_87">87</a></li>
+      <li>on left: <a href="#rule_89">89</a> <a href="#rule_90">90</a></li>
+      <li>on right: <a href="#rule_88">88</a> <a href="#rule_89">89</a></li>
+    </ul>
+  </li>
+  <li><b>tyfield</b> &lt;ast::Field*&gt; (80)
+    <ul>
+      <li>on left: <a href="#rule_91">91</a></li>
+      <li>on right: <a href="#rule_89">89</a> <a href="#rule_90">90</a></li>
+    </ul>
+  </li>
+  <li><b>typeid</b> &lt;ast::NameTy*&gt; (81)
+    <ul>
+      <li>on left: <a href="#rule_92">92</a> <a href="#rule_93">93</a></li>
+      <li>on right: <a href="#rule_14">14</a> <a href="#rule_15">15</a> <a href="#rule_16">16</a> <a href="#rule_43">43</a> <a href="#rule_50">50</a> <a href="#rule_52">52</a> <a href="#rule_54">54</a> <a href="#rule_59">59</a> <a href="#rule_73">73</a> <a href="#rule_74">74</a> <a href="#rule_76">76</a> <a href="#rule_79">79</a> <a href="#rule_80">80</a> <a href="#rule_86">86</a> <a href="#rule_91">91</a></li>
     </ul>
   </li>
 </ul><h2><a name="automaton" id="automaton"></a> Automaton</h2>
@@ -449,8 +467,8 @@
   <a href="#rule_71"> 71</a> <span class="i">tydec</span> → <span class="dot">•</span> <b>"type"</b> <b>"identifier"</b> <b>"="</b> <span class="i">ty</span>
   <a href="#rule_72"> 72</a>       | <span class="dot">•</span> <b>"class"</b> <b>"identifier"</b> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
   <a href="#rule_73"> 73</a>       | <span class="dot">•</span> <b>"class"</b> <b>"identifier"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -499,13 +517,13 @@
 <p class="pre">  <a href="#rule_18"> 18</a> <span class="i">exp</span> → <b>"identifier"</b> <span class="dot">•</span> <b>"("</b> <b>")"</b>
   <a href="#rule_19"> 19</a>     | <b>"identifier"</b> <span class="dot">•</span> <b>"("</b> <span class="i">function_param</span> <b>")"</b>
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <b>"identifier"</b> <span class="dot">•</span>  ["end of file", "&amp;", ":=", "class", ",", "/", "do", ".", "else", "end", "=", "function", "&gt;=", "&gt;", "import", "in", "[", "&lt;=", "&lt;", "-", "method", "&lt;&gt;", "|", "+", "primitive", "}", "]", ")", ";", "then", "*", "to", "type", "var"]
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <b>"identifier"</b> <span class="dot">•</span>  ["{", "["]
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <b>"identifier"</b> <span class="dot">•</span>  ["{", "["]
 
     "("  <a href="#state_31">shift, and go to state 31</a>
 
-    "{"       <a href="#rule_88">reduce using rule 88</a> (typeid)
+    "{"       <a href="#rule_92">reduce using rule 92</a> (typeid)
     "["       <a href="#rule_46">reduce using rule 46</a> (lvalue)
-    "["       [<a href="#rule_88">reduce using rule 88</a> (typeid)]
+    "["       [<a href="#rule_92">reduce using rule 92</a> (typeid)]
     $default  <a href="#rule_46">reduce using rule 46</a> (lvalue)
 </p>
 
@@ -588,8 +606,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -704,8 +722,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -769,8 +787,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -794,8 +812,8 @@
 <h3><a name="state_13" id="state_13"></a>State 13</h3>
 
 <p class="pre">  <a href="#rule_43"> 43</a> <span class="i">exp</span> → <b>"new"</b> <span class="dot">•</span> <span class="i">typeid</span>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "identifier"  <a href="#state_42">shift, and go to state 42</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
@@ -874,8 +892,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -898,7 +916,7 @@
 
 <h3><a name="state_19" id="state_19"></a>State 19</h3>
 
-<p class="pre">  <a href="#rule_89"> 89</a> <span class="i">typeid</span> → <b>"_namety"</b> <span class="dot">•</span> <b>"("</b> <b>"integer"</b> <b>")"</b>
+<p class="pre">  <a href="#rule_93"> 93</a> <span class="i">typeid</span> → <b>"_namety"</b> <span class="dot">•</span> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "("  <a href="#state_48">shift, and go to state 48</a>
 </p>
@@ -963,7 +981,7 @@
 <p class="pre">  <a href="#rule_49"> 49</a> <span class="i">vardec</span> → <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":="</b> <span class="i">exp</span>
   <a href="#rule_50"> 50</a>        | <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <b>":="</b> <span class="i">exp</span>
   <a href="#rule_62"> 62</a> <span class="i">varchunk</span> → <span class="dot">•</span> <span class="i">vardec</span>
-  <a href="#rule_62"> 62</a>          | <span class="i">vardec</span> <span class="dot">•</span>  ["end of file", "class", "function", "import", "in", "primitive", "type"]
+  <a href="#rule_62"> 62</a>          | <span class="i">vardec</span> <span class="dot">•</span>  ["end of file", "class", "function", "import", "in", "method", "primitive", "}", "type"]
   <a href="#rule_63"> 63</a>          | <span class="dot">•</span> <span class="i">vardec</span> <span class="i">varchunk</span>
   <a href="#rule_63"> 63</a>          | <span class="i">vardec</span> <span class="dot">•</span> <span class="i">varchunk</span>
 
@@ -1209,8 +1227,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -1421,9 +1439,9 @@
 
 <h3><a name="state_42" id="state_42"></a>State 42</h3>
 
-<p class="pre">  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <b>"identifier"</b> <span class="dot">•</span>
+<p class="pre">  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <b>"identifier"</b> <span class="dot">•</span>
 
-    $default  <a href="#rule_88">reduce using rule 88</a> (typeid)
+    $default  <a href="#rule_92">reduce using rule 92</a> (typeid)
 </p>
 
 <h3><a name="state_43" id="state_43"></a>State 43</h3>
@@ -1490,7 +1508,7 @@
 
 <h3><a name="state_48" id="state_48"></a>State 48</h3>
 
-<p class="pre">  <a href="#rule_89"> 89</a> <span class="i">typeid</span> → <b>"_namety"</b> <b>"("</b> <span class="dot">•</span> <b>"integer"</b> <b>")"</b>
+<p class="pre">  <a href="#rule_93"> 93</a> <span class="i">typeid</span> → <b>"_namety"</b> <b>"("</b> <span class="dot">•</span> <b>"integer"</b> <b>")"</b>
 
     "integer"  <a href="#state_90">shift, and go to state 90</a>
 </p>
@@ -1543,8 +1561,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -1606,8 +1624,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -1669,8 +1687,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -1732,8 +1750,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -1795,8 +1813,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -1858,8 +1876,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -1921,8 +1939,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -1984,8 +2002,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -2047,8 +2065,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -2110,8 +2128,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -2173,8 +2191,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -2236,8 +2254,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -2299,8 +2317,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -2371,8 +2389,8 @@
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
   <a href="#rule_48"> 48</a>        | <span class="i">lvalue</span> <b>"["</b> <span class="dot">•</span> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -2489,8 +2507,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -2562,8 +2580,8 @@
 <h3><a name="state_76" id="state_76"></a>State 76</h3>
 
 <p class="pre">  <a href="#rule_73"> 73</a> <span class="i">tydec</span> → <b>"class"</b> <b>"identifier"</b> <b>"extends"</b> <span class="dot">•</span> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "identifier"  <a href="#state_42">shift, and go to state 42</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
@@ -2575,19 +2593,24 @@
 
 <p class="pre">  <a href="#rule_49"> 49</a> <span class="i">vardec</span> → <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":="</b> <span class="i">exp</span>
   <a href="#rule_50"> 50</a>        | <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <b>":="</b> <span class="i">exp</span>
+  <a href="#rule_62"> 62</a> <span class="i">varchunk</span> → <span class="dot">•</span> <span class="i">vardec</span>
+  <a href="#rule_63"> 63</a>          | <span class="dot">•</span> <span class="i">vardec</span> <span class="i">varchunk</span>
   <a href="#rule_72"> 72</a> <span class="i">tydec</span> → <b>"class"</b> <b>"identifier"</b> <b>"{"</b> <span class="dot">•</span> <span class="i">classfields</span> <b>"}"</b>
-  <a href="#rule_79"> 79</a> <span class="i">classfields</span> → <span class="dot">•</span> %empty  ["}"]
-  <a href="#rule_80"> 80</a>             | <span class="dot">•</span> <span class="i">vardec</span> <span class="i">classfields</span>
-  <a href="#rule_81"> 81</a>             | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_82"> 82</a>             | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
+  <a href="#rule_81"> 81</a> <span class="i">classfields</span> → <span class="dot">•</span> <span class="i">classfields.1</span>
+  <a href="#rule_82"> 82</a>             | <span class="dot">•</span> <span class="i">classfields.1</span> <span class="i">classfields</span>
+  <a href="#rule_83"> 83</a> <span class="i">classfields.1</span> → <span class="dot">•</span> <span class="i">varchunk</span>
+  <a href="#rule_84"> 84</a>               | <span class="dot">•</span> <span class="i">classfield</span>
+  <a href="#rule_85"> 85</a> <span class="i">classfield</span> → <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span>
+  <a href="#rule_86"> 86</a>            | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
 
     "method"  <a href="#state_113">shift, and go to state 113</a>
     "var"     <a href="#state_17">shift, and go to state 17</a>
 
-    $default  <a href="#rule_79">reduce using rule 79</a> (classfields)
-
-    vardec       <a href="#state_114">go to state 114</a>
-    classfields  <a href="#state_115">go to state 115</a>
+    vardec         <a href="#state_23">go to state 23</a>
+    varchunk       <a href="#state_114">go to state 114</a>
+    classfields    <a href="#state_115">go to state 115</a>
+    classfields.1  <a href="#state_116">go to state 116</a>
+    classfield     <a href="#state_117">go to state 117</a>
 </p>
 
 <h3><a name="state_78" id="state_78"></a>State 78</h3>
@@ -2631,8 +2654,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -2648,7 +2671,7 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_116">go to state 116</a>
+    exp     <a href="#state_118">go to state 118</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
@@ -2663,13 +2686,13 @@
   <a href="#rule_58"> 58</a>             | <span class="dot">•</span> <span class="i">funfield</span>
   <a href="#rule_59"> 59</a> <span class="i">funfield</span> → <span class="dot">•</span> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span>
 
-    "identifier"  <a href="#state_117">shift, and go to state 117</a>
+    "identifier"  <a href="#state_119">shift, and go to state 119</a>
 
     $default  <a href="#rule_55">reduce using rule 55</a> (funfields)
 
-    funfields    <a href="#state_118">go to state 118</a>
-    funfields.1  <a href="#state_119">go to state 119</a>
-    funfield     <a href="#state_120">go to state 120</a>
+    funfields    <a href="#state_120">go to state 120</a>
+    funfields.1  <a href="#state_121">go to state 121</a>
+    funfield     <a href="#state_122">go to state 122</a>
 </p>
 
 <h3><a name="state_80" id="state_80"></a>State 80</h3>
@@ -2714,8 +2737,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -2731,7 +2754,7 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_121">go to state 121</a>
+    exp     <a href="#state_123">go to state 123</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
@@ -2787,14 +2810,14 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
     "integer"     <a href="#state_3">shift, and go to state 3</a>
     "break"       <a href="#state_4">shift, and go to state 4</a>
-    "end"         <a href="#state_122">shift, and go to state 122</a>
+    "end"         <a href="#state_124">shift, and go to state 124</a>
     "for"         <a href="#state_6">shift, and go to state 6</a>
     "if"          <a href="#state_8">shift, and go to state 8</a>
     "let"         <a href="#state_10">shift, and go to state 10</a>
@@ -2805,7 +2828,7 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exps    <a href="#state_123">go to state 123</a>
+    exps    <a href="#state_125">go to state 125</a>
     exp     <a href="#state_40">go to state 40</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
@@ -2861,8 +2884,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -2878,7 +2901,7 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exps    <a href="#state_124">go to state 124</a>
+    exps    <a href="#state_126">go to state 126</a>
     exp     <a href="#state_40">go to state 40</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
@@ -2894,13 +2917,13 @@
   <a href="#rule_58"> 58</a>             | <span class="dot">•</span> <span class="i">funfield</span>
   <a href="#rule_59"> 59</a> <span class="i">funfield</span> → <span class="dot">•</span> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span>
 
-    "identifier"  <a href="#state_117">shift, and go to state 117</a>
+    "identifier"  <a href="#state_119">shift, and go to state 119</a>
 
     $default  <a href="#rule_55">reduce using rule 55</a> (funfields)
 
-    funfields    <a href="#state_125">go to state 125</a>
-    funfields.1  <a href="#state_119">go to state 119</a>
-    funfield     <a href="#state_120">go to state 120</a>
+    funfields    <a href="#state_127">go to state 127</a>
+    funfields.1  <a href="#state_121">go to state 121</a>
+    funfield     <a href="#state_122">go to state 122</a>
 </p>
 
 <h3><a name="state_86" id="state_86"></a>State 86</h3>
@@ -2909,19 +2932,21 @@
   <a href="#rule_74"> 74</a> <span class="i">ty</span> → <span class="dot">•</span> <span class="i">typeid</span>
   <a href="#rule_75"> 75</a>    | <span class="dot">•</span> <b>"{"</b> <span class="i">tyfields</span> <b>"}"</b>
   <a href="#rule_76"> 76</a>    | <span class="dot">•</span> <b>"array"</b> <b>"of"</b> <span class="i">typeid</span>
-  <a href="#rule_77"> 77</a>    | <span class="dot">•</span> <b>"class"</b> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
-  <a href="#rule_78"> 78</a>    | <span class="dot">•</span> <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_77"> 77</a>    | <span class="dot">•</span> <b>"class"</b> <b>"{"</b> <b>"}"</b>
+  <a href="#rule_78"> 78</a>    | <span class="dot">•</span> <b>"class"</b> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
+  <a href="#rule_79"> 79</a>    | <span class="dot">•</span> <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <b>"}"</b>
+  <a href="#rule_80"> 80</a>    | <span class="dot">•</span> <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "identifier"  <a href="#state_42">shift, and go to state 42</a>
-    "array"       <a href="#state_126">shift, and go to state 126</a>
-    "class"       <a href="#state_127">shift, and go to state 127</a>
-    "{"           <a href="#state_128">shift, and go to state 128</a>
+    "array"       <a href="#state_128">shift, and go to state 128</a>
+    "class"       <a href="#state_129">shift, and go to state 129</a>
+    "{"           <a href="#state_130">shift, and go to state 130</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    ty      <a href="#state_129">go to state 129</a>
-    typeid  <a href="#state_130">go to state 130</a>
+    ty      <a href="#state_131">go to state 131</a>
+    typeid  <a href="#state_132">go to state 132</a>
 </p>
 
 <h3><a name="state_87" id="state_87"></a>State 87</h3>
@@ -2965,8 +2990,8 @@
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
   <a href="#rule_49"> 49</a> <span class="i">vardec</span> → <b>"var"</b> <b>"identifier"</b> <b>":="</b> <span class="dot">•</span> <span class="i">exp</span>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -2982,7 +3007,7 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_131">go to state 131</a>
+    exp     <a href="#state_133">go to state 133</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
@@ -2990,13 +3015,13 @@
 <h3><a name="state_88" id="state_88"></a>State 88</h3>
 
 <p class="pre">  <a href="#rule_50"> 50</a> <span class="i">vardec</span> → <b>"var"</b> <b>"identifier"</b> <b>":"</b> <span class="dot">•</span> <span class="i">typeid</span> <b>":="</b> <span class="i">exp</span>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "identifier"  <a href="#state_42">shift, and go to state 42</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    typeid  <a href="#state_132">go to state 132</a>
+    typeid  <a href="#state_134">go to state 134</a>
 </p>
 
 <h3><a name="state_89" id="state_89"></a>State 89</h3>
@@ -3040,8 +3065,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -3057,16 +3082,16 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_133">go to state 133</a>
+    exp     <a href="#state_135">go to state 135</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
 
 <h3><a name="state_90" id="state_90"></a>State 90</h3>
 
-<p class="pre">  <a href="#rule_89"> 89</a> <span class="i">typeid</span> → <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <span class="dot">•</span> <b>")"</b>
+<p class="pre">  <a href="#rule_93"> 93</a> <span class="i">typeid</span> → <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <span class="dot">•</span> <b>")"</b>
 
-    ")"  <a href="#state_134">shift, and go to state 134</a>
+    ")"  <a href="#state_136">shift, and go to state 136</a>
 </p>
 
 <h3><a name="state_91" id="state_91"></a>State 91</h3>
@@ -3592,7 +3617,7 @@
   <a href="#rule_45"> 45</a>     | <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b> <span class="dot">•</span> <b>"("</b> <span class="i">function_param</span> <b>")"</b>
   <a href="#rule_47"> 47</a> <span class="i">lvalue</span> → <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b> <span class="dot">•</span>  ["end of file", "&amp;", ":=", "class", ",", "/", "do", ".", "else", "end", "=", "function", "&gt;=", "&gt;", "import", "in", "[", "&lt;=", "&lt;", "-", "method", "&lt;&gt;", "|", "+", "primitive", "}", "]", ")", ";", "then", "*", "to", "type", "var"]
 
-    "("  <a href="#state_135">shift, and go to state 135</a>
+    "("  <a href="#state_137">shift, and go to state 137</a>
 
     $default  <a href="#rule_47">reduce using rule 47</a> (lvalue)
 </p>
@@ -3624,7 +3649,7 @@
     "&lt;&gt;"  <a href="#state_58">shift, and go to state 58</a>
     "|"   <a href="#state_59">shift, and go to state 59</a>
     "+"   <a href="#state_60">shift, and go to state 60</a>
-    "]"   <a href="#state_136">shift, and go to state 136</a>
+    "]"   <a href="#state_138">shift, and go to state 138</a>
     "*"   <a href="#state_61">shift, and go to state 61</a>
 </p>
 
@@ -3633,7 +3658,7 @@
 <p class="pre">  <a href="#rule_5">  5</a> <span class="i">record_creation</span> → <b>"identifier"</b> <span class="dot">•</span> <b>"="</b> <span class="i">exp</span>
   <a href="#rule_6">  6</a>                 | <b>"identifier"</b> <span class="dot">•</span> <b>"="</b> <span class="i">exp</span> <span class="i">record_init</span>
 
-    "="  <a href="#state_137">shift, and go to state 137</a>
+    "="  <a href="#state_139">shift, and go to state 139</a>
 </p>
 
 <h3><a name="state_107" id="state_107"></a>State 107</h3>
@@ -3647,7 +3672,7 @@
 
 <p class="pre">  <a href="#rule_16"> 16</a> <span class="i">exp</span> → <span class="i">typeid</span> <b>"{"</b> <span class="i">record_creation</span> <span class="dot">•</span> <b>"}"</b>
 
-    "}"  <a href="#state_138">shift, and go to state 138</a>
+    "}"  <a href="#state_140">shift, and go to state 140</a>
 </p>
 
 <h3><a name="state_109" id="state_109"></a>State 109</h3>
@@ -3677,7 +3702,7 @@
     "&lt;&gt;"  <a href="#state_58">shift, and go to state 58</a>
     "|"   <a href="#state_59">shift, and go to state 59</a>
     "+"   <a href="#state_60">shift, and go to state 60</a>
-    "]"   <a href="#state_139">shift, and go to state 139</a>
+    "]"   <a href="#state_141">shift, and go to state 141</a>
     "*"   <a href="#state_61">shift, and go to state 61</a>
 </p>
 
@@ -3731,8 +3756,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -3748,7 +3773,7 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    function_param  <a href="#state_140">go to state 140</a>
+    function_param  <a href="#state_142">go to state 142</a>
     exp             <a href="#state_75">go to state 75</a>
     lvalue          <a href="#state_22">go to state 22</a>
     typeid          <a href="#state_30">go to state 30</a>
@@ -3758,44 +3783,66 @@
 
 <p class="pre">  <a href="#rule_73"> 73</a> <span class="i">tydec</span> → <b>"class"</b> <b>"identifier"</b> <b>"extends"</b> <span class="i">typeid</span> <span class="dot">•</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
 
-    "{"  <a href="#state_141">shift, and go to state 141</a>
+    "{"  <a href="#state_143">shift, and go to state 143</a>
 </p>
 
 <h3><a name="state_113" id="state_113"></a>State 113</h3>
 
-<p class="pre">  <a href="#rule_81"> 81</a> <span class="i">classfields</span> → <b>"method"</b> <span class="dot">•</span> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_82"> 82</a>             | <b>"method"</b> <span class="dot">•</span> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
+<p class="pre">  <a href="#rule_85"> 85</a> <span class="i">classfield</span> → <b>"method"</b> <span class="dot">•</span> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span>
+  <a href="#rule_86"> 86</a>            | <b>"method"</b> <span class="dot">•</span> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
 
-    "identifier"  <a href="#state_142">shift, and go to state 142</a>
+    "identifier"  <a href="#state_144">shift, and go to state 144</a>
 </p>
 
 <h3><a name="state_114" id="state_114"></a>State 114</h3>
 
-<p class="pre">  <a href="#rule_49"> 49</a> <span class="i">vardec</span> → <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":="</b> <span class="i">exp</span>
-  <a href="#rule_50"> 50</a>        | <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <b>":="</b> <span class="i">exp</span>
-  <a href="#rule_79"> 79</a> <span class="i">classfields</span> → <span class="dot">•</span> %empty  ["}"]
-  <a href="#rule_80"> 80</a>             | <span class="dot">•</span> <span class="i">vardec</span> <span class="i">classfields</span>
-  <a href="#rule_80"> 80</a>             | <span class="i">vardec</span> <span class="dot">•</span> <span class="i">classfields</span>
-  <a href="#rule_81"> 81</a>             | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_82"> 82</a>             | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
+<p class="pre">  <a href="#rule_83"> 83</a> <span class="i">classfields.1</span> → <span class="i">varchunk</span> <span class="dot">•</span>
 
-    "method"  <a href="#state_113">shift, and go to state 113</a>
-    "var"     <a href="#state_17">shift, and go to state 17</a>
-
-    $default  <a href="#rule_79">reduce using rule 79</a> (classfields)
-
-    vardec       <a href="#state_114">go to state 114</a>
-    classfields  <a href="#state_143">go to state 143</a>
+    $default  <a href="#rule_83">reduce using rule 83</a> (classfields.1)
 </p>
 
 <h3><a name="state_115" id="state_115"></a>State 115</h3>
 
 <p class="pre">  <a href="#rule_72"> 72</a> <span class="i">tydec</span> → <b>"class"</b> <b>"identifier"</b> <b>"{"</b> <span class="i">classfields</span> <span class="dot">•</span> <b>"}"</b>
 
-    "}"  <a href="#state_144">shift, and go to state 144</a>
+    "}"  <a href="#state_145">shift, and go to state 145</a>
 </p>
 
 <h3><a name="state_116" id="state_116"></a>State 116</h3>
+
+<p class="pre">  <a href="#rule_49"> 49</a> <span class="i">vardec</span> → <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":="</b> <span class="i">exp</span>
+  <a href="#rule_50"> 50</a>        | <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <b>":="</b> <span class="i">exp</span>
+  <a href="#rule_62"> 62</a> <span class="i">varchunk</span> → <span class="dot">•</span> <span class="i">vardec</span>
+  <a href="#rule_63"> 63</a>          | <span class="dot">•</span> <span class="i">vardec</span> <span class="i">varchunk</span>
+  <a href="#rule_81"> 81</a> <span class="i">classfields</span> → <span class="dot">•</span> <span class="i">classfields.1</span>
+  <a href="#rule_81"> 81</a>             | <span class="i">classfields.1</span> <span class="dot">•</span>  ["}"]
+  <a href="#rule_82"> 82</a>             | <span class="dot">•</span> <span class="i">classfields.1</span> <span class="i">classfields</span>
+  <a href="#rule_82"> 82</a>             | <span class="i">classfields.1</span> <span class="dot">•</span> <span class="i">classfields</span>
+  <a href="#rule_83"> 83</a> <span class="i">classfields.1</span> → <span class="dot">•</span> <span class="i">varchunk</span>
+  <a href="#rule_84"> 84</a>               | <span class="dot">•</span> <span class="i">classfield</span>
+  <a href="#rule_85"> 85</a> <span class="i">classfield</span> → <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span>
+  <a href="#rule_86"> 86</a>            | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
+
+    "method"  <a href="#state_113">shift, and go to state 113</a>
+    "var"     <a href="#state_17">shift, and go to state 17</a>
+
+    $default  <a href="#rule_81">reduce using rule 81</a> (classfields)
+
+    vardec         <a href="#state_23">go to state 23</a>
+    varchunk       <a href="#state_114">go to state 114</a>
+    classfields    <a href="#state_146">go to state 146</a>
+    classfields.1  <a href="#state_116">go to state 116</a>
+    classfield     <a href="#state_117">go to state 117</a>
+</p>
+
+<h3><a name="state_117" id="state_117"></a>State 117</h3>
+
+<p class="pre">  <a href="#rule_84"> 84</a> <span class="i">classfields.1</span> → <span class="i">classfield</span> <span class="dot">•</span>
+
+    $default  <a href="#rule_84">reduce using rule 84</a> (classfields.1)
+</p>
+
+<h3><a name="state_118" id="state_118"></a>State 118</h3>
 
 <p class="pre">  <a href="#rule_21"> 21</a> <span class="i">exp</span> → <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
   <a href="#rule_22"> 22</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"-"</b> <span class="i">exp</span>
@@ -3823,42 +3870,42 @@
     "|"   <a href="#state_59">shift, and go to state 59</a>
     "+"   <a href="#state_60">shift, and go to state 60</a>
     "*"   <a href="#state_61">shift, and go to state 61</a>
-    "to"  <a href="#state_145">shift, and go to state 145</a>
-</p>
-
-<h3><a name="state_117" id="state_117"></a>State 117</h3>
-
-<p class="pre">  <a href="#rule_59"> 59</a> <span class="i">funfield</span> → <b>"identifier"</b> <span class="dot">•</span> <b>":"</b> <span class="i">typeid</span>
-
-    ":"  <a href="#state_146">shift, and go to state 146</a>
-</p>
-
-<h3><a name="state_118" id="state_118"></a>State 118</h3>
-
-<p class="pre">  <a href="#rule_51"> 51</a> <span class="i">fundec</span> → <b>"function"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <span class="dot">•</span> <b>")"</b> <b>"="</b> <span class="i">exp</span>
-  <a href="#rule_52"> 52</a>        | <b>"function"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <span class="dot">•</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
-
-    ")"  <a href="#state_147">shift, and go to state 147</a>
+    "to"  <a href="#state_147">shift, and go to state 147</a>
 </p>
 
 <h3><a name="state_119" id="state_119"></a>State 119</h3>
 
+<p class="pre">  <a href="#rule_59"> 59</a> <span class="i">funfield</span> → <b>"identifier"</b> <span class="dot">•</span> <b>":"</b> <span class="i">typeid</span>
+
+    ":"  <a href="#state_148">shift, and go to state 148</a>
+</p>
+
+<h3><a name="state_120" id="state_120"></a>State 120</h3>
+
+<p class="pre">  <a href="#rule_51"> 51</a> <span class="i">fundec</span> → <b>"function"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <span class="dot">•</span> <b>")"</b> <b>"="</b> <span class="i">exp</span>
+  <a href="#rule_52"> 52</a>        | <b>"function"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <span class="dot">•</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
+
+    ")"  <a href="#state_149">shift, and go to state 149</a>
+</p>
+
+<h3><a name="state_121" id="state_121"></a>State 121</h3>
+
 <p class="pre">  <a href="#rule_56"> 56</a> <span class="i">funfields</span> → <span class="i">funfields.1</span> <span class="dot">•</span>  [")"]
   <a href="#rule_57"> 57</a> <span class="i">funfields.1</span> → <span class="i">funfields.1</span> <span class="dot">•</span> <b>","</b> <span class="i">funfield</span>
 
-    ","  <a href="#state_148">shift, and go to state 148</a>
+    ","  <a href="#state_150">shift, and go to state 150</a>
 
     $default  <a href="#rule_56">reduce using rule 56</a> (funfields)
 </p>
 
-<h3><a name="state_120" id="state_120"></a>State 120</h3>
+<h3><a name="state_122" id="state_122"></a>State 122</h3>
 
 <p class="pre">  <a href="#rule_58"> 58</a> <span class="i">funfields.1</span> → <span class="i">funfield</span> <span class="dot">•</span>
 
     $default  <a href="#rule_58">reduce using rule 58</a> (funfields.1)
 </p>
 
-<h3><a name="state_121" id="state_121"></a>State 121</h3>
+<h3><a name="state_123" id="state_123"></a>State 123</h3>
 
 <p class="pre">  <a href="#rule_21"> 21</a> <span class="i">exp</span> → <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
   <a href="#rule_22"> 22</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"-"</b> <span class="i">exp</span>
@@ -3877,7 +3924,7 @@
 
     "&amp;"     <a href="#state_50">shift, and go to state 50</a>
     "/"     <a href="#state_51">shift, and go to state 51</a>
-    "else"  <a href="#state_149">shift, and go to state 149</a>
+    "else"  <a href="#state_151">shift, and go to state 151</a>
     "="     <a href="#state_52">shift, and go to state 52</a>
     "&gt;="    <a href="#state_53">shift, and go to state 53</a>
     "&gt;"     <a href="#state_54">shift, and go to state 54</a>
@@ -3906,84 +3953,86 @@
     Conflict between <a href="#rule_36">rule 36</a> and token "*" resolved as shift ("then" &lt; "*").
 </p>
 
-<h3><a name="state_122" id="state_122"></a>State 122</h3>
+<h3><a name="state_124" id="state_124"></a>State 124</h3>
 
 <p class="pre">  <a href="#rule_41"> 41</a> <span class="i">exp</span> → <b>"let"</b> <span class="i">chunks</span> <b>"in"</b> <b>"end"</b> <span class="dot">•</span>
 
     $default  <a href="#rule_41">reduce using rule 41</a> (exp)
 </p>
 
-<h3><a name="state_123" id="state_123"></a>State 123</h3>
+<h3><a name="state_125" id="state_125"></a>State 125</h3>
 
 <p class="pre">  <a href="#rule_42"> 42</a> <span class="i">exp</span> → <b>"let"</b> <span class="i">chunks</span> <b>"in"</b> <span class="i">exps</span> <span class="dot">•</span> <b>"end"</b>
 
-    "end"  <a href="#state_150">shift, and go to state 150</a>
+    "end"  <a href="#state_152">shift, and go to state 152</a>
 </p>
 
-<h3><a name="state_124" id="state_124"></a>State 124</h3>
+<h3><a name="state_126" id="state_126"></a>State 126</h3>
 
 <p class="pre">  <a href="#rule_4">  4</a> <span class="i">exps</span> → <span class="i">exp</span> <b>";"</b> <span class="i">exps</span> <span class="dot">•</span>
 
     $default  <a href="#rule_4">reduce using rule 4</a> (exps)
 </p>
 
-<h3><a name="state_125" id="state_125"></a>State 125</h3>
+<h3><a name="state_127" id="state_127"></a>State 127</h3>
 
 <p class="pre">  <a href="#rule_53"> 53</a> <span class="i">fundec</span> → <b>"primitive"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <span class="dot">•</span> <b>")"</b>
   <a href="#rule_54"> 54</a>        | <b>"primitive"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <span class="dot">•</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span>
 
-    ")"  <a href="#state_151">shift, and go to state 151</a>
-</p>
-
-<h3><a name="state_126" id="state_126"></a>State 126</h3>
-
-<p class="pre">  <a href="#rule_76"> 76</a> <span class="i">ty</span> → <b>"array"</b> <span class="dot">•</span> <b>"of"</b> <span class="i">typeid</span>
-
-    "of"  <a href="#state_152">shift, and go to state 152</a>
-</p>
-
-<h3><a name="state_127" id="state_127"></a>State 127</h3>
-
-<p class="pre">  <a href="#rule_77"> 77</a> <span class="i">ty</span> → <b>"class"</b> <span class="dot">•</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
-  <a href="#rule_78"> 78</a>    | <b>"class"</b> <span class="dot">•</span> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
-
-    "extends"  <a href="#state_153">shift, and go to state 153</a>
-    "{"        <a href="#state_154">shift, and go to state 154</a>
+    ")"  <a href="#state_153">shift, and go to state 153</a>
 </p>
 
 <h3><a name="state_128" id="state_128"></a>State 128</h3>
 
-<p class="pre">  <a href="#rule_75"> 75</a> <span class="i">ty</span> → <b>"{"</b> <span class="dot">•</span> <span class="i">tyfields</span> <b>"}"</b>
-  <a href="#rule_83"> 83</a> <span class="i">tyfields</span> → <span class="dot">•</span> %empty  ["}"]
-  <a href="#rule_84"> 84</a>          | <span class="dot">•</span> <span class="i">tyfields.1</span>
-  <a href="#rule_85"> 85</a> <span class="i">tyfields.1</span> → <span class="dot">•</span> <span class="i">tyfields.1</span> <b>","</b> <span class="i">tyfield</span>
-  <a href="#rule_86"> 86</a>            | <span class="dot">•</span> <span class="i">tyfield</span>
-  <a href="#rule_87"> 87</a> <span class="i">tyfield</span> → <span class="dot">•</span> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span>
+<p class="pre">  <a href="#rule_76"> 76</a> <span class="i">ty</span> → <b>"array"</b> <span class="dot">•</span> <b>"of"</b> <span class="i">typeid</span>
 
-    "identifier"  <a href="#state_155">shift, and go to state 155</a>
-
-    $default  <a href="#rule_83">reduce using rule 83</a> (tyfields)
-
-    tyfields    <a href="#state_156">go to state 156</a>
-    tyfields.1  <a href="#state_157">go to state 157</a>
-    tyfield     <a href="#state_158">go to state 158</a>
+    "of"  <a href="#state_154">shift, and go to state 154</a>
 </p>
 
 <h3><a name="state_129" id="state_129"></a>State 129</h3>
+
+<p class="pre">  <a href="#rule_77"> 77</a> <span class="i">ty</span> → <b>"class"</b> <span class="dot">•</span> <b>"{"</b> <b>"}"</b>
+  <a href="#rule_78"> 78</a>    | <b>"class"</b> <span class="dot">•</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
+  <a href="#rule_79"> 79</a>    | <b>"class"</b> <span class="dot">•</span> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <b>"}"</b>
+  <a href="#rule_80"> 80</a>    | <b>"class"</b> <span class="dot">•</span> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
+
+    "extends"  <a href="#state_155">shift, and go to state 155</a>
+    "{"        <a href="#state_156">shift, and go to state 156</a>
+</p>
+
+<h3><a name="state_130" id="state_130"></a>State 130</h3>
+
+<p class="pre">  <a href="#rule_75"> 75</a> <span class="i">ty</span> → <b>"{"</b> <span class="dot">•</span> <span class="i">tyfields</span> <b>"}"</b>
+  <a href="#rule_87"> 87</a> <span class="i">tyfields</span> → <span class="dot">•</span> %empty  ["}"]
+  <a href="#rule_88"> 88</a>          | <span class="dot">•</span> <span class="i">tyfields.1</span>
+  <a href="#rule_89"> 89</a> <span class="i">tyfields.1</span> → <span class="dot">•</span> <span class="i">tyfields.1</span> <b>","</b> <span class="i">tyfield</span>
+  <a href="#rule_90"> 90</a>            | <span class="dot">•</span> <span class="i">tyfield</span>
+  <a href="#rule_91"> 91</a> <span class="i">tyfield</span> → <span class="dot">•</span> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span>
+
+    "identifier"  <a href="#state_157">shift, and go to state 157</a>
+
+    $default  <a href="#rule_87">reduce using rule 87</a> (tyfields)
+
+    tyfields    <a href="#state_158">go to state 158</a>
+    tyfields.1  <a href="#state_159">go to state 159</a>
+    tyfield     <a href="#state_160">go to state 160</a>
+</p>
+
+<h3><a name="state_131" id="state_131"></a>State 131</h3>
 
 <p class="pre">  <a href="#rule_71"> 71</a> <span class="i">tydec</span> → <b>"type"</b> <b>"identifier"</b> <b>"="</b> <span class="i">ty</span> <span class="dot">•</span>
 
     $default  <a href="#rule_71">reduce using rule 71</a> (tydec)
 </p>
 
-<h3><a name="state_130" id="state_130"></a>State 130</h3>
+<h3><a name="state_132" id="state_132"></a>State 132</h3>
 
 <p class="pre">  <a href="#rule_74"> 74</a> <span class="i">ty</span> → <span class="i">typeid</span> <span class="dot">•</span>
 
     $default  <a href="#rule_74">reduce using rule 74</a> (ty)
 </p>
 
-<h3><a name="state_131" id="state_131"></a>State 131</h3>
+<h3><a name="state_133" id="state_133"></a>State 133</h3>
 
 <p class="pre">  <a href="#rule_21"> 21</a> <span class="i">exp</span> → <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
   <a href="#rule_22"> 22</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"-"</b> <span class="i">exp</span>
@@ -4015,14 +4064,14 @@
     $default  <a href="#rule_49">reduce using rule 49</a> (vardec)
 </p>
 
-<h3><a name="state_132" id="state_132"></a>State 132</h3>
+<h3><a name="state_134" id="state_134"></a>State 134</h3>
 
 <p class="pre">  <a href="#rule_50"> 50</a> <span class="i">vardec</span> → <b>"var"</b> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <span class="dot">•</span> <b>":="</b> <span class="i">exp</span>
 
-    ":="  <a href="#state_159">shift, and go to state 159</a>
+    ":="  <a href="#state_161">shift, and go to state 161</a>
 </p>
 
-<h3><a name="state_133" id="state_133"></a>State 133</h3>
+<h3><a name="state_135" id="state_135"></a>State 135</h3>
 
 <p class="pre">  <a href="#rule_21"> 21</a> <span class="i">exp</span> → <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
   <a href="#rule_22"> 22</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"-"</b> <span class="i">exp</span>
@@ -4067,14 +4116,14 @@
     Conflict between <a href="#rule_38">rule 38</a> and token "*" resolved as shift ("do" &lt; "*").
 </p>
 
-<h3><a name="state_134" id="state_134"></a>State 134</h3>
+<h3><a name="state_136" id="state_136"></a>State 136</h3>
 
-<p class="pre">  <a href="#rule_89"> 89</a> <span class="i">typeid</span> → <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b> <span class="dot">•</span>
+<p class="pre">  <a href="#rule_93"> 93</a> <span class="i">typeid</span> → <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b> <span class="dot">•</span>
 
-    $default  <a href="#rule_89">reduce using rule 89</a> (typeid)
+    $default  <a href="#rule_93">reduce using rule 93</a> (typeid)
 </p>
 
-<h3><a name="state_135" id="state_135"></a>State 135</h3>
+<h3><a name="state_137" id="state_137"></a>State 137</h3>
 
 <p class="pre">  <a href="#rule_9">  9</a> <span class="i">function_param</span> → <span class="dot">•</span> <span class="i">exp</span>
   <a href="#rule_10"> 10</a>                | <span class="dot">•</span> <span class="i">exp</span> <b>","</b> <span class="i">function_param</span>
@@ -4118,8 +4167,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -4132,24 +4181,24 @@
     "-"           <a href="#state_12">shift, and go to state 12</a>
     "new"         <a href="#state_13">shift, and go to state 13</a>
     "nil"         <a href="#state_14">shift, and go to state 14</a>
-    ")"           <a href="#state_160">shift, and go to state 160</a>
+    ")"           <a href="#state_162">shift, and go to state 162</a>
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    function_param  <a href="#state_161">go to state 161</a>
+    function_param  <a href="#state_163">go to state 163</a>
     exp             <a href="#state_75">go to state 75</a>
     lvalue          <a href="#state_22">go to state 22</a>
     typeid          <a href="#state_30">go to state 30</a>
 </p>
 
-<h3><a name="state_136" id="state_136"></a>State 136</h3>
+<h3><a name="state_138" id="state_138"></a>State 138</h3>
 
 <p class="pre">  <a href="#rule_48"> 48</a> <span class="i">lvalue</span> → <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b> <span class="dot">•</span>
 
     $default  <a href="#rule_48">reduce using rule 48</a> (lvalue)
 </p>
 
-<h3><a name="state_137" id="state_137"></a>State 137</h3>
+<h3><a name="state_139" id="state_139"></a>State 139</h3>
 
 <p class="pre">  <a href="#rule_5">  5</a> <span class="i">record_creation</span> → <b>"identifier"</b> <b>"="</b> <span class="dot">•</span> <span class="i">exp</span>
   <a href="#rule_6">  6</a>                 | <b>"identifier"</b> <b>"="</b> <span class="dot">•</span> <span class="i">exp</span> <span class="i">record_init</span>
@@ -4191,8 +4240,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -4208,74 +4257,79 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_162">go to state 162</a>
+    exp     <a href="#state_164">go to state 164</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
 
-<h3><a name="state_138" id="state_138"></a>State 138</h3>
+<h3><a name="state_140" id="state_140"></a>State 140</h3>
 
 <p class="pre">  <a href="#rule_16"> 16</a> <span class="i">exp</span> → <span class="i">typeid</span> <b>"{"</b> <span class="i">record_creation</span> <b>"}"</b> <span class="dot">•</span>
 
     $default  <a href="#rule_16">reduce using rule 16</a> (exp)
 </p>
 
-<h3><a name="state_139" id="state_139"></a>State 139</h3>
+<h3><a name="state_141" id="state_141"></a>State 141</h3>
 
 <p class="pre">  <a href="#rule_14"> 14</a> <span class="i">exp</span> → <span class="i">typeid</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b> <span class="dot">•</span> <b>"of"</b> <span class="i">exp</span>
 
-    "of"  <a href="#state_163">shift, and go to state 163</a>
+    "of"  <a href="#state_165">shift, and go to state 165</a>
 </p>
 
-<h3><a name="state_140" id="state_140"></a>State 140</h3>
+<h3><a name="state_142" id="state_142"></a>State 142</h3>
 
 <p class="pre">  <a href="#rule_10"> 10</a> <span class="i">function_param</span> → <span class="i">exp</span> <b>","</b> <span class="i">function_param</span> <span class="dot">•</span>
 
     $default  <a href="#rule_10">reduce using rule 10</a> (function_param)
 </p>
 
-<h3><a name="state_141" id="state_141"></a>State 141</h3>
+<h3><a name="state_143" id="state_143"></a>State 143</h3>
 
 <p class="pre">  <a href="#rule_49"> 49</a> <span class="i">vardec</span> → <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":="</b> <span class="i">exp</span>
   <a href="#rule_50"> 50</a>        | <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <b>":="</b> <span class="i">exp</span>
+  <a href="#rule_62"> 62</a> <span class="i">varchunk</span> → <span class="dot">•</span> <span class="i">vardec</span>
+  <a href="#rule_63"> 63</a>          | <span class="dot">•</span> <span class="i">vardec</span> <span class="i">varchunk</span>
   <a href="#rule_73"> 73</a> <span class="i">tydec</span> → <b>"class"</b> <b>"identifier"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="dot">•</span> <span class="i">classfields</span> <b>"}"</b>
-  <a href="#rule_79"> 79</a> <span class="i">classfields</span> → <span class="dot">•</span> %empty  ["}"]
-  <a href="#rule_80"> 80</a>             | <span class="dot">•</span> <span class="i">vardec</span> <span class="i">classfields</span>
-  <a href="#rule_81"> 81</a>             | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_82"> 82</a>             | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
+  <a href="#rule_81"> 81</a> <span class="i">classfields</span> → <span class="dot">•</span> <span class="i">classfields.1</span>
+  <a href="#rule_82"> 82</a>             | <span class="dot">•</span> <span class="i">classfields.1</span> <span class="i">classfields</span>
+  <a href="#rule_83"> 83</a> <span class="i">classfields.1</span> → <span class="dot">•</span> <span class="i">varchunk</span>
+  <a href="#rule_84"> 84</a>               | <span class="dot">•</span> <span class="i">classfield</span>
+  <a href="#rule_85"> 85</a> <span class="i">classfield</span> → <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span>
+  <a href="#rule_86"> 86</a>            | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
 
     "method"  <a href="#state_113">shift, and go to state 113</a>
     "var"     <a href="#state_17">shift, and go to state 17</a>
 
-    $default  <a href="#rule_79">reduce using rule 79</a> (classfields)
-
-    vardec       <a href="#state_114">go to state 114</a>
-    classfields  <a href="#state_164">go to state 164</a>
-</p>
-
-<h3><a name="state_142" id="state_142"></a>State 142</h3>
-
-<p class="pre">  <a href="#rule_81"> 81</a> <span class="i">classfields</span> → <b>"method"</b> <b>"identifier"</b> <span class="dot">•</span> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_82"> 82</a>             | <b>"method"</b> <b>"identifier"</b> <span class="dot">•</span> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-
-    "("  <a href="#state_165">shift, and go to state 165</a>
-</p>
-
-<h3><a name="state_143" id="state_143"></a>State 143</h3>
-
-<p class="pre">  <a href="#rule_80"> 80</a> <span class="i">classfields</span> → <span class="i">vardec</span> <span class="i">classfields</span> <span class="dot">•</span>
-
-    $default  <a href="#rule_80">reduce using rule 80</a> (classfields)
+    vardec         <a href="#state_23">go to state 23</a>
+    varchunk       <a href="#state_114">go to state 114</a>
+    classfields    <a href="#state_166">go to state 166</a>
+    classfields.1  <a href="#state_116">go to state 116</a>
+    classfield     <a href="#state_117">go to state 117</a>
 </p>
 
 <h3><a name="state_144" id="state_144"></a>State 144</h3>
+
+<p class="pre">  <a href="#rule_85"> 85</a> <span class="i">classfield</span> → <b>"method"</b> <b>"identifier"</b> <span class="dot">•</span> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span>
+  <a href="#rule_86"> 86</a>            | <b>"method"</b> <b>"identifier"</b> <span class="dot">•</span> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
+
+    "("  <a href="#state_167">shift, and go to state 167</a>
+</p>
+
+<h3><a name="state_145" id="state_145"></a>State 145</h3>
 
 <p class="pre">  <a href="#rule_72"> 72</a> <span class="i">tydec</span> → <b>"class"</b> <b>"identifier"</b> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b> <span class="dot">•</span>
 
     $default  <a href="#rule_72">reduce using rule 72</a> (tydec)
 </p>
 
-<h3><a name="state_145" id="state_145"></a>State 145</h3>
+<h3><a name="state_146" id="state_146"></a>State 146</h3>
+
+<p class="pre">  <a href="#rule_82"> 82</a> <span class="i">classfields</span> → <span class="i">classfields.1</span> <span class="i">classfields</span> <span class="dot">•</span>
+
+    $default  <a href="#rule_82">reduce using rule 82</a> (classfields)
+</p>
+
+<h3><a name="state_147" id="state_147"></a>State 147</h3>
 
 <p class="pre">  <a href="#rule_11"> 11</a> <span class="i">exp</span> → <span class="dot">•</span> <b>"integer"</b>
   <a href="#rule_12"> 12</a>     | <span class="dot">•</span> <b>"nil"</b>
@@ -4316,8 +4370,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -4333,43 +4387,43 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_166">go to state 166</a>
+    exp     <a href="#state_168">go to state 168</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
 
-<h3><a name="state_146" id="state_146"></a>State 146</h3>
+<h3><a name="state_148" id="state_148"></a>State 148</h3>
 
 <p class="pre">  <a href="#rule_59"> 59</a> <span class="i">funfield</span> → <b>"identifier"</b> <b>":"</b> <span class="dot">•</span> <span class="i">typeid</span>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "identifier"  <a href="#state_42">shift, and go to state 42</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    typeid  <a href="#state_167">go to state 167</a>
+    typeid  <a href="#state_169">go to state 169</a>
 </p>
 
-<h3><a name="state_147" id="state_147"></a>State 147</h3>
+<h3><a name="state_149" id="state_149"></a>State 149</h3>
 
 <p class="pre">  <a href="#rule_51"> 51</a> <span class="i">fundec</span> → <b>"function"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <span class="dot">•</span> <b>"="</b> <span class="i">exp</span>
   <a href="#rule_52"> 52</a>        | <b>"function"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <span class="dot">•</span> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
 
-    ":"  <a href="#state_168">shift, and go to state 168</a>
-    "="  <a href="#state_169">shift, and go to state 169</a>
+    ":"  <a href="#state_170">shift, and go to state 170</a>
+    "="  <a href="#state_171">shift, and go to state 171</a>
 </p>
 
-<h3><a name="state_148" id="state_148"></a>State 148</h3>
+<h3><a name="state_150" id="state_150"></a>State 150</h3>
 
 <p class="pre">  <a href="#rule_57"> 57</a> <span class="i">funfields.1</span> → <span class="i">funfields.1</span> <b>","</b> <span class="dot">•</span> <span class="i">funfield</span>
   <a href="#rule_59"> 59</a> <span class="i">funfield</span> → <span class="dot">•</span> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span>
 
-    "identifier"  <a href="#state_117">shift, and go to state 117</a>
+    "identifier"  <a href="#state_119">shift, and go to state 119</a>
 
-    funfield  <a href="#state_170">go to state 170</a>
+    funfield  <a href="#state_172">go to state 172</a>
 </p>
 
-<h3><a name="state_149" id="state_149"></a>State 149</h3>
+<h3><a name="state_151" id="state_151"></a>State 151</h3>
 
 <p class="pre">  <a href="#rule_11"> 11</a> <span class="i">exp</span> → <span class="dot">•</span> <b>"integer"</b>
   <a href="#rule_12"> 12</a>     | <span class="dot">•</span> <b>"nil"</b>
@@ -4410,8 +4464,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -4427,103 +4481,111 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_171">go to state 171</a>
+    exp     <a href="#state_173">go to state 173</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
 
-<h3><a name="state_150" id="state_150"></a>State 150</h3>
+<h3><a name="state_152" id="state_152"></a>State 152</h3>
 
 <p class="pre">  <a href="#rule_42"> 42</a> <span class="i">exp</span> → <b>"let"</b> <span class="i">chunks</span> <b>"in"</b> <span class="i">exps</span> <b>"end"</b> <span class="dot">•</span>
 
     $default  <a href="#rule_42">reduce using rule 42</a> (exp)
 </p>
 
-<h3><a name="state_151" id="state_151"></a>State 151</h3>
+<h3><a name="state_153" id="state_153"></a>State 153</h3>
 
 <p class="pre">  <a href="#rule_53"> 53</a> <span class="i">fundec</span> → <b>"primitive"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <span class="dot">•</span>  ["end of file", "class", "function", "import", "in", "primitive", "type", "var"]
   <a href="#rule_54"> 54</a>        | <b>"primitive"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <span class="dot">•</span> <b>":"</b> <span class="i">typeid</span>
 
-    ":"  <a href="#state_172">shift, and go to state 172</a>
+    ":"  <a href="#state_174">shift, and go to state 174</a>
 
     $default  <a href="#rule_53">reduce using rule 53</a> (fundec)
 </p>
 
-<h3><a name="state_152" id="state_152"></a>State 152</h3>
-
-<p class="pre">  <a href="#rule_76"> 76</a> <span class="i">ty</span> → <b>"array"</b> <b>"of"</b> <span class="dot">•</span> <span class="i">typeid</span>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
-
-    "identifier"  <a href="#state_42">shift, and go to state 42</a>
-    "_namety"     <a href="#state_19">shift, and go to state 19</a>
-
-    typeid  <a href="#state_173">go to state 173</a>
-</p>
-
-<h3><a name="state_153" id="state_153"></a>State 153</h3>
-
-<p class="pre">  <a href="#rule_78"> 78</a> <span class="i">ty</span> → <b>"class"</b> <b>"extends"</b> <span class="dot">•</span> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
-
-    "identifier"  <a href="#state_42">shift, and go to state 42</a>
-    "_namety"     <a href="#state_19">shift, and go to state 19</a>
-
-    typeid  <a href="#state_174">go to state 174</a>
-</p>
-
 <h3><a name="state_154" id="state_154"></a>State 154</h3>
 
-<p class="pre">  <a href="#rule_49"> 49</a> <span class="i">vardec</span> → <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":="</b> <span class="i">exp</span>
-  <a href="#rule_50"> 50</a>        | <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <b>":="</b> <span class="i">exp</span>
-  <a href="#rule_77"> 77</a> <span class="i">ty</span> → <b>"class"</b> <b>"{"</b> <span class="dot">•</span> <span class="i">classfields</span> <b>"}"</b>
-  <a href="#rule_79"> 79</a> <span class="i">classfields</span> → <span class="dot">•</span> %empty  ["}"]
-  <a href="#rule_80"> 80</a>             | <span class="dot">•</span> <span class="i">vardec</span> <span class="i">classfields</span>
-  <a href="#rule_81"> 81</a>             | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_82"> 82</a>             | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
+<p class="pre">  <a href="#rule_76"> 76</a> <span class="i">ty</span> → <b>"array"</b> <b>"of"</b> <span class="dot">•</span> <span class="i">typeid</span>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
-    "method"  <a href="#state_113">shift, and go to state 113</a>
-    "var"     <a href="#state_17">shift, and go to state 17</a>
+    "identifier"  <a href="#state_42">shift, and go to state 42</a>
+    "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    $default  <a href="#rule_79">reduce using rule 79</a> (classfields)
-
-    vardec       <a href="#state_114">go to state 114</a>
-    classfields  <a href="#state_175">go to state 175</a>
+    typeid  <a href="#state_175">go to state 175</a>
 </p>
 
 <h3><a name="state_155" id="state_155"></a>State 155</h3>
 
-<p class="pre">  <a href="#rule_87"> 87</a> <span class="i">tyfield</span> → <b>"identifier"</b> <span class="dot">•</span> <b>":"</b> <span class="i">typeid</span>
+<p class="pre">  <a href="#rule_79"> 79</a> <span class="i">ty</span> → <b>"class"</b> <b>"extends"</b> <span class="dot">•</span> <span class="i">typeid</span> <b>"{"</b> <b>"}"</b>
+  <a href="#rule_80"> 80</a>    | <b>"class"</b> <b>"extends"</b> <span class="dot">•</span> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
-    ":"  <a href="#state_176">shift, and go to state 176</a>
+    "identifier"  <a href="#state_42">shift, and go to state 42</a>
+    "_namety"     <a href="#state_19">shift, and go to state 19</a>
+
+    typeid  <a href="#state_176">go to state 176</a>
 </p>
 
 <h3><a name="state_156" id="state_156"></a>State 156</h3>
 
-<p class="pre">  <a href="#rule_75"> 75</a> <span class="i">ty</span> → <b>"{"</b> <span class="i">tyfields</span> <span class="dot">•</span> <b>"}"</b>
+<p class="pre">  <a href="#rule_49"> 49</a> <span class="i">vardec</span> → <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":="</b> <span class="i">exp</span>
+  <a href="#rule_50"> 50</a>        | <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <b>":="</b> <span class="i">exp</span>
+  <a href="#rule_62"> 62</a> <span class="i">varchunk</span> → <span class="dot">•</span> <span class="i">vardec</span>
+  <a href="#rule_63"> 63</a>          | <span class="dot">•</span> <span class="i">vardec</span> <span class="i">varchunk</span>
+  <a href="#rule_77"> 77</a> <span class="i">ty</span> → <b>"class"</b> <b>"{"</b> <span class="dot">•</span> <b>"}"</b>
+  <a href="#rule_78"> 78</a>    | <b>"class"</b> <b>"{"</b> <span class="dot">•</span> <span class="i">classfields</span> <b>"}"</b>
+  <a href="#rule_81"> 81</a> <span class="i">classfields</span> → <span class="dot">•</span> <span class="i">classfields.1</span>
+  <a href="#rule_82"> 82</a>             | <span class="dot">•</span> <span class="i">classfields.1</span> <span class="i">classfields</span>
+  <a href="#rule_83"> 83</a> <span class="i">classfields.1</span> → <span class="dot">•</span> <span class="i">varchunk</span>
+  <a href="#rule_84"> 84</a>               | <span class="dot">•</span> <span class="i">classfield</span>
+  <a href="#rule_85"> 85</a> <span class="i">classfield</span> → <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span>
+  <a href="#rule_86"> 86</a>            | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
 
-    "}"  <a href="#state_177">shift, and go to state 177</a>
+    "method"  <a href="#state_113">shift, and go to state 113</a>
+    "}"       <a href="#state_177">shift, and go to state 177</a>
+    "var"     <a href="#state_17">shift, and go to state 17</a>
+
+    vardec         <a href="#state_23">go to state 23</a>
+    varchunk       <a href="#state_114">go to state 114</a>
+    classfields    <a href="#state_178">go to state 178</a>
+    classfields.1  <a href="#state_116">go to state 116</a>
+    classfield     <a href="#state_117">go to state 117</a>
 </p>
 
 <h3><a name="state_157" id="state_157"></a>State 157</h3>
 
-<p class="pre">  <a href="#rule_84"> 84</a> <span class="i">tyfields</span> → <span class="i">tyfields.1</span> <span class="dot">•</span>  ["}", ")"]
-  <a href="#rule_85"> 85</a> <span class="i">tyfields.1</span> → <span class="i">tyfields.1</span> <span class="dot">•</span> <b>","</b> <span class="i">tyfield</span>
+<p class="pre">  <a href="#rule_91"> 91</a> <span class="i">tyfield</span> → <b>"identifier"</b> <span class="dot">•</span> <b>":"</b> <span class="i">typeid</span>
 
-    ","  <a href="#state_178">shift, and go to state 178</a>
-
-    $default  <a href="#rule_84">reduce using rule 84</a> (tyfields)
+    ":"  <a href="#state_179">shift, and go to state 179</a>
 </p>
 
 <h3><a name="state_158" id="state_158"></a>State 158</h3>
 
-<p class="pre">  <a href="#rule_86"> 86</a> <span class="i">tyfields.1</span> → <span class="i">tyfield</span> <span class="dot">•</span>
+<p class="pre">  <a href="#rule_75"> 75</a> <span class="i">ty</span> → <b>"{"</b> <span class="i">tyfields</span> <span class="dot">•</span> <b>"}"</b>
 
-    $default  <a href="#rule_86">reduce using rule 86</a> (tyfields.1)
+    "}"  <a href="#state_180">shift, and go to state 180</a>
 </p>
 
 <h3><a name="state_159" id="state_159"></a>State 159</h3>
+
+<p class="pre">  <a href="#rule_88"> 88</a> <span class="i">tyfields</span> → <span class="i">tyfields.1</span> <span class="dot">•</span>  ["}"]
+  <a href="#rule_89"> 89</a> <span class="i">tyfields.1</span> → <span class="i">tyfields.1</span> <span class="dot">•</span> <b>","</b> <span class="i">tyfield</span>
+
+    ","  <a href="#state_181">shift, and go to state 181</a>
+
+    $default  <a href="#rule_88">reduce using rule 88</a> (tyfields)
+</p>
+
+<h3><a name="state_160" id="state_160"></a>State 160</h3>
+
+<p class="pre">  <a href="#rule_90"> 90</a> <span class="i">tyfields.1</span> → <span class="i">tyfield</span> <span class="dot">•</span>
+
+    $default  <a href="#rule_90">reduce using rule 90</a> (tyfields.1)
+</p>
+
+<h3><a name="state_161" id="state_161"></a>State 161</h3>
 
 <p class="pre">  <a href="#rule_11"> 11</a> <span class="i">exp</span> → <span class="dot">•</span> <b>"integer"</b>
   <a href="#rule_12"> 12</a>     | <span class="dot">•</span> <b>"nil"</b>
@@ -4564,8 +4626,8 @@
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
   <a href="#rule_50"> 50</a> <span class="i">vardec</span> → <b>"var"</b> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <b>":="</b> <span class="dot">•</span> <span class="i">exp</span>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -4581,26 +4643,26 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_179">go to state 179</a>
+    exp     <a href="#state_182">go to state 182</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
 
-<h3><a name="state_160" id="state_160"></a>State 160</h3>
+<h3><a name="state_162" id="state_162"></a>State 162</h3>
 
 <p class="pre">  <a href="#rule_44"> 44</a> <span class="i">exp</span> → <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b> <b>"("</b> <b>")"</b> <span class="dot">•</span>
 
     $default  <a href="#rule_44">reduce using rule 44</a> (exp)
 </p>
 
-<h3><a name="state_161" id="state_161"></a>State 161</h3>
+<h3><a name="state_163" id="state_163"></a>State 163</h3>
 
 <p class="pre">  <a href="#rule_45"> 45</a> <span class="i">exp</span> → <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b> <b>"("</b> <span class="i">function_param</span> <span class="dot">•</span> <b>")"</b>
 
-    ")"  <a href="#state_180">shift, and go to state 180</a>
+    ")"  <a href="#state_183">shift, and go to state 183</a>
 </p>
 
-<h3><a name="state_162" id="state_162"></a>State 162</h3>
+<h3><a name="state_164" id="state_164"></a>State 164</h3>
 
 <p class="pre">  <a href="#rule_5">  5</a> <span class="i">record_creation</span> → <b>"identifier"</b> <b>"="</b> <span class="i">exp</span> <span class="dot">•</span>  ["}"]
   <a href="#rule_6">  6</a>                 | <b>"identifier"</b> <b>"="</b> <span class="i">exp</span> <span class="dot">•</span> <span class="i">record_init</span>
@@ -4620,7 +4682,7 @@
   <a href="#rule_32"> 32</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"|"</b> <span class="i">exp</span>
 
     "&amp;"   <a href="#state_50">shift, and go to state 50</a>
-    ","   <a href="#state_181">shift, and go to state 181</a>
+    ","   <a href="#state_184">shift, and go to state 184</a>
     "/"   <a href="#state_51">shift, and go to state 51</a>
     "="   <a href="#state_52">shift, and go to state 52</a>
     "&gt;="  <a href="#state_53">shift, and go to state 53</a>
@@ -4635,10 +4697,10 @@
 
     $default  <a href="#rule_5">reduce using rule 5</a> (record_creation)
 
-    record_init  <a href="#state_182">go to state 182</a>
+    record_init  <a href="#state_185">go to state 185</a>
 </p>
 
-<h3><a name="state_163" id="state_163"></a>State 163</h3>
+<h3><a name="state_165" id="state_165"></a>State 165</h3>
 
 <p class="pre">  <a href="#rule_11"> 11</a> <span class="i">exp</span> → <span class="dot">•</span> <b>"integer"</b>
   <a href="#rule_12"> 12</a>     | <span class="dot">•</span> <b>"nil"</b>
@@ -4679,8 +4741,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -4696,38 +4758,38 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_183">go to state 183</a>
+    exp     <a href="#state_186">go to state 186</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
 
-<h3><a name="state_164" id="state_164"></a>State 164</h3>
+<h3><a name="state_166" id="state_166"></a>State 166</h3>
 
 <p class="pre">  <a href="#rule_73"> 73</a> <span class="i">tydec</span> → <b>"class"</b> <b>"identifier"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <span class="dot">•</span> <b>"}"</b>
 
-    "}"  <a href="#state_184">shift, and go to state 184</a>
+    "}"  <a href="#state_187">shift, and go to state 187</a>
 </p>
 
-<h3><a name="state_165" id="state_165"></a>State 165</h3>
+<h3><a name="state_167" id="state_167"></a>State 167</h3>
 
-<p class="pre">  <a href="#rule_81"> 81</a> <span class="i">classfields</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="dot">•</span> <span class="i">tyfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_82"> 82</a>             | <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="dot">•</span> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_83"> 83</a> <span class="i">tyfields</span> → <span class="dot">•</span> %empty  [")"]
-  <a href="#rule_84"> 84</a>          | <span class="dot">•</span> <span class="i">tyfields.1</span>
-  <a href="#rule_85"> 85</a> <span class="i">tyfields.1</span> → <span class="dot">•</span> <span class="i">tyfields.1</span> <b>","</b> <span class="i">tyfield</span>
-  <a href="#rule_86"> 86</a>            | <span class="dot">•</span> <span class="i">tyfield</span>
-  <a href="#rule_87"> 87</a> <span class="i">tyfield</span> → <span class="dot">•</span> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span>
+<p class="pre">  <a href="#rule_55"> 55</a> <span class="i">funfields</span> → <span class="dot">•</span> %empty  [")"]
+  <a href="#rule_56"> 56</a>           | <span class="dot">•</span> <span class="i">funfields.1</span>
+  <a href="#rule_57"> 57</a> <span class="i">funfields.1</span> → <span class="dot">•</span> <span class="i">funfields.1</span> <b>","</b> <span class="i">funfield</span>
+  <a href="#rule_58"> 58</a>             | <span class="dot">•</span> <span class="i">funfield</span>
+  <a href="#rule_59"> 59</a> <span class="i">funfield</span> → <span class="dot">•</span> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span>
+  <a href="#rule_85"> 85</a> <span class="i">classfield</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="dot">•</span> <span class="i">funfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span>
+  <a href="#rule_86"> 86</a>            | <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="dot">•</span> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
 
-    "identifier"  <a href="#state_155">shift, and go to state 155</a>
+    "identifier"  <a href="#state_119">shift, and go to state 119</a>
 
-    $default  <a href="#rule_83">reduce using rule 83</a> (tyfields)
+    $default  <a href="#rule_55">reduce using rule 55</a> (funfields)
 
-    tyfields    <a href="#state_185">go to state 185</a>
-    tyfields.1  <a href="#state_157">go to state 157</a>
-    tyfield     <a href="#state_158">go to state 158</a>
+    funfields    <a href="#state_188">go to state 188</a>
+    funfields.1  <a href="#state_121">go to state 121</a>
+    funfield     <a href="#state_122">go to state 122</a>
 </p>
 
-<h3><a name="state_166" id="state_166"></a>State 166</h3>
+<h3><a name="state_168" id="state_168"></a>State 168</h3>
 
 <p class="pre">  <a href="#rule_21"> 21</a> <span class="i">exp</span> → <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
   <a href="#rule_22"> 22</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"-"</b> <span class="i">exp</span>
@@ -4745,7 +4807,7 @@
 
     "&amp;"   <a href="#state_50">shift, and go to state 50</a>
     "/"   <a href="#state_51">shift, and go to state 51</a>
-    "do"  <a href="#state_186">shift, and go to state 186</a>
+    "do"  <a href="#state_189">shift, and go to state 189</a>
     "="   <a href="#state_52">shift, and go to state 52</a>
     "&gt;="  <a href="#state_53">shift, and go to state 53</a>
     "&gt;"   <a href="#state_54">shift, and go to state 54</a>
@@ -4758,26 +4820,26 @@
     "*"   <a href="#state_61">shift, and go to state 61</a>
 </p>
 
-<h3><a name="state_167" id="state_167"></a>State 167</h3>
+<h3><a name="state_169" id="state_169"></a>State 169</h3>
 
 <p class="pre">  <a href="#rule_59"> 59</a> <span class="i">funfield</span> → <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <span class="dot">•</span>
 
     $default  <a href="#rule_59">reduce using rule 59</a> (funfield)
 </p>
 
-<h3><a name="state_168" id="state_168"></a>State 168</h3>
+<h3><a name="state_170" id="state_170"></a>State 170</h3>
 
 <p class="pre">  <a href="#rule_52"> 52</a> <span class="i">fundec</span> → <b>"function"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="dot">•</span> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "identifier"  <a href="#state_42">shift, and go to state 42</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    typeid  <a href="#state_187">go to state 187</a>
+    typeid  <a href="#state_190">go to state 190</a>
 </p>
 
-<h3><a name="state_169" id="state_169"></a>State 169</h3>
+<h3><a name="state_171" id="state_171"></a>State 171</h3>
 
 <p class="pre">  <a href="#rule_11"> 11</a> <span class="i">exp</span> → <span class="dot">•</span> <b>"integer"</b>
   <a href="#rule_12"> 12</a>     | <span class="dot">•</span> <b>"nil"</b>
@@ -4818,8 +4880,8 @@
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
   <a href="#rule_51"> 51</a> <span class="i">fundec</span> → <b>"function"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>"="</b> <span class="dot">•</span> <span class="i">exp</span>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -4835,19 +4897,19 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_188">go to state 188</a>
+    exp     <a href="#state_191">go to state 191</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
 
-<h3><a name="state_170" id="state_170"></a>State 170</h3>
+<h3><a name="state_172" id="state_172"></a>State 172</h3>
 
 <p class="pre">  <a href="#rule_57"> 57</a> <span class="i">funfields.1</span> → <span class="i">funfields.1</span> <b>","</b> <span class="i">funfield</span> <span class="dot">•</span>
 
     $default  <a href="#rule_57">reduce using rule 57</a> (funfields.1)
 </p>
 
-<h3><a name="state_171" id="state_171"></a>State 171</h3>
+<h3><a name="state_173" id="state_173"></a>State 173</h3>
 
 <p class="pre">  <a href="#rule_21"> 21</a> <span class="i">exp</span> → <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
   <a href="#rule_22"> 22</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"-"</b> <span class="i">exp</span>
@@ -4892,44 +4954,11 @@
     Conflict between <a href="#rule_37">rule 37</a> and token "*" resolved as shift ("else" &lt; "*").
 </p>
 
-<h3><a name="state_172" id="state_172"></a>State 172</h3>
-
-<p class="pre">  <a href="#rule_54"> 54</a> <span class="i">fundec</span> → <b>"primitive"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="dot">•</span> <span class="i">typeid</span>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
-
-    "identifier"  <a href="#state_42">shift, and go to state 42</a>
-    "_namety"     <a href="#state_19">shift, and go to state 19</a>
-
-    typeid  <a href="#state_189">go to state 189</a>
-</p>
-
-<h3><a name="state_173" id="state_173"></a>State 173</h3>
-
-<p class="pre">  <a href="#rule_76"> 76</a> <span class="i">ty</span> → <b>"array"</b> <b>"of"</b> <span class="i">typeid</span> <span class="dot">•</span>
-
-    $default  <a href="#rule_76">reduce using rule 76</a> (ty)
-</p>
-
 <h3><a name="state_174" id="state_174"></a>State 174</h3>
 
-<p class="pre">  <a href="#rule_78"> 78</a> <span class="i">ty</span> → <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <span class="dot">•</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
-
-    "{"  <a href="#state_190">shift, and go to state 190</a>
-</p>
-
-<h3><a name="state_175" id="state_175"></a>State 175</h3>
-
-<p class="pre">  <a href="#rule_77"> 77</a> <span class="i">ty</span> → <b>"class"</b> <b>"{"</b> <span class="i">classfields</span> <span class="dot">•</span> <b>"}"</b>
-
-    "}"  <a href="#state_191">shift, and go to state 191</a>
-</p>
-
-<h3><a name="state_176" id="state_176"></a>State 176</h3>
-
-<p class="pre">  <a href="#rule_87"> 87</a> <span class="i">tyfield</span> → <b>"identifier"</b> <b>":"</b> <span class="dot">•</span> <span class="i">typeid</span>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+<p class="pre">  <a href="#rule_54"> 54</a> <span class="i">fundec</span> → <b>"primitive"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="dot">•</span> <span class="i">typeid</span>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "identifier"  <a href="#state_42">shift, and go to state 42</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
@@ -4937,24 +4966,65 @@
     typeid  <a href="#state_192">go to state 192</a>
 </p>
 
+<h3><a name="state_175" id="state_175"></a>State 175</h3>
+
+<p class="pre">  <a href="#rule_76"> 76</a> <span class="i">ty</span> → <b>"array"</b> <b>"of"</b> <span class="i">typeid</span> <span class="dot">•</span>
+
+    $default  <a href="#rule_76">reduce using rule 76</a> (ty)
+</p>
+
+<h3><a name="state_176" id="state_176"></a>State 176</h3>
+
+<p class="pre">  <a href="#rule_79"> 79</a> <span class="i">ty</span> → <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <span class="dot">•</span> <b>"{"</b> <b>"}"</b>
+  <a href="#rule_80"> 80</a>    | <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <span class="dot">•</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b>
+
+    "{"  <a href="#state_193">shift, and go to state 193</a>
+</p>
+
 <h3><a name="state_177" id="state_177"></a>State 177</h3>
+
+<p class="pre">  <a href="#rule_77"> 77</a> <span class="i">ty</span> → <b>"class"</b> <b>"{"</b> <b>"}"</b> <span class="dot">•</span>
+
+    $default  <a href="#rule_77">reduce using rule 77</a> (ty)
+</p>
+
+<h3><a name="state_178" id="state_178"></a>State 178</h3>
+
+<p class="pre">  <a href="#rule_78"> 78</a> <span class="i">ty</span> → <b>"class"</b> <b>"{"</b> <span class="i">classfields</span> <span class="dot">•</span> <b>"}"</b>
+
+    "}"  <a href="#state_194">shift, and go to state 194</a>
+</p>
+
+<h3><a name="state_179" id="state_179"></a>State 179</h3>
+
+<p class="pre">  <a href="#rule_91"> 91</a> <span class="i">tyfield</span> → <b>"identifier"</b> <b>":"</b> <span class="dot">•</span> <span class="i">typeid</span>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+
+    "identifier"  <a href="#state_42">shift, and go to state 42</a>
+    "_namety"     <a href="#state_19">shift, and go to state 19</a>
+
+    typeid  <a href="#state_195">go to state 195</a>
+</p>
+
+<h3><a name="state_180" id="state_180"></a>State 180</h3>
 
 <p class="pre">  <a href="#rule_75"> 75</a> <span class="i">ty</span> → <b>"{"</b> <span class="i">tyfields</span> <b>"}"</b> <span class="dot">•</span>
 
     $default  <a href="#rule_75">reduce using rule 75</a> (ty)
 </p>
 
-<h3><a name="state_178" id="state_178"></a>State 178</h3>
+<h3><a name="state_181" id="state_181"></a>State 181</h3>
 
-<p class="pre">  <a href="#rule_85"> 85</a> <span class="i">tyfields.1</span> → <span class="i">tyfields.1</span> <b>","</b> <span class="dot">•</span> <span class="i">tyfield</span>
-  <a href="#rule_87"> 87</a> <span class="i">tyfield</span> → <span class="dot">•</span> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span>
+<p class="pre">  <a href="#rule_89"> 89</a> <span class="i">tyfields.1</span> → <span class="i">tyfields.1</span> <b>","</b> <span class="dot">•</span> <span class="i">tyfield</span>
+  <a href="#rule_91"> 91</a> <span class="i">tyfield</span> → <span class="dot">•</span> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span>
 
-    "identifier"  <a href="#state_155">shift, and go to state 155</a>
+    "identifier"  <a href="#state_157">shift, and go to state 157</a>
 
-    tyfield  <a href="#state_193">go to state 193</a>
+    tyfield  <a href="#state_196">go to state 196</a>
 </p>
 
-<h3><a name="state_179" id="state_179"></a>State 179</h3>
+<h3><a name="state_182" id="state_182"></a>State 182</h3>
 
 <p class="pre">  <a href="#rule_21"> 21</a> <span class="i">exp</span> → <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
   <a href="#rule_22"> 22</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"-"</b> <span class="i">exp</span>
@@ -4986,29 +5056,29 @@
     $default  <a href="#rule_50">reduce using rule 50</a> (vardec)
 </p>
 
-<h3><a name="state_180" id="state_180"></a>State 180</h3>
+<h3><a name="state_183" id="state_183"></a>State 183</h3>
 
 <p class="pre">  <a href="#rule_45"> 45</a> <span class="i">exp</span> → <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b> <b>"("</b> <span class="i">function_param</span> <b>")"</b> <span class="dot">•</span>
 
     $default  <a href="#rule_45">reduce using rule 45</a> (exp)
 </p>
 
-<h3><a name="state_181" id="state_181"></a>State 181</h3>
+<h3><a name="state_184" id="state_184"></a>State 184</h3>
 
 <p class="pre">  <a href="#rule_7">  7</a> <span class="i">record_init</span> → <b>","</b> <span class="dot">•</span> <b>"identifier"</b> <b>"="</b> <span class="i">exp</span>
   <a href="#rule_8">  8</a>             | <b>","</b> <span class="dot">•</span> <b>"identifier"</b> <b>"="</b> <span class="i">exp</span> <span class="i">record_init</span>
 
-    "identifier"  <a href="#state_194">shift, and go to state 194</a>
+    "identifier"  <a href="#state_197">shift, and go to state 197</a>
 </p>
 
-<h3><a name="state_182" id="state_182"></a>State 182</h3>
+<h3><a name="state_185" id="state_185"></a>State 185</h3>
 
 <p class="pre">  <a href="#rule_6">  6</a> <span class="i">record_creation</span> → <b>"identifier"</b> <b>"="</b> <span class="i">exp</span> <span class="i">record_init</span> <span class="dot">•</span>
 
     $default  <a href="#rule_6">reduce using rule 6</a> (record_creation)
 </p>
 
-<h3><a name="state_183" id="state_183"></a>State 183</h3>
+<h3><a name="state_186" id="state_186"></a>State 186</h3>
 
 <p class="pre">  <a href="#rule_14"> 14</a> <span class="i">exp</span> → <span class="i">typeid</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b> <b>"of"</b> <span class="i">exp</span> <span class="dot">•</span>  ["end of file", "class", ",", "do", "else", "end", "function", "import", "in", "method", "primitive", "}", "]", ")", ";", "then", "to", "type", "var"]
   <a href="#rule_21"> 21</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
@@ -5053,22 +5123,22 @@
     Conflict between <a href="#rule_14">rule 14</a> and token "*" resolved as shift ("of" &lt; "*").
 </p>
 
-<h3><a name="state_184" id="state_184"></a>State 184</h3>
+<h3><a name="state_187" id="state_187"></a>State 187</h3>
 
 <p class="pre">  <a href="#rule_73"> 73</a> <span class="i">tydec</span> → <b>"class"</b> <b>"identifier"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b> <span class="dot">•</span>
 
     $default  <a href="#rule_73">reduce using rule 73</a> (tydec)
 </p>
 
-<h3><a name="state_185" id="state_185"></a>State 185</h3>
+<h3><a name="state_188" id="state_188"></a>State 188</h3>
 
-<p class="pre">  <a href="#rule_81"> 81</a> <span class="i">classfields</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <span class="dot">•</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_82"> 82</a>             | <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <span class="dot">•</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
+<p class="pre">  <a href="#rule_85"> 85</a> <span class="i">classfield</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <span class="dot">•</span> <b>")"</b> <b>"="</b> <span class="i">exp</span>
+  <a href="#rule_86"> 86</a>            | <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <span class="dot">•</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
 
-    ")"  <a href="#state_195">shift, and go to state 195</a>
+    ")"  <a href="#state_198">shift, and go to state 198</a>
 </p>
 
-<h3><a name="state_186" id="state_186"></a>State 186</h3>
+<h3><a name="state_189" id="state_189"></a>State 189</h3>
 
 <p class="pre">  <a href="#rule_11"> 11</a> <span class="i">exp</span> → <span class="dot">•</span> <b>"integer"</b>
   <a href="#rule_12"> 12</a>     | <span class="dot">•</span> <b>"nil"</b>
@@ -5109,8 +5179,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -5126,19 +5196,19 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_196">go to state 196</a>
+    exp     <a href="#state_199">go to state 199</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
 
-<h3><a name="state_187" id="state_187"></a>State 187</h3>
+<h3><a name="state_190" id="state_190"></a>State 190</h3>
 
 <p class="pre">  <a href="#rule_52"> 52</a> <span class="i">fundec</span> → <b>"function"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <span class="dot">•</span> <b>"="</b> <span class="i">exp</span>
 
-    "="  <a href="#state_197">shift, and go to state 197</a>
+    "="  <a href="#state_200">shift, and go to state 200</a>
 </p>
 
-<h3><a name="state_188" id="state_188"></a>State 188</h3>
+<h3><a name="state_191" id="state_191"></a>State 191</h3>
 
 <p class="pre">  <a href="#rule_21"> 21</a> <span class="i">exp</span> → <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
   <a href="#rule_22"> 22</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"-"</b> <span class="i">exp</span>
@@ -5170,71 +5240,78 @@
     $default  <a href="#rule_51">reduce using rule 51</a> (fundec)
 </p>
 
-<h3><a name="state_189" id="state_189"></a>State 189</h3>
+<h3><a name="state_192" id="state_192"></a>State 192</h3>
 
 <p class="pre">  <a href="#rule_54"> 54</a> <span class="i">fundec</span> → <b>"primitive"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <span class="dot">•</span>
 
     $default  <a href="#rule_54">reduce using rule 54</a> (fundec)
 </p>
 
-<h3><a name="state_190" id="state_190"></a>State 190</h3>
+<h3><a name="state_193" id="state_193"></a>State 193</h3>
 
 <p class="pre">  <a href="#rule_49"> 49</a> <span class="i">vardec</span> → <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":="</b> <span class="i">exp</span>
   <a href="#rule_50"> 50</a>        | <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <b>":="</b> <span class="i">exp</span>
-  <a href="#rule_78"> 78</a> <span class="i">ty</span> → <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="dot">•</span> <span class="i">classfields</span> <b>"}"</b>
-  <a href="#rule_79"> 79</a> <span class="i">classfields</span> → <span class="dot">•</span> %empty  ["}"]
-  <a href="#rule_80"> 80</a>             | <span class="dot">•</span> <span class="i">vardec</span> <span class="i">classfields</span>
-  <a href="#rule_81"> 81</a>             | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_82"> 82</a>             | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
+  <a href="#rule_62"> 62</a> <span class="i">varchunk</span> → <span class="dot">•</span> <span class="i">vardec</span>
+  <a href="#rule_63"> 63</a>          | <span class="dot">•</span> <span class="i">vardec</span> <span class="i">varchunk</span>
+  <a href="#rule_79"> 79</a> <span class="i">ty</span> → <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="dot">•</span> <b>"}"</b>
+  <a href="#rule_80"> 80</a>    | <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="dot">•</span> <span class="i">classfields</span> <b>"}"</b>
+  <a href="#rule_81"> 81</a> <span class="i">classfields</span> → <span class="dot">•</span> <span class="i">classfields.1</span>
+  <a href="#rule_82"> 82</a>             | <span class="dot">•</span> <span class="i">classfields.1</span> <span class="i">classfields</span>
+  <a href="#rule_83"> 83</a> <span class="i">classfields.1</span> → <span class="dot">•</span> <span class="i">varchunk</span>
+  <a href="#rule_84"> 84</a>               | <span class="dot">•</span> <span class="i">classfield</span>
+  <a href="#rule_85"> 85</a> <span class="i">classfield</span> → <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span>
+  <a href="#rule_86"> 86</a>            | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
 
     "method"  <a href="#state_113">shift, and go to state 113</a>
+    "}"       <a href="#state_201">shift, and go to state 201</a>
     "var"     <a href="#state_17">shift, and go to state 17</a>
 
-    $default  <a href="#rule_79">reduce using rule 79</a> (classfields)
-
-    vardec       <a href="#state_114">go to state 114</a>
-    classfields  <a href="#state_198">go to state 198</a>
-</p>
-
-<h3><a name="state_191" id="state_191"></a>State 191</h3>
-
-<p class="pre">  <a href="#rule_77"> 77</a> <span class="i">ty</span> → <b>"class"</b> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b> <span class="dot">•</span>
-
-    $default  <a href="#rule_77">reduce using rule 77</a> (ty)
-</p>
-
-<h3><a name="state_192" id="state_192"></a>State 192</h3>
-
-<p class="pre">  <a href="#rule_87"> 87</a> <span class="i">tyfield</span> → <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <span class="dot">•</span>
-
-    $default  <a href="#rule_87">reduce using rule 87</a> (tyfield)
-</p>
-
-<h3><a name="state_193" id="state_193"></a>State 193</h3>
-
-<p class="pre">  <a href="#rule_85"> 85</a> <span class="i">tyfields.1</span> → <span class="i">tyfields.1</span> <b>","</b> <span class="i">tyfield</span> <span class="dot">•</span>
-
-    $default  <a href="#rule_85">reduce using rule 85</a> (tyfields.1)
+    vardec         <a href="#state_23">go to state 23</a>
+    varchunk       <a href="#state_114">go to state 114</a>
+    classfields    <a href="#state_202">go to state 202</a>
+    classfields.1  <a href="#state_116">go to state 116</a>
+    classfield     <a href="#state_117">go to state 117</a>
 </p>
 
 <h3><a name="state_194" id="state_194"></a>State 194</h3>
 
-<p class="pre">  <a href="#rule_7">  7</a> <span class="i">record_init</span> → <b>","</b> <b>"identifier"</b> <span class="dot">•</span> <b>"="</b> <span class="i">exp</span>
-  <a href="#rule_8">  8</a>             | <b>","</b> <b>"identifier"</b> <span class="dot">•</span> <b>"="</b> <span class="i">exp</span> <span class="i">record_init</span>
+<p class="pre">  <a href="#rule_78"> 78</a> <span class="i">ty</span> → <b>"class"</b> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b> <span class="dot">•</span>
 
-    "="  <a href="#state_199">shift, and go to state 199</a>
+    $default  <a href="#rule_78">reduce using rule 78</a> (ty)
 </p>
 
 <h3><a name="state_195" id="state_195"></a>State 195</h3>
 
-<p class="pre">  <a href="#rule_81"> 81</a> <span class="i">classfields</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <span class="dot">•</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_82"> 82</a>             | <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <span class="dot">•</span> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
+<p class="pre">  <a href="#rule_91"> 91</a> <span class="i">tyfield</span> → <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <span class="dot">•</span>
 
-    ":"  <a href="#state_200">shift, and go to state 200</a>
-    "="  <a href="#state_201">shift, and go to state 201</a>
+    $default  <a href="#rule_91">reduce using rule 91</a> (tyfield)
 </p>
 
 <h3><a name="state_196" id="state_196"></a>State 196</h3>
+
+<p class="pre">  <a href="#rule_89"> 89</a> <span class="i">tyfields.1</span> → <span class="i">tyfields.1</span> <b>","</b> <span class="i">tyfield</span> <span class="dot">•</span>
+
+    $default  <a href="#rule_89">reduce using rule 89</a> (tyfields.1)
+</p>
+
+<h3><a name="state_197" id="state_197"></a>State 197</h3>
+
+<p class="pre">  <a href="#rule_7">  7</a> <span class="i">record_init</span> → <b>","</b> <b>"identifier"</b> <span class="dot">•</span> <b>"="</b> <span class="i">exp</span>
+  <a href="#rule_8">  8</a>             | <b>","</b> <b>"identifier"</b> <span class="dot">•</span> <b>"="</b> <span class="i">exp</span> <span class="i">record_init</span>
+
+    "="  <a href="#state_203">shift, and go to state 203</a>
+</p>
+
+<h3><a name="state_198" id="state_198"></a>State 198</h3>
+
+<p class="pre">  <a href="#rule_85"> 85</a> <span class="i">classfield</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <span class="dot">•</span> <b>"="</b> <span class="i">exp</span>
+  <a href="#rule_86"> 86</a>            | <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <span class="dot">•</span> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
+
+    ":"  <a href="#state_204">shift, and go to state 204</a>
+    "="  <a href="#state_205">shift, and go to state 205</a>
+</p>
+
+<h3><a name="state_199" id="state_199"></a>State 199</h3>
 
 <p class="pre">  <a href="#rule_21"> 21</a> <span class="i">exp</span> → <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
   <a href="#rule_22"> 22</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"-"</b> <span class="i">exp</span>
@@ -5279,7 +5356,7 @@
     Conflict between <a href="#rule_39">rule 39</a> and token "*" resolved as shift ("do" &lt; "*").
 </p>
 
-<h3><a name="state_197" id="state_197"></a>State 197</h3>
+<h3><a name="state_200" id="state_200"></a>State 200</h3>
 
 <p class="pre">  <a href="#rule_11"> 11</a> <span class="i">exp</span> → <span class="dot">•</span> <b>"integer"</b>
   <a href="#rule_12"> 12</a>     | <span class="dot">•</span> <b>"nil"</b>
@@ -5320,8 +5397,8 @@
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
   <a href="#rule_52"> 52</a> <span class="i">fundec</span> → <b>"function"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="dot">•</span> <span class="i">exp</span>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -5337,19 +5414,26 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_202">go to state 202</a>
+    exp     <a href="#state_206">go to state 206</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
 
-<h3><a name="state_198" id="state_198"></a>State 198</h3>
+<h3><a name="state_201" id="state_201"></a>State 201</h3>
 
-<p class="pre">  <a href="#rule_78"> 78</a> <span class="i">ty</span> → <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <span class="dot">•</span> <b>"}"</b>
+<p class="pre">  <a href="#rule_79"> 79</a> <span class="i">ty</span> → <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <b>"}"</b> <span class="dot">•</span>
 
-    "}"  <a href="#state_203">shift, and go to state 203</a>
+    $default  <a href="#rule_79">reduce using rule 79</a> (ty)
 </p>
 
-<h3><a name="state_199" id="state_199"></a>State 199</h3>
+<h3><a name="state_202" id="state_202"></a>State 202</h3>
+
+<p class="pre">  <a href="#rule_80"> 80</a> <span class="i">ty</span> → <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <span class="dot">•</span> <b>"}"</b>
+
+    "}"  <a href="#state_207">shift, and go to state 207</a>
+</p>
+
+<h3><a name="state_203" id="state_203"></a>State 203</h3>
 
 <p class="pre">  <a href="#rule_7">  7</a> <span class="i">record_init</span> → <b>","</b> <b>"identifier"</b> <b>"="</b> <span class="dot">•</span> <span class="i">exp</span>
   <a href="#rule_8">  8</a>             | <b>","</b> <b>"identifier"</b> <b>"="</b> <span class="dot">•</span> <span class="i">exp</span> <span class="i">record_init</span>
@@ -5391,8 +5475,8 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -5408,24 +5492,24 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_204">go to state 204</a>
+    exp     <a href="#state_208">go to state 208</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
 
-<h3><a name="state_200" id="state_200"></a>State 200</h3>
+<h3><a name="state_204" id="state_204"></a>State 204</h3>
 
-<p class="pre">  <a href="#rule_82"> 82</a> <span class="i">classfields</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="dot">•</span> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+<p class="pre">  <a href="#rule_86"> 86</a> <span class="i">classfield</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="dot">•</span> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "identifier"  <a href="#state_42">shift, and go to state 42</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    typeid  <a href="#state_205">go to state 205</a>
+    typeid  <a href="#state_209">go to state 209</a>
 </p>
 
-<h3><a name="state_201" id="state_201"></a>State 201</h3>
+<h3><a name="state_205" id="state_205"></a>State 205</h3>
 
 <p class="pre">  <a href="#rule_11"> 11</a> <span class="i">exp</span> → <span class="dot">•</span> <b>"integer"</b>
   <a href="#rule_12"> 12</a>     | <span class="dot">•</span> <b>"nil"</b>
@@ -5465,9 +5549,9 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_81"> 81</a> <span class="i">classfields</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>"="</b> <span class="dot">•</span> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_85"> 85</a> <span class="i">classfield</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>"="</b> <span class="dot">•</span> <span class="i">exp</span>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -5483,12 +5567,12 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_206">go to state 206</a>
+    exp     <a href="#state_210">go to state 210</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
 
-<h3><a name="state_202" id="state_202"></a>State 202</h3>
+<h3><a name="state_206" id="state_206"></a>State 206</h3>
 
 <p class="pre">  <a href="#rule_21"> 21</a> <span class="i">exp</span> → <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
   <a href="#rule_22"> 22</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"-"</b> <span class="i">exp</span>
@@ -5520,14 +5604,14 @@
     $default  <a href="#rule_52">reduce using rule 52</a> (fundec)
 </p>
 
-<h3><a name="state_203" id="state_203"></a>State 203</h3>
+<h3><a name="state_207" id="state_207"></a>State 207</h3>
 
-<p class="pre">  <a href="#rule_78"> 78</a> <span class="i">ty</span> → <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b> <span class="dot">•</span>
+<p class="pre">  <a href="#rule_80"> 80</a> <span class="i">ty</span> → <b>"class"</b> <b>"extends"</b> <span class="i">typeid</span> <b>"{"</b> <span class="i">classfields</span> <b>"}"</b> <span class="dot">•</span>
 
-    $default  <a href="#rule_78">reduce using rule 78</a> (ty)
+    $default  <a href="#rule_80">reduce using rule 80</a> (ty)
 </p>
 
-<h3><a name="state_204" id="state_204"></a>State 204</h3>
+<h3><a name="state_208" id="state_208"></a>State 208</h3>
 
 <p class="pre">  <a href="#rule_7">  7</a> <span class="i">record_init</span> → <span class="dot">•</span> <b>","</b> <b>"identifier"</b> <b>"="</b> <span class="i">exp</span>
   <a href="#rule_7">  7</a>             | <b>","</b> <b>"identifier"</b> <b>"="</b> <span class="i">exp</span> <span class="dot">•</span>  ["}"]
@@ -5547,7 +5631,7 @@
   <a href="#rule_32"> 32</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"|"</b> <span class="i">exp</span>
 
     "&amp;"   <a href="#state_50">shift, and go to state 50</a>
-    ","   <a href="#state_181">shift, and go to state 181</a>
+    ","   <a href="#state_184">shift, and go to state 184</a>
     "/"   <a href="#state_51">shift, and go to state 51</a>
     "="   <a href="#state_52">shift, and go to state 52</a>
     "&gt;="  <a href="#state_53">shift, and go to state 53</a>
@@ -5562,17 +5646,17 @@
 
     $default  <a href="#rule_7">reduce using rule 7</a> (record_init)
 
-    record_init  <a href="#state_207">go to state 207</a>
+    record_init  <a href="#state_211">go to state 211</a>
 </p>
 
-<h3><a name="state_205" id="state_205"></a>State 205</h3>
+<h3><a name="state_209" id="state_209"></a>State 209</h3>
 
-<p class="pre">  <a href="#rule_82"> 82</a> <span class="i">classfields</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <span class="dot">•</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
+<p class="pre">  <a href="#rule_86"> 86</a> <span class="i">classfield</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <span class="dot">•</span> <b>"="</b> <span class="i">exp</span>
 
-    "="  <a href="#state_208">shift, and go to state 208</a>
+    "="  <a href="#state_212">shift, and go to state 212</a>
 </p>
 
-<h3><a name="state_206" id="state_206"></a>State 206</h3>
+<h3><a name="state_210" id="state_210"></a>State 210</h3>
 
 <p class="pre">  <a href="#rule_21"> 21</a> <span class="i">exp</span> → <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
   <a href="#rule_22"> 22</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"-"</b> <span class="i">exp</span>
@@ -5586,43 +5670,32 @@
   <a href="#rule_30"> 30</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"&lt;="</b> <span class="i">exp</span>
   <a href="#rule_31"> 31</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"&amp;"</b> <span class="i">exp</span>
   <a href="#rule_32"> 32</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"|"</b> <span class="i">exp</span>
-  <a href="#rule_49"> 49</a> <span class="i">vardec</span> → <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":="</b> <span class="i">exp</span>
-  <a href="#rule_50"> 50</a>        | <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <b>":="</b> <span class="i">exp</span>
-  <a href="#rule_79"> 79</a> <span class="i">classfields</span> → <span class="dot">•</span> %empty  ["}"]
-  <a href="#rule_80"> 80</a>             | <span class="dot">•</span> <span class="i">vardec</span> <span class="i">classfields</span>
-  <a href="#rule_81"> 81</a>             | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_81"> 81</a>             | <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="dot">•</span> <span class="i">classfields</span>
-  <a href="#rule_82"> 82</a>             | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
+  <a href="#rule_85"> 85</a> <span class="i">classfield</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="dot">•</span>  ["method", "}", "var"]
 
-    "&amp;"       <a href="#state_50">shift, and go to state 50</a>
-    "/"       <a href="#state_51">shift, and go to state 51</a>
-    "="       <a href="#state_52">shift, and go to state 52</a>
-    "&gt;="      <a href="#state_53">shift, and go to state 53</a>
-    "&gt;"       <a href="#state_54">shift, and go to state 54</a>
-    "&lt;="      <a href="#state_55">shift, and go to state 55</a>
-    "&lt;"       <a href="#state_56">shift, and go to state 56</a>
-    "-"       <a href="#state_57">shift, and go to state 57</a>
-    "method"  <a href="#state_113">shift, and go to state 113</a>
-    "&lt;&gt;"      <a href="#state_58">shift, and go to state 58</a>
-    "|"       <a href="#state_59">shift, and go to state 59</a>
-    "+"       <a href="#state_60">shift, and go to state 60</a>
-    "*"       <a href="#state_61">shift, and go to state 61</a>
-    "var"     <a href="#state_17">shift, and go to state 17</a>
+    "&amp;"   <a href="#state_50">shift, and go to state 50</a>
+    "/"   <a href="#state_51">shift, and go to state 51</a>
+    "="   <a href="#state_52">shift, and go to state 52</a>
+    "&gt;="  <a href="#state_53">shift, and go to state 53</a>
+    "&gt;"   <a href="#state_54">shift, and go to state 54</a>
+    "&lt;="  <a href="#state_55">shift, and go to state 55</a>
+    "&lt;"   <a href="#state_56">shift, and go to state 56</a>
+    "-"   <a href="#state_57">shift, and go to state 57</a>
+    "&lt;&gt;"  <a href="#state_58">shift, and go to state 58</a>
+    "|"   <a href="#state_59">shift, and go to state 59</a>
+    "+"   <a href="#state_60">shift, and go to state 60</a>
+    "*"   <a href="#state_61">shift, and go to state 61</a>
 
-    $default  <a href="#rule_79">reduce using rule 79</a> (classfields)
-
-    vardec       <a href="#state_114">go to state 114</a>
-    classfields  <a href="#state_209">go to state 209</a>
+    $default  <a href="#rule_85">reduce using rule 85</a> (classfield)
 </p>
 
-<h3><a name="state_207" id="state_207"></a>State 207</h3>
+<h3><a name="state_211" id="state_211"></a>State 211</h3>
 
 <p class="pre">  <a href="#rule_8">  8</a> <span class="i">record_init</span> → <b>","</b> <b>"identifier"</b> <b>"="</b> <span class="i">exp</span> <span class="i">record_init</span> <span class="dot">•</span>
 
     $default  <a href="#rule_8">reduce using rule 8</a> (record_init)
 </p>
 
-<h3><a name="state_208" id="state_208"></a>State 208</h3>
+<h3><a name="state_212" id="state_212"></a>State 212</h3>
 
 <p class="pre">  <a href="#rule_11"> 11</a> <span class="i">exp</span> → <span class="dot">•</span> <b>"integer"</b>
   <a href="#rule_12"> 12</a>     | <span class="dot">•</span> <b>"nil"</b>
@@ -5662,9 +5735,9 @@
   <a href="#rule_46"> 46</a> <span class="i">lvalue</span> → <span class="dot">•</span> <b>"identifier"</b>
   <a href="#rule_47"> 47</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"."</b> <b>"identifier"</b>
   <a href="#rule_48"> 48</a>        | <span class="dot">•</span> <span class="i">lvalue</span> <b>"["</b> <span class="i">exp</span> <b>"]"</b>
-  <a href="#rule_82"> 82</a> <span class="i">classfields</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="dot">•</span> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_88"> 88</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
-  <a href="#rule_89"> 89</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
+  <a href="#rule_86"> 86</a> <span class="i">classfield</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="dot">•</span> <span class="i">exp</span>
+  <a href="#rule_92"> 92</a> <span class="i">typeid</span> → <span class="dot">•</span> <b>"identifier"</b>
+  <a href="#rule_93"> 93</a>        | <span class="dot">•</span> <b>"_namety"</b> <b>"("</b> <b>"integer"</b> <b>")"</b>
 
     "string"      <a href="#state_1">shift, and go to state 1</a>
     "identifier"  <a href="#state_2">shift, and go to state 2</a>
@@ -5680,19 +5753,12 @@
     "while"       <a href="#state_18">shift, and go to state 18</a>
     "_namety"     <a href="#state_19">shift, and go to state 19</a>
 
-    exp     <a href="#state_210">go to state 210</a>
+    exp     <a href="#state_213">go to state 213</a>
     lvalue  <a href="#state_22">go to state 22</a>
     typeid  <a href="#state_30">go to state 30</a>
 </p>
 
-<h3><a name="state_209" id="state_209"></a>State 209</h3>
-
-<p class="pre">  <a href="#rule_81"> 81</a> <span class="i">classfields</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span> <span class="dot">•</span>
-
-    $default  <a href="#rule_81">reduce using rule 81</a> (classfields)
-</p>
-
-<h3><a name="state_210" id="state_210"></a>State 210</h3>
+<h3><a name="state_213" id="state_213"></a>State 213</h3>
 
 <p class="pre">  <a href="#rule_21"> 21</a> <span class="i">exp</span> → <span class="i">exp</span> <span class="dot">•</span> <b>"+"</b> <span class="i">exp</span>
   <a href="#rule_22"> 22</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"-"</b> <span class="i">exp</span>
@@ -5706,40 +5772,22 @@
   <a href="#rule_30"> 30</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"&lt;="</b> <span class="i">exp</span>
   <a href="#rule_31"> 31</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"&amp;"</b> <span class="i">exp</span>
   <a href="#rule_32"> 32</a>     | <span class="i">exp</span> <span class="dot">•</span> <b>"|"</b> <span class="i">exp</span>
-  <a href="#rule_49"> 49</a> <span class="i">vardec</span> → <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":="</b> <span class="i">exp</span>
-  <a href="#rule_50"> 50</a>        | <span class="dot">•</span> <b>"var"</b> <b>"identifier"</b> <b>":"</b> <span class="i">typeid</span> <b>":="</b> <span class="i">exp</span>
-  <a href="#rule_79"> 79</a> <span class="i">classfields</span> → <span class="dot">•</span> %empty  ["}"]
-  <a href="#rule_80"> 80</a>             | <span class="dot">•</span> <span class="i">vardec</span> <span class="i">classfields</span>
-  <a href="#rule_81"> 81</a>             | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_82"> 82</a>             | <span class="dot">•</span> <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span>
-  <a href="#rule_82"> 82</a>             | <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="dot">•</span> <span class="i">classfields</span>
+  <a href="#rule_86"> 86</a> <span class="i">classfield</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">funfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="dot">•</span>  ["method", "}", "var"]
 
-    "&amp;"       <a href="#state_50">shift, and go to state 50</a>
-    "/"       <a href="#state_51">shift, and go to state 51</a>
-    "="       <a href="#state_52">shift, and go to state 52</a>
-    "&gt;="      <a href="#state_53">shift, and go to state 53</a>
-    "&gt;"       <a href="#state_54">shift, and go to state 54</a>
-    "&lt;="      <a href="#state_55">shift, and go to state 55</a>
-    "&lt;"       <a href="#state_56">shift, and go to state 56</a>
-    "-"       <a href="#state_57">shift, and go to state 57</a>
-    "method"  <a href="#state_113">shift, and go to state 113</a>
-    "&lt;&gt;"      <a href="#state_58">shift, and go to state 58</a>
-    "|"       <a href="#state_59">shift, and go to state 59</a>
-    "+"       <a href="#state_60">shift, and go to state 60</a>
-    "*"       <a href="#state_61">shift, and go to state 61</a>
-    "var"     <a href="#state_17">shift, and go to state 17</a>
+    "&amp;"   <a href="#state_50">shift, and go to state 50</a>
+    "/"   <a href="#state_51">shift, and go to state 51</a>
+    "="   <a href="#state_52">shift, and go to state 52</a>
+    "&gt;="  <a href="#state_53">shift, and go to state 53</a>
+    "&gt;"   <a href="#state_54">shift, and go to state 54</a>
+    "&lt;="  <a href="#state_55">shift, and go to state 55</a>
+    "&lt;"   <a href="#state_56">shift, and go to state 56</a>
+    "-"   <a href="#state_57">shift, and go to state 57</a>
+    "&lt;&gt;"  <a href="#state_58">shift, and go to state 58</a>
+    "|"   <a href="#state_59">shift, and go to state 59</a>
+    "+"   <a href="#state_60">shift, and go to state 60</a>
+    "*"   <a href="#state_61">shift, and go to state 61</a>
 
-    $default  <a href="#rule_79">reduce using rule 79</a> (classfields)
-
-    vardec       <a href="#state_114">go to state 114</a>
-    classfields  <a href="#state_211">go to state 211</a>
-</p>
-
-<h3><a name="state_211" id="state_211"></a>State 211</h3>
-
-<p class="pre">  <a href="#rule_82"> 82</a> <span class="i">classfields</span> → <b>"method"</b> <b>"identifier"</b> <b>"("</b> <span class="i">tyfields</span> <b>")"</b> <b>":"</b> <span class="i">typeid</span> <b>"="</b> <span class="i">exp</span> <span class="i">classfields</span> <span class="dot">•</span>
-
-    $default  <a href="#rule_82">reduce using rule 82</a> (classfields)
+    $default  <a href="#rule_86">reduce using rule 86</a> (classfield)
 </p>
 
 <div id="footer"><hr />This document was generated using
