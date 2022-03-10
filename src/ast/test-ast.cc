@@ -6,6 +6,7 @@
 
 #include <ast/all.hh>
 #include <ast/libast.hh>
+#include "type-dec.hh"
 
 using namespace ast;
 
@@ -66,6 +67,36 @@ int main()
     chunks->emplace_back(funchunk);
 
     Exp* exp = new LetExp(loc, chunks, new CallExp(loc, "f", new exps_type()));
+    std::cout << *exp << '\n';
+    delete exp;
+  }
+
+  std::cout << "Custom test 1: TypeDec \n";
+  {
+    TypeDec* exp = new TypeDec(loc, "my_int", new NameTy(loc, "int"));
+    std::cout << *exp << '\n';
+    delete exp;
+  }
+  std::cout << "Custom test 2: ArrayTy \n";
+  {
+    TypeDec* exp =
+      new TypeDec(loc, "int_array", new ArrayTy(loc, new NameTy(loc, "int")));
+    std::cout << *exp << '\n';
+    delete exp;
+  }
+  std::cout << "Custom test 3: TypeField \n";
+  {
+    FieldInit* exp = new FieldInit(
+      loc, "name",
+      new AssignExp(loc, new SimpleVar(loc, "a"), new IntExp(loc, 5)));
+    std::cout << *exp << '\n';
+    delete exp;
+  }
+  std::cout << "Custom test 4: Objects \n";
+  {
+    FieldInit* exp = new FieldInit(
+      loc, "name",
+      new AssignExp(loc, new SimpleVar(loc, "a"), new IntExp(loc, 5)));
     std::cout << *exp << '\n';
     delete exp;
   }

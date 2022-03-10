@@ -34,14 +34,14 @@ namespace ast
     void operator()(const StringExp& e) override;
     void operator()(const ObjectExp& e) override;
     void operator()(const CallExp& e) override;
-    /*void operator()(const MethodCallExp& e) override;
+    void operator()(const MethodCallExp& e) override;
     void operator()(const RecordExp& e) override;
     void operator()(const NilExp& e) override;
     void operator()(const SeqExp& e) override;
     void operator()(const AssignExp& e) override;
-    */void operator()(const IfExp& e) override;
+    void operator()(const IfExp& e) override;
     void operator()(const WhileExp& e) override;
-   /*void operator()(const ForExp& e) override;
+    void operator()(const ForExp& e) override;
     void operator()(const BreakExp& e) override;
     void operator()(const LetExp& e) override;
     void operator()(const OpExp& e) override;
@@ -60,7 +60,7 @@ namespace ast
     void operator()(const MethodDec& e) override;
     void operator()(const FunctionDec& e) override;
     void operator()(const FunctionChunk& e) override;
-    *//// \}
+    /// \}
 
   private:
     // Factor pretty-printing of RecordExp and RecordTy.
