@@ -293,7 +293,7 @@ namespace ast
           ostr_ << ", ";
         i++;
       }
-      ostr_ << "}" << misc::decindent;
+    ostr_ << "}" << misc::decindent;
   }
 
   void PrettyPrinter::operator()(const MethodCallExp& e)
@@ -352,12 +352,8 @@ namespace ast
   void PrettyPrinter::operator()(const ClassTy& e)
   {
     ostr_ << "class ";
-    NameTy* super = e.super_get();
-    if (super != nullptr)
-    {
-      ostr_ << "extends ";
-      super.accept(*this);
-    }
+    // FIXME: extends problem
+    e.super_get().accept(*this);
     ostr_ << misc::incindent;
     e.chunks_get().accept(*this);
     ostr_ << misc::decindent;
@@ -365,8 +361,23 @@ namespace ast
 
   void PrettyPrinter::operator()(const RecordTy& e)
   {
-    // FIXME
+    ostr_ << " {" << misc::incindent;
+    size_t i = 0;
+    size_t size = e.fields_get().size();
+    for (auto k : e.fields_get())
+      {
+        k->accept(*this);
+        if (i != size - 1)
+          ostr_ << ", ";
+        i++;
+      }
+    ostr_ << "}" << misc::decindent;
   }
 
+  void PrettyPrinter::operator()(const Field& e)
+  {
+    e.type_name_get().accept(*this);
+    ostr_ << ' ' << e.name_get();
+  }
 
 } // namespace ast
