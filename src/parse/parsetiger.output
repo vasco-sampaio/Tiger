@@ -195,7 +195,7 @@ Nonterminals, with rules where they appear
     program (57)
         on left: 1 2
         on right: 0
-    exps <ast::Exp*> (58)
+    exps <ast::exps_type*> (58)
         on left: 3 4
         on right: 4 34 42
     record_creation <ast::fieldinits_type*> (59)

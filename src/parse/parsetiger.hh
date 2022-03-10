@@ -333,7 +333,6 @@ namespace parse {
       // classfields
       char dummy2[sizeof (ast::ChunkList*)];
 
-      // exps
       // exp
       char dummy3[sizeof (ast::Exp*)];
 
@@ -373,6 +372,7 @@ namespace parse {
       // funfield
       char dummy14[sizeof (ast::VarDec*)];
 
+      // exps
       // function_param
       char dummy15[sizeof (ast::exps_type*)];
 
@@ -630,7 +630,6 @@ namespace parse {
         value.move< ast::ChunkList* > (std::move (that.value));
         break;
 
-      case symbol_kind::S_exps: // exps
       case symbol_kind::S_exp: // exp
         value.move< ast::Exp* > (std::move (that.value));
         break;
@@ -682,6 +681,7 @@ namespace parse {
         value.move< ast::VarDec* > (std::move (that.value));
         break;
 
+      case symbol_kind::S_exps: // exps
       case symbol_kind::S_function_param: // function_param
         value.move< ast::exps_type* > (std::move (that.value));
         break;
@@ -1033,7 +1033,6 @@ namespace parse {
         value.copy< ast::ChunkList* > (that.value);
         break;
 
-      case symbol_kind::S_exps: // exps
       case symbol_kind::S_exp: // exp
         value.copy< ast::Exp* > (that.value);
         break;
@@ -1085,6 +1084,7 @@ namespace parse {
         value.copy< ast::VarDec* > (that.value);
         break;
 
+      case symbol_kind::S_exps: // exps
       case symbol_kind::S_function_param: // function_param
         value.copy< ast::exps_type* > (that.value);
         break;
@@ -1134,7 +1134,6 @@ namespace parse {
         value.move< ast::ChunkList* > (std::move (that.value));
         break;
 
-      case symbol_kind::S_exps: // exps
       case symbol_kind::S_exp: // exp
         value.move< ast::Exp* > (std::move (that.value));
         break;
@@ -1186,6 +1185,7 @@ namespace parse {
         value.move< ast::VarDec* > (std::move (that.value));
         break;
 
+      case symbol_kind::S_exps: // exps
       case symbol_kind::S_function_param: // function_param
         value.move< ast::exps_type* > (std::move (that.value));
         break;
@@ -1246,7 +1246,6 @@ switch (yykind)
         value.template destroy< ast::ChunkList* > ();
         break;
 
-      case symbol_kind::S_exps: // exps
       case symbol_kind::S_exp: // exp
         value.template destroy< ast::Exp* > ();
         break;
@@ -1298,6 +1297,7 @@ switch (yykind)
         value.template destroy< ast::VarDec* > ();
         break;
 
+      case symbol_kind::S_exps: // exps
       case symbol_kind::S_function_param: // function_param
         value.template destroy< ast::exps_type* > ();
         break;
@@ -2474,7 +2474,6 @@ switch (yykind)
         value.copy< ast::ChunkList* > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_exps: // exps
       case symbol_kind::S_exp: // exp
         value.copy< ast::Exp* > (YY_MOVE (that.value));
         break;
@@ -2526,6 +2525,7 @@ switch (yykind)
         value.copy< ast::VarDec* > (YY_MOVE (that.value));
         break;
 
+      case symbol_kind::S_exps: // exps
       case symbol_kind::S_function_param: // function_param
         value.copy< ast::exps_type* > (YY_MOVE (that.value));
         break;
@@ -2585,7 +2585,6 @@ switch (yykind)
         value.move< ast::ChunkList* > (YY_MOVE (s.value));
         break;
 
-      case symbol_kind::S_exps: // exps
       case symbol_kind::S_exp: // exp
         value.move< ast::Exp* > (YY_MOVE (s.value));
         break;
@@ -2637,6 +2636,7 @@ switch (yykind)
         value.move< ast::VarDec* > (YY_MOVE (s.value));
         break;
 
+      case symbol_kind::S_exps: // exps
       case symbol_kind::S_function_param: // function_param
         value.move< ast::exps_type* > (YY_MOVE (s.value));
         break;

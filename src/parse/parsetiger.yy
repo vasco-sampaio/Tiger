@@ -192,7 +192,7 @@
        EOF 0        "end of file"
       
 
-%type <ast::Exp*>             exp exps
+%type <ast::Exp*>             exp
 %type <ast::ChunkList*>       chunks classfields
 
 %type <ast::TypeChunk*>       tychunk
@@ -204,7 +204,7 @@
 %type <ast::fields_type*>     tyfields tyfields.1
   // DONE: Some code was deleted here (More %types).
 %type <ast::Var*>             lvalue
-%type <ast::exps_type*>       function_param
+%type <ast::exps_type*>       function_param exps
 %type <ast::fieldinits_type*> record_creation record_init
 %type <ast::FunctionDec*>     fundec
 %type <ast::VarDec*>          vardec funfield
@@ -256,10 +256,9 @@ program:
   chunks      { tp.ast_ = $1; }
 ;
 
-
 exps:
-   exp
-|  exp SEMI exps
+   exp  { $$ = new ast::exps_type{$1}; }
+|  exp SEMI exps { $$ = $3; $$->push_back($1); }
 ;
 
 record_creation:
@@ -274,7 +273,7 @@ record_init:
 ;
 
 function_param:
-  exp    { $$ = tp.td_.make_exps_type<std::vector<ast::Exp*>>(*$$); }
+  exp { $$ = new ast::exps_type{$1}; }
 | exp COMMA function_param { $$ = $3; $$->push_back($1); }
 ;
 
@@ -303,7 +302,7 @@ exp:
 |   exp AND exp
 |   exp OR exp
 |   LPAREN RPAREN       { $$ = tp.td_.make_SeqExp(@$, nullptr); }
-|   LPAREN exps RPAREN  { $$ = tp.td_.make_SeqExp(@$, tp.td_.make_exps_type($2)); }
+|   LPAREN exps RPAREN  { $$ = tp.td_.make_SeqExp(@$, $2); }
 |   lvalue ASSIGN exp { $$ = tp.td_.make_AssignExp(@$, $1, $3); }
 |   IF exp THEN exp  { $$ = tp.td_.make_IfExp(@$, $2, $4); }
 |   IF exp THEN exp ELSE exp { $$ = tp.td_.make_IfExp(@$, $2, $4, $6); }
@@ -311,7 +310,7 @@ exp:
 |   FOR ID ASSIGN exp TO exp DO exp { $$ = tp.td_.make_ForExp(@$, tp.td_.make_VarDec(@2, $2, tp.td_.make_NameTy(@2, misc::symbol("int")), $4), $6, $8); }
 |   BREAK { $$ = tp.td_.make_BreakExp(@$); }
 |   LET chunks IN END { $$ = tp.td_.make_LetExp(@$, $2, nullptr); }
-|   LET chunks IN exps END { $$ = tp.td_.make_LetExp(@$, $2, $4); }
+|   LET chunks IN exps END { $$ = tp.td_.make_LetExp(@$, $2, tp.td_.make_SeqExp(@$, $4)); }
 |   NEW typeid  { $$ = tp.td_.make_ObjectExp(@$, $2); }
 |   lvalue DOT ID LPAREN RPAREN { $$ = tp.td_.make_MethodCallExp(@$, $3, nullptr, $1); }
 |   lvalue DOT ID LPAREN function_param RPAREN  { $$ = tp.td_.make_MethodCallExp(@$, $3, $5, $1); }
@@ -400,7 +399,7 @@ tychunk:
 
 tydec:
   "type" ID "=" ty { $$ = tp.td_.make_TypeDec(@$, $2, $4); }
-| CLASS ID LBRACE classfields RBRACE 
+| CLASS ID LBRACE classfields RBRACE  
 | CLASS ID EXTENDS typeid LBRACE classfields RBRACE
 ;
 

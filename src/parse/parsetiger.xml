@@ -830,7 +830,7 @@
     <nonterminals>
       <nonterminal symbol-number="56" name="$accept" type="" usefulness="useful"/>
       <nonterminal symbol-number="57" name="program" type="" usefulness="useful"/>
-      <nonterminal symbol-number="58" name="exps" type="ast::Exp*" usefulness="useful"/>
+      <nonterminal symbol-number="58" name="exps" type="ast::exps_type*" usefulness="useful"/>
       <nonterminal symbol-number="59" name="record_creation" type="ast::fieldinits_type*" usefulness="useful"/>
       <nonterminal symbol-number="60" name="record_init" type="ast::fieldinits_type*" usefulness="useful"/>
       <nonterminal symbol-number="61" name="function_param" type="ast::exps_type*" usefulness="useful"/>
