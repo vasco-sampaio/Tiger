@@ -1,0 +1,20 @@
+==================================================
+   LRDE Tiger Compiler 1.91.b: ./test-suite.log
+==================================================
+
+# TOTAL: 16
+# PASS:  15
+# SKIP:  0
+# XFAIL: 0
+# FAIL:  1
+# XPASS: 0
+# ERROR: 0
+
+.. contents:: :depth: 2
+
+FAIL: src/object/test-parse
+===========================
+
+let
+FAIL src/object/test-parse (exit status: 139)
+

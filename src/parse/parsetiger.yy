@@ -299,8 +299,16 @@ exp:
 |   exp LT exp        { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::lt, $3); }
 |   exp GE exp        { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::ge, $3); }
 |   exp LE exp        { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::le, $3); }
-|   exp AND exp
-|   exp OR exp
+|   exp AND exp       { $$ = tp.td_.make_IfExp(@1, $1, 
+                                                   tp.td_.make_IfExp(@2, $3, 
+                                                            tp.td_.make_IntExp(@$, 1), 
+                                                            tp.td_.make_IntExp(@$, 0)), 
+                                                   tp.td_.make_IntExp(@$, 0)); }
+|   exp OR exp        { $$ = tp.td_.make_IfExp(@1, $1, 
+                                                   tp.td_.make_IntExp(@$, 1),
+                                                   tp.td_.make_IfExp(@2, $3, 
+                                                            tp.td_.make_IntExp(@$, 1), 
+                                                            tp.td_.make_IntExp(@$, 0))); }
 |   LPAREN RPAREN       { $$ = tp.td_.make_SeqExp(@$, nullptr); }
 |   LPAREN exps RPAREN  { $$ = tp.td_.make_SeqExp(@$, $2); }
 |   lvalue ASSIGN exp { $$ = tp.td_.make_AssignExp(@$, $1, $3); }
@@ -399,8 +407,8 @@ tychunk:
 
 tydec:
   "type" ID "=" ty { $$ = tp.td_.make_TypeDec(@$, $2, $4); }
-| CLASS ID LBRACE classfields RBRACE  
-| CLASS ID EXTENDS typeid LBRACE classfields RBRACE
+| CLASS ID LBRACE classfields RBRACE { $$ = tp.td_.make_TypeDec(@$, $2, tp.td_.make_ClassTy(@$, nullptr, $4)); }
+| CLASS ID EXTENDS typeid LBRACE classfields RBRACE { $$ = tp.td_.make_TypeDec(@$, $2, tp.td_.make_ClassTy(@$, $4, $6)); }
 ;
 
 ty:
