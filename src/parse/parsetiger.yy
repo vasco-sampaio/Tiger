@@ -200,18 +200,25 @@
 %type <ast::NameTy*>          typeid
 %type <ast::Ty*>              ty
 
-%type <ast::Field*>           tyfield 
+%type <ast::Field*>           tyfield
 %type <ast::fields_type*>     tyfields tyfields.1
   // DONE: Some code was deleted here (More %types).
 %type <ast::Var*>             lvalue
 %type <ast::exps_type*>       function_param
 %type <ast::fieldinits_type*> record_creation record_init
 %type <ast::FunctionDec*>     fundec
-%type <ast::VarDec*>          vardec
+%type <ast::VarDec*>          vardec funfield
+%type <ast::FunctionChunk*>   funchunk
+%type <ast::VarChunk*>  varchunk funfields funfields.1
 
   // DONE: Some code was deleted here (Priorities/associativities).
 %precedence CHUNKS
 %precedence TYPE
+
+%precedence VAR
+
+%precedence PRIMITIVE
+%precedence FUNCTION
 
 %precedence CLASS
 %precedence DO OF
@@ -319,12 +326,39 @@ vardec:
 | VAR ID COLON typeid ASSIGN exp { $$ = tp.td_.make_VarDec(@$, $2, $4, $6); }
 ;
 
+
+
 fundec:
-    FUNCTION ID LPAREN tyfields RPAREN EQ exp
-|   FUNCTION ID LPAREN tyfields RPAREN COLON typeid EQ exp
-|   PRIMITIVE ID LPAREN tyfields RPAREN
-|   PRIMITIVE ID LPAREN tyfields RPAREN COLON typeid
+    FUNCTION ID LPAREN funfields RPAREN EQ exp { $$ = tp.td_.make_FunctionDec(@$, $2, $4, nullptr,$7); }
+|   FUNCTION ID LPAREN funfields RPAREN COLON typeid EQ exp { $$ = tp.td_.make_FunctionDec(@$, $2, $4, $7,$9); }
+|   PRIMITIVE ID LPAREN funfields RPAREN { $$ = tp.td_.make_FunctionDec(@$, $2, $4, nullptr, nullptr); }
+|   PRIMITIVE ID LPAREN funfields RPAREN COLON typeid { $$ = tp.td_.make_FunctionDec(@$, $2, $4, $7, nullptr); }
 ;
+
+funfields:
+  %empty               { $$ = tp.td_.make_VarChunk(@$); }
+| funfields.1           { $$ = $1; }
+;
+
+funfields.1:
+  funfields.1 "," funfield { $$ = $1; $$->emplace_back(*$3); }
+| funfield                 { $$ = tp.td_.make_VarChunk(@$); $$->emplace_back(*$1);}
+;
+
+funfield:
+  ID ":" typeid     { $$ = tp.td_.make_VarDec(@$, $1, $3, nullptr); }
+;
+
+funchunk:
+  fundec %prec CHUNKS  { $$ = tp.td_.make_FunctionChunk(@1); $$->push_front(*$1); }
+| fundec funchunk       { $$ = $2; $$->push_front(*$1); }
+;
+
+varchunk:
+  vardec %prec CHUNKS  { $$ = tp.td_.make_VarChunk(@1); $$->push_front(*$1); }
+| vardec varchunk       { $$ = $2; $$->push_front(*$1); }
+;
+
 
 
 /*---------------.
@@ -345,8 +379,8 @@ chunks:
   %empty                  { $$ = tp.td_.make_ChunkList(@$); }
 | tychunk  chunks         { $$ = $2; $$->push_front($1); }
   // DONE: Some code was deleted here (More rules).
-| fundec   chunks 
-| vardec   chunks
+| funchunk   chunks       { $$ = $2; $$->push_front($1); }
+| varchunk   chunks       { $$ = $2; $$->push_front($1); }
 | IMPORT STRING chunks
 ;
 
