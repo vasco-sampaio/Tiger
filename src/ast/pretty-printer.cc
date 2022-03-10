@@ -36,10 +36,12 @@ namespace ast
 
   void PrettyPrinter::operator()(const SimpleVar& e) { ostr_ << e.name_get(); }
 
-  /*void PrettyPrinter::operator()(const FieldVar& e)
+  void PrettyPrinter::operator()(const FieldVar& e)
   {
-    // FIXME: Some code was deleted here.
-  }*/
+    // DONE: Some code was deleted here.
+    e.var_get().accept(*this);
+    ostr_ << '.' << e.name_get();
+  }
 
   /* Foo[10]. */
   void PrettyPrinter::operator()(const SubscriptVar& e)
@@ -336,6 +338,35 @@ namespace ast
 
   void PrettyPrinter::operator()(const FunctionChunk& e)
   {
-
+    size_t size = e.decs_get().size();
+    size_t i = 0;
+    for (auto k : e.decs_get())
+      {
+        k->accept(*this);
+        if (i != size - 1)
+          ostr_ << misc::iendl;
+        i++;
+      }
   }
+
+  void PrettyPrinter::operator()(const ClassTy& e)
+  {
+    ostr_ << "class ";
+    NameTy* super = e.super_get();
+    if (super != nullptr)
+    {
+      ostr_ << "extends ";
+      super.accept(*this);
+    }
+    ostr_ << misc::incindent;
+    e.chunks_get().accept(*this);
+    ostr_ << misc::decindent;
+  }
+
+  void PrettyPrinter::operator()(const RecordTy& e)
+  {
+    // FIXME
+  }
+
+
 } // namespace ast

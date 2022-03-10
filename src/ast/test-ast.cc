@@ -92,4 +92,12 @@ int main()
     std::cout << *exp << '\n';
     delete exp;
   }
+  std::cout << "Custom test 4: Objects \n";
+  {
+    FieldInit* exp = new FieldInit(
+      loc, "name",
+      new AssignExp(loc, new SimpleVar(loc, "a"), new IntExp(loc, 5)));
+    std::cout << *exp << '\n';
+    delete exp;
+  }
 }

@@ -26,7 +26,7 @@ namespace ast
     /// Visit methods.
     /// \{
     void operator()(const SimpleVar& e) override; //
-    //void operator()(const FieldVar& e) override;
+    void operator()(const FieldVar& e) override;
     void operator()(const SubscriptVar& e) override; //
     void operator()(const CastExp& e) override; //
     // DONE: Some code was deleted here.
@@ -48,18 +48,18 @@ namespace ast
     void operator()(const ChunkList& e) override;
     void operator()(const TypeChunk& e) override;
     void operator()(const TypeDec& e) override;
-    //void operator()(const RecordTy& e) override;
+    void operator()(const RecordTy& e) override;
     void operator()(const ArrayTy& e) override;
     //void operator()(const Field& e) override;
     void operator()(const NameTy& e) override;
-    void operator()(const FieldInit& e) override;/*
+    void operator()(const FieldInit& e) override;
     void operator()(const ClassTy& e) override;
-    */void operator()(const VarChunk& e) override;
-    void operator()(const VarDec& e) override;/*
+    void operator()(const VarChunk& e) override;
+    void operator()(const VarDec& e) override;
     void operator()(const MethodChunk& e) override;
-    void operator()(const MethodDec& e) override;*/
+    void operator()(const MethodDec& e) override;
     void operator()(const FunctionDec& e) override;
-    //void operator()(const FunctionChunk& e) override;
+    void operator()(const FunctionChunk& e) override;
     /// \}
 
   private:
