@@ -70,24 +70,26 @@ int main()
     std::cout << *exp << '\n';
     delete exp;
   }
-/*
-  std::cout << "First custom test \n";
+
+  std::cout << "Custom test 1: TypeDec \n";
   {
-    auto formals =
-      new TypeChunk::Ds{new TypeDec(loc, "my_int", new NameTy(loc, "int")),
-                        new TypeDec(loc, "my_str", new NameTy(loc, "string"))};
-
-    TypeDec* typedec =
-      new TypeDec(loc, "decs", new TypeChunk(loc, formals));
-
-    TypeChunk* type_chunk = new TypeChunk(loc);
-    type_chunk->emplace_back(*typedec);
-
-    ChunkList* chunks = new ChunkList(loc);
-    chunks->emplace_back(type_chunk);
-
-    Exp* exp = new LetExp(loc, chunks, new CallExp(loc, "f", new exps_type()));
+    TypeDec* exp = new TypeDec(loc, "my_int", new NameTy(loc, "int"));
     std::cout << *exp << '\n';
     delete exp;
-  }*/
+  }
+  std::cout << "Custom test 2: ArrayTy \n";
+  {
+    TypeDec* exp =
+      new TypeDec(loc, "int_array", new ArrayTy(loc, new NameTy(loc, "int")));
+    std::cout << *exp << '\n';
+    delete exp;
+  }
+  std::cout << "Custom test 3: TypeField \n";
+  {
+    FieldInit* exp = new FieldInit(
+      loc, "name",
+      new AssignExp(loc, new SimpleVar(loc, "a"), new IntExp(loc, 5)));
+    std::cout << *exp << '\n';
+    delete exp;
+  }
 }

@@ -14,4 +14,10 @@ let
 in f ()
 end
 
+Custom test 1: TypeDec 
+type my_int = int
+Custom test 2: ArrayTy 
+type int_array = array of int
+Custom test 3: TypeField 
+name {a := 5}
 PASS src/ast/test-ast (exit status: 0)

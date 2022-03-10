@@ -4,6 +4,7 @@
  */
 
 #include <cstddef>
+#include <ostream>
 #include <ast/all.hh>
 #include <ast/libast.hh>
 #include <ast/pretty-printer.hh>
@@ -171,7 +172,7 @@ namespace ast
   void PrettyPrinter::operator()(const CallExp& e)
   {
     ostr_ << e.name_get();
-    ostr_ << " (";
+    ostr_ << " (" << misc::incindent;
     size_t size = e.args_get().size();
     size_t i = 0;
     for (auto k : e.args_get())
@@ -181,7 +182,7 @@ namespace ast
           ostr_ << ", ";
         i++;
       }
-    ostr_ << ')';
+    ostr_ << ')' << misc::decindent;
   }
 
   void PrettyPrinter::operator()(const FunctionDec& e)
@@ -272,10 +273,69 @@ namespace ast
 
   void PrettyPrinter::operator()(const FieldInit& e)
   {
-    ostr_ << "{ " << e.name_get();
-    ostr_ << " = ";
+    ostr_ << e.name_get() << " {" << misc::incindent;
     e.init_get().accept(*this);
-    ostr_ << " }";
+    ostr_ << "}" << misc::decindent;
   }
 
+  void PrettyPrinter::operator()(const RecordExp& e)
+  {
+    size_t size = e.fields_get().size();
+    e.type_name_get().accept(*this);
+    ostr_ << " {" << misc::incindent;
+    size_t i = 0;
+    for (auto k : e.fields_get())
+      {
+        k->accept(*this);
+        if (i != size - 1)
+          ostr_ << ", ";
+        i++;
+      }
+      ostr_ << "}" << misc::decindent;
+  }
+
+  void PrettyPrinter::operator()(const MethodCallExp& e)
+  {
+    e.object_get().accept(*this);
+    ostr_ << "." << e.name_get() << "(" << misc::incindent;
+    size_t size = e.args_get().size();
+    size_t i = 0;
+    for (auto k : e.args_get())
+      {
+        k->accept(*this);
+        if (i != size - 1)
+          ostr_ << ", ";
+        i++;
+      }
+    ostr_ << ')' << misc::decindent;
+  }
+
+  void PrettyPrinter::operator()(const MethodDec& e)
+  {
+    ostr_ << "method " << e.name_get() << " (" << misc::incindent;
+    e.formals_get().accept(*this);
+    ostr_ << ") : ";
+    e.result_get()->accept(*this);
+    ostr_ << " = ";
+    e.body_get()->accept(*this);
+    ostr_ << misc::decindent;
+  }
+
+  void PrettyPrinter::operator()(const MethodChunk& e)
+  {
+    size_t size = e.decs_get().size();
+    size_t i = 0;
+    for (auto k : e.decs_get())
+      {
+        k->accept(*this);
+        if (i != size - 1)
+          ostr_ << misc::iendl;
+        i++;
+      }
+  }
+
+  void PrettyPrinter::operator()(const FunctionChunk& e)
+  {
+
+  }
 } // namespace ast
