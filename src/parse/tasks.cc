@@ -5,6 +5,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <memory>
 
 #include <ast/tasks.hh>
 #include <common.hh>
@@ -37,7 +38,8 @@ namespace parse::tasks
     if (!result.first)
       task_error().exit();
 
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    ast::tasks::the_program.reset(result.first);
   }
 
   void library_display() { std::cout << l << '\n'; }

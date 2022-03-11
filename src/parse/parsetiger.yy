@@ -102,7 +102,7 @@
 }
 
   // FIXME: Some code was deleted here (Printers and destructors).
-  { the_program = std::move(tp.ast_); }
+  
 
 /*-----------------------------------------.
 | Code output in the implementation file.  |
