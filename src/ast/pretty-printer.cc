@@ -199,7 +199,7 @@ namespace ast
     ostr_ << misc::decindent;
   }
 
-  void PrettyPrinter::operator()(const NameTy& e) { ostr_ << e.name_get(); }
+  void PrettyPrinter::operator()(const NameTy& e) { ostr_ << ' ' << e.name_get() << ' '; }
 
   void PrettyPrinter::operator()(const LetExp& e)
   {
@@ -226,11 +226,12 @@ namespace ast
   void PrettyPrinter::operator()(const VarDec& e)
   {
     ostr_ << e.name_get();
-    ostr_ << " : ";
-    e.type_name_get()->accept(*this);
+    ostr_ << " :";
+    if (e.type_name_get()->name_get() != misc::symbol("NULL"))
+      e.type_name_get()->accept(*this);
     if (e.init_get())
       {
-        ostr_ << " = ";
+        ostr_ << "= ";
         e.init_get()->accept(*this);
       }
   }

@@ -331,7 +331,7 @@ lvalue:
 ;
 
 vardec:
-  VAR ID ASSIGN exp { $$ = tp.td_.make_VarDec(@$, $2, nullptr, $4); }
+  VAR ID ASSIGN exp { $$ = tp.td_.make_VarDec(@$, $2, tp.td_.make_NameTy(@3, misc::symbol("NULL")), $4); }
 | VAR ID COLON typeid ASSIGN exp { $$ = tp.td_.make_VarDec(@$, $2, $4, $6); }
 ;
 
