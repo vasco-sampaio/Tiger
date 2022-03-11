@@ -488,8 +488,10 @@ namespace parse {
     TOK_VAR = 306,                 // "var"
     TOK_WHILE = 307,               // "while"
     TOK_UMINUS = 308,              // UMINUS
-    TOK_CHUNKS = 309,              // "_chunks"
-    TOK_NAMETY = 310               // "_namety"
+    TOK_EXP = 309,                 // "_exp"
+    TOK_LVALUE = 310,              // "_lvalue"
+    TOK_CHUNKS = 311,              // "_chunks"
+    TOK_NAMETY = 312               // "_namety"
       };
     };
 
@@ -501,7 +503,7 @@ namespace parse {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 56, ///< Number of tokens.
+        YYNTOKENS = 58, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -557,34 +559,36 @@ namespace parse {
         S_VAR = 51,                              // "var"
         S_WHILE = 52,                            // "while"
         S_UMINUS = 53,                           // UMINUS
-        S_CHUNKS = 54,                           // "_chunks"
-        S_NAMETY = 55,                           // "_namety"
-        S_YYACCEPT = 56,                         // $accept
-        S_program = 57,                          // program
-        S_exps = 58,                             // exps
-        S_record_creation = 59,                  // record_creation
-        S_record_init = 60,                      // record_init
-        S_function_param = 61,                   // function_param
-        S_exp = 62,                              // exp
-        S_lvalue = 63,                           // lvalue
-        S_vardec = 64,                           // vardec
-        S_fundec = 65,                           // fundec
-        S_funfields = 66,                        // funfields
-        S_67_funfields_1 = 67,                   // funfields.1
-        S_funfield = 68,                         // funfield
-        S_funchunk = 69,                         // funchunk
-        S_varchunk = 70,                         // varchunk
-        S_chunks = 71,                           // chunks
-        S_tychunk = 72,                          // tychunk
-        S_tydec = 73,                            // tydec
-        S_ty = 74,                               // ty
-        S_classfields = 75,                      // classfields
-        S_76_classfields_1 = 76,                 // classfields.1
-        S_classfield = 77,                       // classfield
-        S_tyfields = 78,                         // tyfields
-        S_79_tyfields_1 = 79,                    // tyfields.1
-        S_tyfield = 80,                          // tyfield
-        S_typeid = 81                            // typeid
+        S_EXP = 54,                              // "_exp"
+        S_LVALUE = 55,                           // "_lvalue"
+        S_CHUNKS = 56,                           // "_chunks"
+        S_NAMETY = 57,                           // "_namety"
+        S_YYACCEPT = 58,                         // $accept
+        S_program = 59,                          // program
+        S_exps = 60,                             // exps
+        S_record_creation = 61,                  // record_creation
+        S_record_init = 62,                      // record_init
+        S_function_param = 63,                   // function_param
+        S_exp = 64,                              // exp
+        S_lvalue = 65,                           // lvalue
+        S_vardec = 66,                           // vardec
+        S_fundec = 67,                           // fundec
+        S_funfields = 68,                        // funfields
+        S_69_funfields_1 = 69,                   // funfields.1
+        S_funfield = 70,                         // funfield
+        S_funchunk = 71,                         // funchunk
+        S_varchunk = 72,                         // varchunk
+        S_chunks = 73,                           // chunks
+        S_tychunk = 74,                          // tychunk
+        S_tydec = 75,                            // tydec
+        S_ty = 76,                               // ty
+        S_classfields = 77,                      // classfields
+        S_78_classfields_1 = 78,                 // classfields.1
+        S_classfield = 79,                       // classfield
+        S_tyfields = 80,                         // tyfields
+        S_81_tyfields_1 = 81,                    // tyfields.1
+        S_tyfield = 82,                          // tyfield
+        S_typeid = 83                            // typeid
       };
     };
 
@@ -621,7 +625,7 @@ namespace parse {
       {
         switch (this->kind ())
     {
-      case symbol_kind::S_76_classfields_1: // classfields.1
+      case symbol_kind::S_78_classfields_1: // classfields.1
         value.move< ast::ChunkInterface* > (std::move (that.value));
         break;
 
@@ -671,7 +675,7 @@ namespace parse {
         break;
 
       case symbol_kind::S_funfields: // funfields
-      case symbol_kind::S_67_funfields_1: // funfields.1
+      case symbol_kind::S_69_funfields_1: // funfields.1
       case symbol_kind::S_varchunk: // varchunk
         value.move< ast::VarChunk* > (std::move (that.value));
         break;
@@ -692,7 +696,7 @@ namespace parse {
         break;
 
       case symbol_kind::S_tyfields: // tyfields
-      case symbol_kind::S_79_tyfields_1: // tyfields.1
+      case symbol_kind::S_81_tyfields_1: // tyfields.1
         value.move< ast::fields_type* > (std::move (that.value));
         break;
 
@@ -1024,7 +1028,7 @@ namespace parse {
         Base::operator= (that);
         switch (this->kind ())
     {
-      case symbol_kind::S_76_classfields_1: // classfields.1
+      case symbol_kind::S_78_classfields_1: // classfields.1
         value.copy< ast::ChunkInterface* > (that.value);
         break;
 
@@ -1074,7 +1078,7 @@ namespace parse {
         break;
 
       case symbol_kind::S_funfields: // funfields
-      case symbol_kind::S_67_funfields_1: // funfields.1
+      case symbol_kind::S_69_funfields_1: // funfields.1
       case symbol_kind::S_varchunk: // varchunk
         value.copy< ast::VarChunk* > (that.value);
         break;
@@ -1095,7 +1099,7 @@ namespace parse {
         break;
 
       case symbol_kind::S_tyfields: // tyfields
-      case symbol_kind::S_79_tyfields_1: // tyfields.1
+      case symbol_kind::S_81_tyfields_1: // tyfields.1
         value.copy< ast::fields_type* > (that.value);
         break;
 
@@ -1125,7 +1129,7 @@ namespace parse {
         Base::operator= (std::move (that));
         switch (this->kind ())
     {
-      case symbol_kind::S_76_classfields_1: // classfields.1
+      case symbol_kind::S_78_classfields_1: // classfields.1
         value.move< ast::ChunkInterface* > (std::move (that.value));
         break;
 
@@ -1175,7 +1179,7 @@ namespace parse {
         break;
 
       case symbol_kind::S_funfields: // funfields
-      case symbol_kind::S_67_funfields_1: // funfields.1
+      case symbol_kind::S_69_funfields_1: // funfields.1
       case symbol_kind::S_varchunk: // varchunk
         value.move< ast::VarChunk* > (std::move (that.value));
         break;
@@ -1196,7 +1200,7 @@ namespace parse {
         break;
 
       case symbol_kind::S_tyfields: // tyfields
-      case symbol_kind::S_79_tyfields_1: // tyfields.1
+      case symbol_kind::S_81_tyfields_1: // tyfields.1
         value.move< ast::fields_type* > (std::move (that.value));
         break;
 
@@ -1237,7 +1241,7 @@ namespace parse {
         // Value type destructor.
 switch (yykind)
     {
-      case symbol_kind::S_76_classfields_1: // classfields.1
+      case symbol_kind::S_78_classfields_1: // classfields.1
         value.template destroy< ast::ChunkInterface* > ();
         break;
 
@@ -1287,7 +1291,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_funfields: // funfields
-      case symbol_kind::S_67_funfields_1: // funfields.1
+      case symbol_kind::S_69_funfields_1: // funfields.1
       case symbol_kind::S_varchunk: // varchunk
         value.template destroy< ast::VarChunk* > ();
         break;
@@ -1308,7 +1312,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_tyfields: // tyfields
-      case symbol_kind::S_79_tyfields_1: // tyfields.1
+      case symbol_kind::S_81_tyfields_1: // tyfields.1
         value.template destroy< ast::fields_type* > ();
         break;
 
@@ -2297,6 +2301,36 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_EXP (location_type l)
+      {
+        return symbol_type (token::TOK_EXP, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_EXP (const location_type& l)
+      {
+        return symbol_type (token::TOK_EXP, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_LVALUE (location_type l)
+      {
+        return symbol_type (token::TOK_LVALUE, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_LVALUE (const location_type& l)
+      {
+        return symbol_type (token::TOK_LVALUE, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_CHUNKS (location_type l)
       {
         return symbol_type (token::TOK_CHUNKS, std::move (l));
@@ -2443,10 +2477,10 @@ switch (yykind)
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
       35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
       45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
-      55
+      55,    56,    57
     };
     // Last valid token kind.
-    const int code_max = 310;
+    const int code_max = 312;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -2465,7 +2499,7 @@ switch (yykind)
   {
     switch (this->kind ())
     {
-      case symbol_kind::S_76_classfields_1: // classfields.1
+      case symbol_kind::S_78_classfields_1: // classfields.1
         value.copy< ast::ChunkInterface* > (YY_MOVE (that.value));
         break;
 
@@ -2515,7 +2549,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_funfields: // funfields
-      case symbol_kind::S_67_funfields_1: // funfields.1
+      case symbol_kind::S_69_funfields_1: // funfields.1
       case symbol_kind::S_varchunk: // varchunk
         value.copy< ast::VarChunk* > (YY_MOVE (that.value));
         break;
@@ -2536,7 +2570,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_tyfields: // tyfields
-      case symbol_kind::S_79_tyfields_1: // tyfields.1
+      case symbol_kind::S_81_tyfields_1: // tyfields.1
         value.copy< ast::fields_type* > (YY_MOVE (that.value));
         break;
 
@@ -2576,7 +2610,7 @@ switch (yykind)
     super_type::move (s);
     switch (this->kind ())
     {
-      case symbol_kind::S_76_classfields_1: // classfields.1
+      case symbol_kind::S_78_classfields_1: // classfields.1
         value.move< ast::ChunkInterface* > (YY_MOVE (s.value));
         break;
 
@@ -2626,7 +2660,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_funfields: // funfields
-      case symbol_kind::S_67_funfields_1: // funfields.1
+      case symbol_kind::S_69_funfields_1: // funfields.1
       case symbol_kind::S_varchunk: // varchunk
         value.move< ast::VarChunk* > (YY_MOVE (s.value));
         break;
@@ -2647,7 +2681,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_tyfields: // tyfields
-      case symbol_kind::S_79_tyfields_1: // tyfields.1
+      case symbol_kind::S_81_tyfields_1: // tyfields.1
         value.move< ast::fields_type* > (YY_MOVE (s.value));
         break;
 
@@ -2739,7 +2773,7 @@ switch (yykind)
 
 
 } // parse
-#line 2743 "parse/parsetiger.hh"
+#line 2777 "parse/parsetiger.hh"
 
 
 // "%code provides" blocks.
@@ -2751,7 +2785,7 @@ switch (yykind)
     (Prefix parselex)(::parse::TigerParser& tp)
   # define YY_DECL YY_DECL_(yyFlexLexer::)
 
-#line 2755 "parse/parsetiger.hh"
+#line 2789 "parse/parsetiger.hh"
 
 
 #endif // !YY_PARSE_SRC_PARSE_PARSETIGER_HH_INCLUDED

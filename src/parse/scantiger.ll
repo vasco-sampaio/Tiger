@@ -154,6 +154,8 @@ digit           [0-9]
 ":="        {return TOKEN(ASSIGN);}
 "_chunks"   {return TOKEN(CHUNKS);}
 "_namety"   {return TOKEN(NAMETY);}
+"_exp"      {return TOKEN(EXP);}
+"_lvalue"   {return TOKEN(LVALUE);}
 "_cast"     {return TOKEN(CAST);}
 
 

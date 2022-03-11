@@ -102,7 +102,7 @@
 }
 
   // FIXME: Some code was deleted here (Printers and destructors).
-
+  { the_program = std::move(tp.ast_); }
 
 /*-----------------------------------------.
 | Code output in the implementation file.  |
@@ -322,12 +322,15 @@ exp:
 |   NEW typeid  { $$ = tp.td_.make_ObjectExp(@$, $2); }
 |   lvalue DOT ID LPAREN RPAREN { $$ = tp.td_.make_MethodCallExp(@$, $3, new ast::exps_type(), $1); }
 |   lvalue DOT ID LPAREN function_param RPAREN  { $$ = tp.td_.make_MethodCallExp(@$, $3, $5, $1); }
+|   CAST LPAREN exp COMMA ty RPAREN { $$ = tp.td_.make_CastExp(@$, $3, $5); }
+|   EXP LPAREN INT RPAREN { $$ = metavar<ast::Exp>(tp, $3); }
 ;
 
 lvalue:
     ID { $$ = tp.td_.make_SimpleVar(@$, $1); }
 |   lvalue DOT ID { $$ = tp.td_.make_FieldVar(@$, $1, $3); }
 |   lvalue LBRACK exp RBRACK { $$ = tp.td_.make_SubscriptVar(@$, $1, $3); }
+|   LVALUE LPAREN INT RPAREN { $$ = metavar<ast::Var>(tp, $3); }
 ;
 
 vardec:
@@ -369,6 +372,9 @@ varchunk:
 ;
 
 
+%token EXP "_exp";
+%token LVALUE "_lvalue";
+
 
 /*---------------.
 | Declarations.  |
@@ -390,7 +396,8 @@ chunks:
   // DONE: Some code was deleted here (More rules).
 | funchunk   chunks       { $$ = $2; $$->push_front($1); }
 | varchunk   chunks       { $$ = $2; $$->push_front($1); }
-| IMPORT STRING chunks
+| CHUNKS LPAREN INT RPAREN chunks { $$ = metavar<ast::ChunkList>(tp, $3); }
+| IMPORT STRING chunks    
 ;
 
 /*--------------------.
