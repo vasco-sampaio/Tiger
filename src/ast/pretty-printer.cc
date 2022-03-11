@@ -64,7 +64,7 @@ namespace ast
 
   void PrettyPrinter::operator()(const StringExp& e)
   {
-    ostr_ << e.string_get();
+    ostr_ << '\"' << e.string_get() << '\"';
   }
 
   void PrettyPrinter::operator()(const ObjectExp& e)
@@ -189,23 +189,34 @@ namespace ast
 
   void PrettyPrinter::operator()(const FunctionDec& e)
   {
-    ostr_ << "function " << e.name_get() << " (" << misc::incindent;
+    if (e.body_get() == nullptr)
+      ostr_ << "primitive ";
+    else
+      ostr_ << "function ";
+    ostr_ << e.name_get() << " (" << misc::incindent;
     e.formals_get().accept(*this);
 
-    ostr_ << ") : ";
-    e.result_get()->accept(*this);
-    ostr_ << " = ";
-    e.body_get()->accept(*this);
+    ostr_ << ")";
+    if (e.result_get() != nullptr)
+    {
+      ostr_ << " : ";
+      e.result_get()->accept(*this);
+    }
+    if (e.body_get() != nullptr)
+    {
+      ostr_ << " = ";
+      e.body_get()->accept(*this);
+    }
     ostr_ << misc::decindent;
   }
 
-  void PrettyPrinter::operator()(const NameTy& e) { ostr_ << ' ' << e.name_get() << ' '; }
+  void PrettyPrinter::operator()(const NameTy& e) { ostr_ << e.name_get(); }
 
   void PrettyPrinter::operator()(const LetExp& e)
   {
     ostr_ << "let" << misc::incindent << misc::iendl;
     e.decs_get().accept(*this);
-    ostr_ << misc::decindent << misc::iendl << "in" << misc::incindent;
+    ostr_ << misc::decindent << misc::iendl << "in " << misc::incindent;
     if (e.body_get() != nullptr)
     {
       ostr_ << ' ';
@@ -230,7 +241,7 @@ namespace ast
   void PrettyPrinter::operator()(const VarDec& e)
   {
     ostr_ << e.name_get();
-    ostr_ << " :";
+    ostr_ << " : ";
     if (e.type_name_get() != nullptr)
       e.type_name_get()->accept(*this);
     if (e.init_get())
@@ -248,7 +259,10 @@ namespace ast
       {
         k->accept(*this);
         if (i != size - 1)
+        {
+          ostr_ << ';';
           ostr_ << misc::iendl;
+        }
         i++;
       }
   }
