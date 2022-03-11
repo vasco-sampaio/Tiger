@@ -128,7 +128,8 @@ namespace ast
   {
     // DONE: Some code was deleted here.
     e.decs_get().accept(*this);
-    e.body_get().accept(*this);
+    if (e.body_get() != nullptr)
+      e.body_get()->accept(*this);
   }
 
   template <template <typename> class Const>

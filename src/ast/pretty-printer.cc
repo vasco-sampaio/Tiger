@@ -205,8 +205,12 @@ namespace ast
   {
     ostr_ << "let" << misc::incindent << misc::iendl;
     e.decs_get().accept(*this);
-    ostr_ << misc::decindent << misc::iendl << "in " << misc::incindent;
-    e.body_get().accept(*this);
+    ostr_ << misc::decindent << misc::iendl << "in" << misc::incindent;
+    if (e.body_get() != nullptr)
+    {
+      ostr_ << ' ';
+      e.body_get()->accept(*this);
+    }
     ostr_ << misc::decindent << misc::iendl << "end" << misc::iendl;
   }
 
@@ -227,7 +231,7 @@ namespace ast
   {
     ostr_ << e.name_get();
     ostr_ << " :";
-    if (e.type_name_get()->name_get() != misc::symbol("NULL"))
+    if (e.type_name_get() != nullptr)
       e.type_name_get()->accept(*this);
     if (e.init_get())
       {
@@ -317,9 +321,10 @@ namespace ast
   {
     ostr_ << "method " << e.name_get() << " (" << misc::incindent;
     e.formals_get().accept(*this);
-    ostr_ << ") : ";
-    e.result_get()->accept(*this);
-    ostr_ << " = ";
+    ostr_ << ") :";
+    if (e.result_get() != nullptr)
+        e.result_get()->accept(*this);
+    ostr_ << "= ";
     e.body_get()->accept(*this);
     ostr_ << misc::decindent;
   }
@@ -354,7 +359,11 @@ namespace ast
   {
     ostr_ << "class ";
     // FIXME: extends problem
-    e.super_get().accept(*this);
+    if (e.super_get() != nullptr)
+    {
+      ostr_ << ": extends ";
+      e.super_get()->accept(*this);
+    }
     ostr_ << misc::incindent;
     e.chunks_get().accept(*this);
     ostr_ << misc::decindent;

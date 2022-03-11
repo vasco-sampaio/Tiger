@@ -25,8 +25,8 @@ namespace ast
 
     const ChunkList& decs_get() const;
     ChunkList& decs_get();
-    const Exp& body_get() const;
-    Exp& body_get();
+    const Exp* body_get() const;
+    Exp* body_get();
 
   protected:
     ChunkList* decs_;

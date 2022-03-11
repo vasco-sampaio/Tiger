@@ -1,3 +1,19 @@
 let
-  type C = class Objecta :  = 42
-FAIL src/object/test-parse (exit status: 139)
+  type C = class : extends  Object a := 42
+    method print () := print_int (a)
+  c :=  C 
+in c.print()
+  c.a := 51
+  
+end
+
+let
+  type C = class : extends  Object a := 42
+    method print () := print_int (a)
+  c :=  C 
+in c.print()
+  c.a := 51
+  
+end
+
+PASS src/object/test-parse (exit status: 0)

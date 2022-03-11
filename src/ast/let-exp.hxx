@@ -13,6 +13,6 @@ namespace ast
   inline const ChunkList& LetExp::decs_get() const { return *decs_; }
   inline ChunkList& LetExp::decs_get() { return *decs_; }
 
-  inline const Exp& LetExp::body_get() const { return *body_; }
-  inline Exp& LetExp::body_get() { return *body_; }
+  inline const Exp* LetExp::body_get() const { return body_; }
+  inline Exp* LetExp::body_get() { return body_; }
 } // namespace ast

@@ -283,10 +283,10 @@ exp:
 |   NIL         { $$ = tp.td_.make_NilExp(@$); }
 |   STRING      { $$ = tp.td_.make_StringExp(@$, $1); }
 |   typeid LBRACK exp RBRACK OF exp   { $$ = tp.td_.make_ArrayExp(@$, $1, $3, $6); }
-|   typeid LBRACE RBRACE                  { $$ = tp.td_.make_RecordExp(@$, $1, nullptr); }
+|   typeid LBRACE RBRACE                  { $$ = tp.td_.make_RecordExp(@$, $1, new ast::fieldinits_type()); }
 |   typeid LBRACE record_creation RBRACE  { $$ = tp.td_.make_RecordExp(@$, $1, $3); }
 |   lvalue      { $$ = $1; }
-|   ID LPAREN RPAREN   { $$ = tp.td_.make_CallExp(@$, $1, nullptr); }
+|   ID LPAREN RPAREN   { $$ = tp.td_.make_CallExp(@$, $1, new ast::exps_type()); }
 |   ID LPAREN function_param RPAREN { $$ = tp.td_.make_CallExp(@$, $1, $3); }
 |   MINUS exp  %prec UMINUS { $$ = tp.td_.make_OpExp(@$, tp.td_.make_IntExp(@1, 0), ast::OpExp::Oper::sub, $2); }
 |   exp PLUS exp      { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::add, $3); }
@@ -309,7 +309,7 @@ exp:
                                                    tp.td_.make_IfExp(@2, $3, 
                                                             tp.td_.make_IntExp(@$, 1), 
                                                             tp.td_.make_IntExp(@$, 0))); }
-|   LPAREN RPAREN       { $$ = tp.td_.make_SeqExp(@$, nullptr); }
+|   LPAREN RPAREN       { $$ = tp.td_.make_SeqExp(@$, new ast::exps_type()); }
 |   LPAREN exps RPAREN  { $$ = tp.td_.make_SeqExp(@$, $2); }
 |   lvalue ASSIGN exp { $$ = tp.td_.make_AssignExp(@$, $1, $3); }
 |   IF exp THEN exp  { $$ = tp.td_.make_IfExp(@$, $2, $4); }
@@ -320,7 +320,7 @@ exp:
 |   LET chunks IN END { $$ = tp.td_.make_LetExp(@$, $2, nullptr); }
 |   LET chunks IN exps END { $$ = tp.td_.make_LetExp(@$, $2, tp.td_.make_SeqExp(@$, $4)); }
 |   NEW typeid  { $$ = tp.td_.make_ObjectExp(@$, $2); }
-|   lvalue DOT ID LPAREN RPAREN { $$ = tp.td_.make_MethodCallExp(@$, $3, nullptr, $1); }
+|   lvalue DOT ID LPAREN RPAREN { $$ = tp.td_.make_MethodCallExp(@$, $3, new ast::exps_type(), $1); }
 |   lvalue DOT ID LPAREN function_param RPAREN  { $$ = tp.td_.make_MethodCallExp(@$, $3, $5, $1); }
 ;
 
@@ -331,7 +331,7 @@ lvalue:
 ;
 
 vardec:
-  VAR ID ASSIGN exp { $$ = tp.td_.make_VarDec(@$, $2, tp.td_.make_NameTy(@3, misc::symbol("NULL")), $4); }
+  VAR ID ASSIGN exp { $$ = tp.td_.make_VarDec(@$, $2, nullptr, $4); }
 | VAR ID COLON typeid ASSIGN exp { $$ = tp.td_.make_VarDec(@$, $2, $4, $6); }
 ;
 
