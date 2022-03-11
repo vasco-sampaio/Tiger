@@ -204,8 +204,10 @@ namespace ast
     }
     if (e.body_get() != nullptr)
     {
-      ostr_ << " = ";
+      ostr_ << " =";
+      ostr_ << misc::iendl << '(' << misc::incindent;
       e.body_get()->accept(*this);
+      ostr_ << misc::decindent << ')';
     }
     ostr_ << misc::decindent;
   }
