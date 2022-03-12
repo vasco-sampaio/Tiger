@@ -256,9 +256,11 @@ program:
   chunks      { tp.ast_ = $1; }
 ;
 
+
 exps:
    exp  { $$ = new ast::exps_type{$1}; }
-|  exp SEMI exps { $$ = $3; $$->push_back($1); }
+|  exp SEMI exps { $$ = $3; $$->insert($$->begin(), $1); }
+|  %empty { $$ = new ast::exps_type(); }
 ;
 
 record_creation:
@@ -309,7 +311,6 @@ exp:
                                                    tp.td_.make_IfExp(@2, $3, 
                                                             tp.td_.make_IntExp(@$, 1), 
                                                             tp.td_.make_IntExp(@$, 0))); }
-|   LPAREN RPAREN       { $$ = tp.td_.make_SeqExp(@$, new ast::exps_type()); }
 |   LPAREN exps RPAREN  { $$ = tp.td_.make_SeqExp(@$, $2); }
 |   lvalue ASSIGN exp { $$ = tp.td_.make_AssignExp(@$, $1, $3); }
 |   IF exp THEN exp  { $$ = tp.td_.make_IfExp(@$, $2, $4); }
@@ -317,7 +318,6 @@ exp:
 |   WHILE exp DO exp  { $$ = tp.td_.make_WhileExp(@$, $2, $4); }
 |   FOR ID ASSIGN exp TO exp DO exp { $$ = tp.td_.make_ForExp(@$, tp.td_.make_VarDec(@2, $2, tp.td_.make_NameTy(@2, misc::symbol("int")), $4), $6, $8); }
 |   BREAK { $$ = tp.td_.make_BreakExp(@$); }
-|   LET chunks IN END { $$ = tp.td_.make_LetExp(@$, $2, nullptr); }
 |   LET chunks IN exps END { $$ = tp.td_.make_LetExp(@$, $2, tp.td_.make_SeqExp(@$, $4)); }
 |   NEW typeid  { $$ = tp.td_.make_ObjectExp(@$, $2); }
 |   lvalue DOT ID LPAREN RPAREN { $$ = tp.td_.make_MethodCallExp(@$, $3, new ast::exps_type(), $1); }

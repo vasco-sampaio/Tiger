@@ -77,12 +77,12 @@ namespace ast
   {
     ostr_ << "if" << '(';
     e.test_get().accept(*this);
-    ostr_ << ')' << " then" << misc::iendl;
+    ostr_ << ')' << " then" << misc::incendl;
     e.then_clause_get().accept(*this);
     ostr_ << misc::decindent;
     if (e.else_clause_get() != nullptr)
       {
-        ostr_ << misc::decindent << "else" << misc::iendl;
+        ostr_ << "else" << misc::incendl;
         e.else_clause_get()->accept(*this);
         ostr_ << misc::decindent;
       }
@@ -92,7 +92,7 @@ namespace ast
   {
     ostr_ << "while" << '(';
     e.test_get().accept(*this);
-    ostr_ << ')' << " do" << misc::iendl;
+    ostr_ << ')' << " do" << misc::incendl;
     e.body_get().accept(*this);
     ostr_ << misc::decindent;
   }
@@ -121,11 +121,15 @@ namespace ast
 
   void PrettyPrinter::operator()(const SeqExp& e)
   {
-    for (auto& x : e.exps_get())
-      {
-        x->accept(*this);
-        ostr_ << misc::iendl;
-      }
+    auto v = e.exps_get();
+    for (size_t i = 0; i < v.size(); i++)
+    {
+        v.at(i)->accept(*this);
+        if (i != v.size() - 1)
+          ostr_ << ';' << misc::iendl;
+        else
+          ostr_ << "()";
+    }
   }
 
   void PrettyPrinter::operator()(const OpExp& e)
@@ -193,7 +197,7 @@ namespace ast
       ostr_ << "primitive ";
     else
       ostr_ << "function ";
-    ostr_ << e.name_get() << " (" << misc::incindent;
+    ostr_ << e.name_get() << "(" << misc::incindent;
     e.formals_get().accept(*this);
 
     ostr_ << ")";
@@ -205,9 +209,9 @@ namespace ast
     if (e.body_get() != nullptr)
     {
       ostr_ << " =";
-      ostr_ << misc::iendl << '(' << misc::incindent;
+      ostr_ << misc::iendl << '(' << misc::incendl;
       e.body_get()->accept(*this);
-      ostr_ << misc::decindent << ')';
+      ostr_ << misc::decendl << ')';
     }
     ostr_ << misc::decindent;
   }
