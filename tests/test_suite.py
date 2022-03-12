@@ -10,6 +10,8 @@ import termcolor
 import yaml
 import os
 
+from difflib import unified_diff
+
 @dataclass
 class TestCase:
     name: str
@@ -20,12 +22,24 @@ class TestCase:
 OK_TAG = f"[ {termcolor.colored('OK', 'green')} ]"
 KO_TAG = f"[ {termcolor.colored('KO', 'red')} ]"
 
+def diff(expected: str, actual: str) -> str:
+    expected_lines = expected.splitlines(keepends=True)
+    actual_lines = actual.splitlines(keepends=True)
+    return ''.join(unified_diff(expected_lines, actual_lines, fromfile='expected', tofile='actual'))
+
 def run_shell(shell: str, stdin: str) -> sp.CompletedProcess:
     return sp.run([shell, "-X", "--parse", stdin], capture_output=True, text=True)
+
+def run_shellTC2(shell: str, stdin: str) -> sp.CompletedProcess:
+    return sp.run([shell, "-XA", stdin], capture_output=True, text=True)
 
 def perform_checks(expected, actual: sp.CompletedProcess):
     assert expected == actual.returncode, \
             f"Exited with {actual.returncode} expected {expected}"
+
+def compare_out(expected, actual: sp.CompletedProcess):
+    assert expected == actual.stdout, \
+            f"stdout differ\n{diff(expected, actual.stdout)}"
 
 if __name__ == "__main__":
     parser = ArgumentParser("Testsuite")
@@ -35,7 +49,7 @@ if __name__ == "__main__":
     binary_path = args.binary.absolute()
     print(f"Testing {binary_path}")
 
-    for i in range(1,3):
+    for i in range(1,2):
         for file in os.listdir("samples/tc"+str(i)+"/tests/good"):
             expected = 0
             sh_proc = run_shell(binary_path, "samples/tc1/tests/good/" + file)
@@ -62,6 +76,14 @@ if __name__ == "__main__":
 
             try:
                 perform_checks(expected, sh_proc)
+            except AssertionError as err:
+                print(f"{KO_TAG} {file}\n{err}")
+            else:
+                print(f"{OK_TAG} {file}")
+    for file in os.listdir("samples/tc2/tests/files"):
+            sh_proc = run_shellTC2(binary_path, "samples/tc2/tests/files/" + file)
+            try:
+                compare_out(open("samples/tc2/tests/res/"+file, "r").read(), sh_proc)
             except AssertionError as err:
                 print(f"{KO_TAG} {file}\n{err}")
             else:

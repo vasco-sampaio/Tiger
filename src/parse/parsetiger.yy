@@ -265,12 +265,13 @@ exps:
 
 record_creation:
   ID EQ exp { $$ = tp.td_.make_fieldinits_type<ast::fieldinits_type>({tp.td_.make_FieldInit(@$, $1, $3)}); }
-| ID EQ exp record_init { $$ = tp.td_.make_fieldinits_type<ast::fieldinits_type>(*$4); 
+| ID EQ exp record_init { $$ = $4; 
                           $$->push_back({tp.td_.make_FieldInit(@$, $1, $3)}); }
 ;
 
 record_init:
-  COMMA ID EQ exp             { $$->push_back({tp.td_.make_FieldInit(@$, $2, $4)}); }
+  COMMA ID EQ exp             { $$ = new ast::fieldinits_type(); 
+                                $$->push_back({tp.td_.make_FieldInit(@$, $2, $4)}); }
 | COMMA ID EQ exp record_init { $$ = $5; $$->push_back({tp.td_.make_FieldInit(@$, $2, $4)}); }
 ;
 

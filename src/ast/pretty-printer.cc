@@ -178,7 +178,7 @@ namespace ast
   void PrettyPrinter::operator()(const CallExp& e)
   {
     ostr_ << e.name_get();
-    ostr_ << " (" << misc::incindent;
+    ostr_ << "(" << misc::incindent;
     size_t size = e.args_get().size();
     size_t i = 0;
     for (auto k : e.args_get())
