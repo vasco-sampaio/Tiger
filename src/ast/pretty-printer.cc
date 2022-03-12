@@ -75,7 +75,7 @@ namespace ast
 
   void PrettyPrinter::operator()(const IfExp& e)
   {
-    ostr_ << "if" << '(';
+    ostr_ << "if " << '(';
     e.test_get().accept(*this);
     ostr_ << ')' << " then" << misc::incendl;
     e.then_clause_get().accept(*this);
@@ -222,13 +222,16 @@ namespace ast
   {
     ostr_ << "let" << misc::incindent << misc::iendl;
     e.decs_get().accept(*this);
-    ostr_ << misc::decindent << misc::iendl << "in " << misc::incindent;
+    ostr_ << misc::decindent << misc::iendl << "in " << misc::incendl;
     if (e.body_get() != nullptr)
     {
       ostr_ << ' ';
-      e.body_get()->accept(*this);
+      e.body_get()->accept(*this); 
+      ostr_ << misc::decendl;
     }
-    ostr_ << misc::decindent << misc::iendl << "end" << misc::iendl;
+    else
+      ostr_ << misc::decindent;
+    ostr_ << "end" << misc::iendl;
   }
 
   void PrettyPrinter::operator()(const VarChunk& e)
