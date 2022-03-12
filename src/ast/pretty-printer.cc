@@ -86,7 +86,7 @@ namespace ast
         e.else_clause_get()->accept(*this);
         ostr_ << misc::decindent;
       }
-    ostr_ << ')' << misc::decindent;
+    ostr_ << ")" << misc::decindent;
   }
 
   void PrettyPrinter::operator()(const WhileExp& e)
@@ -95,7 +95,7 @@ namespace ast
     e.test_get().accept(*this);
     ostr_ << ')' << " do" << misc::incendl;
     e.body_get().accept(*this);
-    ostr_ << ')' << misc::decindent;
+    ostr_  << ")" << misc::decindent;
   }
 
   void PrettyPrinter::operator()(const ForExp& e)
@@ -106,7 +106,7 @@ namespace ast
     e.hi_get().accept(*this);
     ostr_ << " do" << misc::incendl;
     e.body_get().accept(*this);
-    ostr_ << ')' << misc::decindent;
+    ostr_ << ")" << misc::decindent;
   }
 
   void PrettyPrinter::operator()(const NilExp& e) { ostr_ << "nil"; }
@@ -210,13 +210,11 @@ namespace ast
     if (e.body_get() != nullptr)
     {
       ostr_ << " =";
-      ostr_ << misc::iendl << '(' << misc::incendl;
+      ostr_ << misc::iendl;
+      ostr_ << '(' << misc::incendl;
       e.body_get()->accept(*this);
-
       if (e.result_get() == nullptr)
-      {
         ostr_ << "()";
-      }
       ostr_ << misc::decendl << ')';
     }
     ostr_ << misc::decindent;
@@ -254,7 +252,7 @@ namespace ast
 
   void PrettyPrinter::operator()(const VarDec& e)
   {
-    ostr_ << "var " << e.name_get();
+    ostr_ << e.name_get();
     ostr_ << " :";
     if (e.type_name_get() != nullptr)
     {
@@ -277,7 +275,6 @@ namespace ast
         k->accept(*this);
         if (i != size - 1)
         {
-          ostr_ << ';';
           ostr_ << misc::iendl;
         }
         i++;
@@ -363,8 +360,7 @@ namespace ast
     {
       e.body_get()->accept(*this);
     }
-    
-    ostr_ << misc::decendl;
+    ostr_ << misc::decindent;
   }
 
   void PrettyPrinter::operator()(const MethodChunk& e)
@@ -403,7 +399,10 @@ namespace ast
     ostr_ << misc::iendl << '{';
     ostr_ << misc::incendl;
     if (e.chunks_get() != nullptr)
+    {
       e.chunks_get()->accept(*this);
+      ostr_ << misc::iendl;
+    }
     ostr_ << misc::decindent;
     ostr_ << '}';
   }

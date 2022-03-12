@@ -177,41 +177,38 @@ digit           [0-9]
   }
 
   "\\"[abfrntv] {
-    finished = 0;
-    sstream << misc::escape(yytext);
-    grown_string.append(sstream.str());
-  }
+      finished = 0;
+      grown_string.append(yytext);
+    }
 
-  "\\"[0-7]{3} {
-    finished = 0;
-    grown_string.append(std::to_string(std::stoi(++yytext, 0, 8)));
-  }
+    "\\"[0-7]{3} {
+      finished = 0;
+      grown_string.push_back(std::stoi(++yytext, 0, 8));
+    }
 
-  "\\x"[0-9A-Fa-f]{2} {
-    finished = 0;
-    yytext += 2;
-    grown_string.append(std::to_string(std::stoi(yytext, 0, 16)));
-  }
+    "\\x"[0-9A-Fa-f]{2} {
+      finished = 0;
+      yytext += 2;
+      grown_string.push_back(std::stoi(yytext, 0, 16));
+    }
 
-  "\\\\" {
-    finished = 0;
-    sstream << misc::escape(yytext);
-    grown_string.append(sstream.str());
-  }
+    "\\\\" {
+      finished = 0;
+      grown_string.append(yytext);
+    }
 
-  "\\\"" {
-    finished = 0;
-    sstream << misc::escape(yytext);
-    grown_string.append(sstream.str());
-  }
+    "\\\"" {
+      finished = 0;
+      grown_string.append(yytext);
+    }
 
-  "\\". {
-    do {                                                 
-      tp.error_ << misc::error::error_type::scan        
-                << tp.location_                         
-                << ": invalid escape\n";     
-    } while (false);
-  }
+    "\\". {
+      do {                                                 
+        tp.error_ << misc::error::error_type::scan        
+                  << tp.location_                         
+                  << ": invalid escape\n";     
+      } while (false);
+    }
 
   . {
     finished = 0;
