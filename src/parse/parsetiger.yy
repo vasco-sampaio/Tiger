@@ -317,7 +317,7 @@ exp:
 |   IF exp THEN exp  { $$ = tp.td_.make_IfExp(@$, $2, $4); }
 |   IF exp THEN exp ELSE exp { $$ = tp.td_.make_IfExp(@$, $2, $4, $6); }
 |   WHILE exp DO exp  { $$ = tp.td_.make_WhileExp(@$, $2, $4); }
-|   FOR ID ASSIGN exp TO exp DO exp { $$ = tp.td_.make_ForExp(@$, tp.td_.make_VarDec(@2, $2, tp.td_.make_NameTy(@2, misc::symbol("int")), $4), $6, $8); }
+|   FOR ID ASSIGN exp TO exp DO exp { $$ = tp.td_.make_ForExp(@$, tp.td_.make_VarDec(@2, $2, nullptr, $4), $6, $8); }
 |   BREAK { $$ = tp.td_.make_BreakExp(@$); }
 |   LET chunks IN exps END { $$ = tp.td_.make_LetExp(@$, $2, tp.td_.make_SeqExp(@$, $4)); }
 |   NEW typeid  { $$ = tp.td_.make_ObjectExp(@$, $2); }
@@ -397,8 +397,8 @@ chunks:
   // DONE: Some code was deleted here (More rules).
 | funchunk   chunks       { $$ = $2; $$->push_front($1); }
 | varchunk   chunks       { $$ = $2; $$->push_front($1); }
-| CHUNKS LPAREN INT RPAREN chunks { $$ = metavar<ast::ChunkList>(tp, $3); }
-| IMPORT STRING chunks    
+| CHUNKS LPAREN INT RPAREN chunks { $$ = $5; $$->splice_front(*metavar<ast::ChunkList>(tp, $3)); }
+| IMPORT STRING chunks    { $$ = tp.parse_import($2, @$); }
 ;
 
 /*--------------------.

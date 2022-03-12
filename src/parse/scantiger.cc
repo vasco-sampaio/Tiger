@@ -587,14 +587,14 @@ static const flex_int16_t yy_chk[269] =
 
 static const flex_int16_t yy_rule_linenum[72] =
     {   0,
-       83,  103,  104,  110,  111,  112,  113,  114,  115,  116,
-      117,  118,  119,  120,  121,  122,  123,  124,  125,  126,
-      127,  128,  129,  130,  131,  132,  133,  134,  135,  136,
-      137,  138,  139,  140,  141,  142,  143,  144,  145,  146,
-      147,  148,  149,  150,  151,  152,  153,  154,  155,  156,
-      157,  158,  159,  160,  163,  166,  172,  178,  183,  189,
-      195,  201,  210,  216,  218,  228,  232,  236,  237,  238,
-      251
+       92,  111,  112,  118,  119,  120,  121,  122,  123,  124,
+      125,  126,  127,  128,  129,  130,  131,  132,  133,  134,
+      135,  136,  137,  138,  139,  140,  141,  142,  143,  144,
+      145,  146,  147,  148,  149,  150,  151,  152,  153,  154,
+      155,  156,  157,  158,  159,  160,  161,  162,  163,  164,
+      165,  166,  167,  168,  171,  174,  180,  186,  191,  197,
+      203,  209,  217,  223,  225,  235,  239,  243,  244,  245,
+      257
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -655,12 +655,21 @@ static const flex_int16_t yy_rule_linenum[72] =
                 << misc::escape(yytext) << "'\n";       \
   } while (false)
 
+  # define CHECK_OBJECT()                               \
+  do {                                                  \
+    if (!tp.enable_object_extensions_p_)                \
+      tp.error_ << misc::error::error_type::scan        \
+                << tp.location_                         \
+                << ": objects not activated: `"         \
+                << misc::escape(yytext) << "'\n";       \
+  } while (false)
+
 YY_FLEX_NAMESPACE_BEGIN
-#line 645 "src/parse/scantiger.cc"
+#line 654 "src/parse/scantiger.cc"
 
 /* Abbreviations.  */
 /* DONE: Some code was deleted here. */
-#line 649 "src/parse/scantiger.cc"
+#line 658 "src/parse/scantiger.cc"
 
 #define INITIAL 0
 #define SC_COMMENT 1
@@ -854,10 +863,10 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 69 "src/parse/scantiger.ll"
+#line 78 "src/parse/scantiger.ll"
 
 
-#line 72 "src/parse/scantiger.ll"
+#line 81 "src/parse/scantiger.ll"
   // DONE: Some code was deleted here (Local variables).
   // Each time yylex is called.
 
@@ -869,7 +878,7 @@ YY_DECL
 
  /* The rules.  */
 
-#line 858 "src/parse/scantiger.cc"
+#line 867 "src/parse/scantiger.cc"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -946,7 +955,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 83 "src/parse/scantiger.ll"
+#line 92 "src/parse/scantiger.ll"
 {
                 int val = 0;
   // DONE: Some code was deleted here (Decode, and check the value).
@@ -957,7 +966,6 @@ YY_RULE_SETUP
                 catch(const std::out_of_range&)
                 {
                     do {                                                  
-                      if (!tp.enable_extensions_p_)                       
                         tp.error_ << misc::error::error_type::scan        
                         << tp.location_                         
                         << ": int too big\n";     
@@ -969,13 +977,13 @@ YY_RULE_SETUP
 /* DONE: Some code was deleted here. */
 case 2:
 YY_RULE_SETUP
-#line 103 "src/parse/scantiger.ll"
+#line 111 "src/parse/scantiger.ll"
 
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 104 "src/parse/scantiger.ll"
+#line 112 "src/parse/scantiger.ll"
 {
   tp.location_.columns(yyleng);
   tp.location_.step();
@@ -984,268 +992,268 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 110 "src/parse/scantiger.ll"
+#line 118 "src/parse/scantiger.ll"
 {return TOKEN(ARRAY);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 111 "src/parse/scantiger.ll"
+#line 119 "src/parse/scantiger.ll"
 {return TOKEN(IF);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 112 "src/parse/scantiger.ll"
+#line 120 "src/parse/scantiger.ll"
 {return TOKEN(THEN);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 113 "src/parse/scantiger.ll"
+#line 121 "src/parse/scantiger.ll"
 {return TOKEN(ELSE);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 114 "src/parse/scantiger.ll"
+#line 122 "src/parse/scantiger.ll"
 {return TOKEN(WHILE);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 115 "src/parse/scantiger.ll"
+#line 123 "src/parse/scantiger.ll"
 {return TOKEN(FOR);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 116 "src/parse/scantiger.ll"
+#line 124 "src/parse/scantiger.ll"
 {return TOKEN(TO);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 117 "src/parse/scantiger.ll"
+#line 125 "src/parse/scantiger.ll"
 {return TOKEN(DO);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 118 "src/parse/scantiger.ll"
+#line 126 "src/parse/scantiger.ll"
 {return TOKEN(LET);}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 119 "src/parse/scantiger.ll"
+#line 127 "src/parse/scantiger.ll"
 {return TOKEN(IN);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 120 "src/parse/scantiger.ll"
+#line 128 "src/parse/scantiger.ll"
 {return TOKEN(END);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 121 "src/parse/scantiger.ll"
+#line 129 "src/parse/scantiger.ll"
 {return TOKEN(OF);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 122 "src/parse/scantiger.ll"
+#line 130 "src/parse/scantiger.ll"
 {return TOKEN(BREAK);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 123 "src/parse/scantiger.ll"
+#line 131 "src/parse/scantiger.ll"
 {return TOKEN(NIL);}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 124 "src/parse/scantiger.ll"
+#line 132 "src/parse/scantiger.ll"
 {return TOKEN(FUNCTION);}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 125 "src/parse/scantiger.ll"
+#line 133 "src/parse/scantiger.ll"
 {return TOKEN(VAR);}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 126 "src/parse/scantiger.ll"
+#line 134 "src/parse/scantiger.ll"
 {return TOKEN(TYPE);}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 127 "src/parse/scantiger.ll"
+#line 135 "src/parse/scantiger.ll"
 {return TOKEN(IMPORT);}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 128 "src/parse/scantiger.ll"
+#line 136 "src/parse/scantiger.ll"
 {return TOKEN(PRIMITIVE);}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 129 "src/parse/scantiger.ll"
-{return TOKEN(CLASS);}
+#line 137 "src/parse/scantiger.ll"
+{CHECK_OBJECT(); return TOKEN(CLASS);}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 130 "src/parse/scantiger.ll"
-{return TOKEN(EXTENDS);}
+#line 138 "src/parse/scantiger.ll"
+{CHECK_OBJECT(); return TOKEN(EXTENDS);}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 131 "src/parse/scantiger.ll"
-{return TOKEN(METHOD);}
+#line 139 "src/parse/scantiger.ll"
+{CHECK_OBJECT(); return TOKEN(METHOD);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 132 "src/parse/scantiger.ll"
-{return TOKEN(NEW);}
+#line 140 "src/parse/scantiger.ll"
+{CHECK_OBJECT(); return TOKEN(NEW);}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 133 "src/parse/scantiger.ll"
+#line 141 "src/parse/scantiger.ll"
 {return TOKEN(COMMA);}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 134 "src/parse/scantiger.ll"
+#line 142 "src/parse/scantiger.ll"
 {return TOKEN(COLON);}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 135 "src/parse/scantiger.ll"
+#line 143 "src/parse/scantiger.ll"
 {return TOKEN(SEMI);}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 136 "src/parse/scantiger.ll"
+#line 144 "src/parse/scantiger.ll"
 {return TOKEN(LPAREN);}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 137 "src/parse/scantiger.ll"
+#line 145 "src/parse/scantiger.ll"
 {return TOKEN(RPAREN);}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 138 "src/parse/scantiger.ll"
+#line 146 "src/parse/scantiger.ll"
 {return TOKEN(LBRACE);}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 139 "src/parse/scantiger.ll"
+#line 147 "src/parse/scantiger.ll"
 {return TOKEN(RBRACE);}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 140 "src/parse/scantiger.ll"
+#line 148 "src/parse/scantiger.ll"
 {return TOKEN(LBRACK);}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 141 "src/parse/scantiger.ll"
+#line 149 "src/parse/scantiger.ll"
 {return TOKEN(RBRACK);}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 142 "src/parse/scantiger.ll"
+#line 150 "src/parse/scantiger.ll"
 {return TOKEN(PLUS);}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 143 "src/parse/scantiger.ll"
+#line 151 "src/parse/scantiger.ll"
 {return TOKEN(DOT);}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 144 "src/parse/scantiger.ll"
+#line 152 "src/parse/scantiger.ll"
 {return TOKEN(MINUS);}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 145 "src/parse/scantiger.ll"
+#line 153 "src/parse/scantiger.ll"
 {return TOKEN(TIMES);}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 146 "src/parse/scantiger.ll"
+#line 154 "src/parse/scantiger.ll"
 {return TOKEN(DIVIDE);}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 147 "src/parse/scantiger.ll"
+#line 155 "src/parse/scantiger.ll"
 {return TOKEN(EQ);}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 148 "src/parse/scantiger.ll"
+#line 156 "src/parse/scantiger.ll"
 {return TOKEN(NE);}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 149 "src/parse/scantiger.ll"
+#line 157 "src/parse/scantiger.ll"
 {return TOKEN(LT);}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 150 "src/parse/scantiger.ll"
+#line 158 "src/parse/scantiger.ll"
 {return TOKEN(LE);}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 151 "src/parse/scantiger.ll"
+#line 159 "src/parse/scantiger.ll"
 {return TOKEN(GT);}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 152 "src/parse/scantiger.ll"
+#line 160 "src/parse/scantiger.ll"
 {return TOKEN(GE);}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 153 "src/parse/scantiger.ll"
+#line 161 "src/parse/scantiger.ll"
 {return TOKEN(AND);}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 154 "src/parse/scantiger.ll"
+#line 162 "src/parse/scantiger.ll"
 {return TOKEN(OR);}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 155 "src/parse/scantiger.ll"
+#line 163 "src/parse/scantiger.ll"
 {return TOKEN(ASSIGN);}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 156 "src/parse/scantiger.ll"
-{return TOKEN(CHUNKS);}
+#line 164 "src/parse/scantiger.ll"
+{CHECK_EXTENSION(); return TOKEN(CHUNKS);}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 157 "src/parse/scantiger.ll"
-{return TOKEN(NAMETY);}
+#line 165 "src/parse/scantiger.ll"
+{CHECK_EXTENSION(); return TOKEN(NAMETY);}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 158 "src/parse/scantiger.ll"
-{return TOKEN(EXP);}
+#line 166 "src/parse/scantiger.ll"
+{CHECK_EXTENSION(); return TOKEN(EXP);}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 159 "src/parse/scantiger.ll"
-{return TOKEN(LVALUE);}
+#line 167 "src/parse/scantiger.ll"
+{CHECK_EXTENSION(); return TOKEN(LVALUE);}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 160 "src/parse/scantiger.ll"
-{return TOKEN(CAST);}
+#line 168 "src/parse/scantiger.ll"
+{CHECK_EXTENSION(); return TOKEN(CAST);}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 163 "src/parse/scantiger.ll"
+#line 171 "src/parse/scantiger.ll"
 grown_string.clear(); BEGIN SC_STRING;
 	YY_BREAK
 /* Handling of the strings.  Initial " is eaten. */
 case 56:
 YY_RULE_SETUP
-#line 166 "src/parse/scantiger.ll"
+#line 174 "src/parse/scantiger.ll"
 {
     BEGIN INITIAL; // Return to main context
     finished = 1;
@@ -1254,7 +1262,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 172 "src/parse/scantiger.ll"
+#line 180 "src/parse/scantiger.ll"
 {
     finished = 0;
     sstream << misc::escape(yytext);
@@ -1263,7 +1271,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 178 "src/parse/scantiger.ll"
+#line 186 "src/parse/scantiger.ll"
 {
     finished = 0;
     grown_string.append(std::to_string(std::stoi(++yytext, 0, 8)));
@@ -1271,7 +1279,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 183 "src/parse/scantiger.ll"
+#line 191 "src/parse/scantiger.ll"
 {
     finished = 0;
     yytext += 2;
@@ -1280,7 +1288,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 189 "src/parse/scantiger.ll"
+#line 197 "src/parse/scantiger.ll"
 {
     finished = 0;
     sstream << misc::escape(yytext);
@@ -1289,7 +1297,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 195 "src/parse/scantiger.ll"
+#line 203 "src/parse/scantiger.ll"
 {
     finished = 0;
     sstream << misc::escape(yytext);
@@ -1298,10 +1306,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 201 "src/parse/scantiger.ll"
+#line 209 "src/parse/scantiger.ll"
 {
-    do {                                                  
-    if (!tp.enable_extensions_p_)                       
+    do {                                                 
       tp.error_ << misc::error::error_type::scan        
                 << tp.location_                         
                 << ": invalid escape\n";     
@@ -1310,7 +1317,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 210 "src/parse/scantiger.ll"
+#line 217 "src/parse/scantiger.ll"
 {
     finished = 0;
     grown_string.append(yytext);
@@ -1319,13 +1326,13 @@ YY_RULE_SETUP
 
 case 64:
 YY_RULE_SETUP
-#line 216 "src/parse/scantiger.ll"
+#line 223 "src/parse/scantiger.ll"
 grown_comment.clear(); BEGIN SC_COMMENT;
 	YY_BREAK
 /* Handling of the strings.  Initial " is eaten. */
 case 65:
 YY_RULE_SETUP
-#line 218 "src/parse/scantiger.ll"
+#line 225 "src/parse/scantiger.ll"
 {
     
     if (nested == 0)
@@ -1339,14 +1346,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 228 "src/parse/scantiger.ll"
+#line 235 "src/parse/scantiger.ll"
 {
     nested += 1;
   }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 232 "src/parse/scantiger.ll"
+#line 239 "src/parse/scantiger.ll"
 {
     grown_comment.append(yytext);
   }
@@ -1354,28 +1361,27 @@ YY_RULE_SETUP
 
 case 68:
 YY_RULE_SETUP
-#line 236 "src/parse/scantiger.ll"
+#line 243 "src/parse/scantiger.ll"
 {return TOKEN_VAL(ID, misc::symbol(yytext));}
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 237 "src/parse/scantiger.ll"
+#line 244 "src/parse/scantiger.ll"
 {return TOKEN_VAL(ID, misc::symbol(yytext));}
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 238 "src/parse/scantiger.ll"
+#line 245 "src/parse/scantiger.ll"
 {return TOKEN_VAL(ID, misc::symbol(yytext));}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(SC_COMMENT):
 case YY_STATE_EOF(SC_STRING):
-#line 239 "src/parse/scantiger.ll"
+#line 246 "src/parse/scantiger.ll"
 {
   if (grown_comment.size() > 0 || !finished)
 {
   do {                                                  
-    if (!tp.enable_extensions_p_)                       
       tp.error_ << misc::error::error_type::scan        
                 << tp.location_                         
                 << ": unexpected end of file in a comment or string\n";     
@@ -1386,10 +1392,9 @@ return TOKEN(EOF);
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 251 "src/parse/scantiger.ll"
+#line 257 "src/parse/scantiger.ll"
 {
-  do {                                                  
-    if (!tp.enable_extensions_p_)                       
+  do {                                                   
       tp.error_ << misc::error::error_type::scan        
                 << tp.location_                         
                 << ": unrecognized token\n";     
@@ -1398,10 +1403,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 259 "src/parse/scantiger.ll"
+#line 264 "src/parse/scantiger.ll"
 ECHO;
 	YY_BREAK
-#line 1390 "src/parse/scantiger.cc"
+#line 1395 "src/parse/scantiger.cc"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2518,7 +2523,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 259 "src/parse/scantiger.ll"
+#line 264 "src/parse/scantiger.ll"
 
 
 // Do not use %option noyywrap, because then flex generates the same

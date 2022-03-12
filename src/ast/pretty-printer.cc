@@ -59,7 +59,7 @@ namespace ast
     ostr_ << ')';
   }
 
-  // FIXME: Some code was deleted here.
+  // DONE: Some code was deleted here.
   void PrettyPrinter::operator()(const IntExp& e) { ostr_ << e.value_get(); }
 
   void PrettyPrinter::operator()(const StringExp& e)
@@ -75,37 +75,38 @@ namespace ast
 
   void PrettyPrinter::operator()(const IfExp& e)
   {
-    ostr_ << "if " << '(';
+    ostr_ << "(if ";
     e.test_get().accept(*this);
-    ostr_ << ')' << " then" << misc::incendl;
+    ostr_ << misc::incendl << "then ";
     e.then_clause_get().accept(*this);
-    ostr_ << misc::decindent;
+    ostr_ << misc::iendl;
     if (e.else_clause_get() != nullptr)
       {
-        ostr_ << "else" << misc::incendl;
+        ostr_ << "else " << misc::incindent;
         e.else_clause_get()->accept(*this);
         ostr_ << misc::decindent;
       }
+    ostr_ << ')' << misc::decindent;
   }
 
   void PrettyPrinter::operator()(const WhileExp& e)
   {
-    ostr_ << "while" << '(';
+    ostr_ << "(while" << '(';
     e.test_get().accept(*this);
     ostr_ << ')' << " do" << misc::incendl;
     e.body_get().accept(*this);
-    ostr_ << misc::decindent;
+    ostr_ << ')' << misc::decindent;
   }
 
   void PrettyPrinter::operator()(const ForExp& e)
   {
-    ostr_ << "for";
+    ostr_ << "(for ";
     e.vardec_get().accept(*this);
     ostr_ << " to ";
     e.hi_get().accept(*this);
-    ostr_ << " do " << misc::incindent;
+    ostr_ << " do" << misc::incendl;
     e.body_get().accept(*this);
-    ostr_ << misc::decindent;
+    ostr_ << ')' << misc::decindent;
   }
 
   void PrettyPrinter::operator()(const NilExp& e) { ostr_ << "nil"; }
@@ -127,8 +128,6 @@ namespace ast
         v.at(i)->accept(*this);
         if (i != v.size() - 1)
           ostr_ << ';' << misc::iendl;
-        else
-          ostr_ << "()";
     }
   }
 
@@ -170,9 +169,11 @@ namespace ast
       default:
         op = "+";
       }
+    ostr_ << '(';
     e.left_get().accept(*this);
     ostr_ << ' ' << op << ' ';
     e.right_get().accept(*this);
+    ostr_ << ')';
   }
 
   void PrettyPrinter::operator()(const CallExp& e)
@@ -211,6 +212,11 @@ namespace ast
       ostr_ << " =";
       ostr_ << misc::iendl << '(' << misc::incendl;
       e.body_get()->accept(*this);
+
+      if (e.result_get() == nullptr)
+      {
+        ostr_ << "()";
+      }
       ostr_ << misc::decendl << ')';
     }
     ostr_ << misc::decindent;
@@ -222,16 +228,15 @@ namespace ast
   {
     ostr_ << "let" << misc::incindent << misc::iendl;
     e.decs_get().accept(*this);
-    ostr_ << misc::decindent << misc::iendl << "in " << misc::incendl;
+    ostr_ << misc::decindent << misc::iendl << "in" << misc::incendl;
     if (e.body_get() != nullptr)
     {
-      ostr_ << ' ';
       e.body_get()->accept(*this); 
       ostr_ << misc::decendl;
     }
     else
       ostr_ << misc::decindent;
-    ostr_ << "end" << misc::iendl;
+    ostr_ << "end";
   }
 
   void PrettyPrinter::operator()(const VarChunk& e)
@@ -249,10 +254,13 @@ namespace ast
 
   void PrettyPrinter::operator()(const VarDec& e)
   {
-    ostr_ << e.name_get();
-    ostr_ << " : ";
+    ostr_ << "var " << e.name_get();
+    ostr_ << " :";
     if (e.type_name_get() != nullptr)
+    {
+      ostr_ << ' ';
       e.type_name_get()->accept(*this);
+    }
     if (e.init_get())
       {
         ostr_ << "= ";
@@ -342,14 +350,21 @@ namespace ast
 
   void PrettyPrinter::operator()(const MethodDec& e)
   {
-    ostr_ << "method " << e.name_get() << " (" << misc::incindent;
+    ostr_ << "method " << e.name_get() << "(" << misc::incindent;
     e.formals_get().accept(*this);
     ostr_ << ") :";
     if (e.result_get() != nullptr)
+    {
+        ostr_ << ' ';
         e.result_get()->accept(*this);
-    ostr_ << "= ";
-    e.body_get()->accept(*this);
-    ostr_ << misc::decindent;
+    }
+    ostr_ << " =" << misc::iendl;
+    if (e.body_get() != nullptr)
+    {
+      e.body_get()->accept(*this);
+    }
+    
+    ostr_ << misc::decendl;
   }
 
   void PrettyPrinter::operator()(const MethodChunk& e)
@@ -380,16 +395,17 @@ namespace ast
 
   void PrettyPrinter::operator()(const ClassTy& e)
   {
-    ostr_ << "class ";
-    // FIXME: extends problem
+    ostr_ << "class extends ";
     if (e.super_get() != nullptr)
-    {
-      ostr_ << ": extends ";
       e.super_get()->accept(*this);
-    }
-    ostr_ << misc::incindent;
-    e.chunks_get().accept(*this);
+    else
+      ostr_ << "Object";
+    ostr_ << misc::iendl << '{';
+    ostr_ << misc::incendl;
+    if (e.chunks_get() != nullptr)
+      e.chunks_get()->accept(*this);
     ostr_ << misc::decindent;
+    ostr_ << '}';
   }
 
   void PrettyPrinter::operator()(const RecordTy& e)

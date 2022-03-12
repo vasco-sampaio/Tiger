@@ -40,9 +40,9 @@ namespace ast
     /// Return super class.
     NameTy* super_get();
     /// Return list of declarations.
-    const ChunkList& chunks_get() const;
+    const ChunkList* chunks_get() const;
     /// Return list of declarations.
-    ChunkList& chunks_get();
+    ChunkList* chunks_get();
     /** \} */
 
   protected:

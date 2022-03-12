@@ -53,6 +53,15 @@
                 << misc::escape(yytext) << "'\n";       \
   } while (false)
 
+  # define CHECK_OBJECT()                               \
+  do {                                                  \
+    if (!tp.enable_object_extensions_p_)                \
+      tp.error_ << misc::error::error_type::scan        \
+                << tp.location_                         \
+                << ": objects not activated: `"         \
+                << misc::escape(yytext) << "'\n";       \
+  } while (false)
+
 YY_FLEX_NAMESPACE_BEGIN
 %}
 
@@ -89,7 +98,6 @@ digit           [0-9]
                 catch(const std::out_of_range&)
                 {
                     do {                                                  
-                      if (!tp.enable_extensions_p_)                       
                         tp.error_ << misc::error::error_type::scan        
                         << tp.location_                         
                         << ": int too big\n";     
@@ -125,10 +133,10 @@ digit           [0-9]
 "type"      {return TOKEN(TYPE);}
 "import"    {return TOKEN(IMPORT);}
 "primitive" {return TOKEN(PRIMITIVE);}
-"class"     {return TOKEN(CLASS);}
-"extends"   {return TOKEN(EXTENDS);}
-"method"    {return TOKEN(METHOD);}
-"new"       {return TOKEN(NEW);}
+"class"     {CHECK_OBJECT(); return TOKEN(CLASS);}
+"extends"   {CHECK_OBJECT(); return TOKEN(EXTENDS);}
+"method"    {CHECK_OBJECT(); return TOKEN(METHOD);}
+"new"       {CHECK_OBJECT(); return TOKEN(NEW);}
 ","         {return TOKEN(COMMA);}
 ":"         {return TOKEN(COLON);}
 ";"         {return TOKEN(SEMI);}
@@ -152,11 +160,11 @@ digit           [0-9]
 "&"         {return TOKEN(AND);}
 "|"         {return TOKEN(OR);}
 ":="        {return TOKEN(ASSIGN);}
-"_chunks"   {return TOKEN(CHUNKS);}
-"_namety"   {return TOKEN(NAMETY);}
-"_exp"      {return TOKEN(EXP);}
-"_lvalue"   {return TOKEN(LVALUE);}
-"_cast"     {return TOKEN(CAST);}
+"_chunks"   {CHECK_EXTENSION(); return TOKEN(CHUNKS);}
+"_namety"   {CHECK_EXTENSION(); return TOKEN(NAMETY);}
+"_exp"      {CHECK_EXTENSION(); return TOKEN(EXP);}
+"_lvalue"   {CHECK_EXTENSION(); return TOKEN(LVALUE);}
+"_cast"     {CHECK_EXTENSION(); return TOKEN(CAST);}
 
 
 "\""        grown_string.clear(); BEGIN SC_STRING;
@@ -198,8 +206,7 @@ digit           [0-9]
   }
 
   "\\". {
-    do {                                                  
-    if (!tp.enable_extensions_p_)                       
+    do {                                                 
       tp.error_ << misc::error::error_type::scan        
                 << tp.location_                         
                 << ": invalid escape\n";     
@@ -239,7 +246,6 @@ digit           [0-9]
   if (grown_comment.size() > 0 || !finished)
 {
   do {                                                  
-    if (!tp.enable_extensions_p_)                       
       tp.error_ << misc::error::error_type::scan        
                 << tp.location_                         
                 << ": unexpected end of file in a comment or string\n";     
@@ -248,8 +254,7 @@ digit           [0-9]
 return TOKEN(EOF);
 }
 .                     {
-  do {                                                  
-    if (!tp.enable_extensions_p_)                       
+  do {                                                   
       tp.error_ << misc::error::error_type::scan        
                 << tp.location_                         
                 << ": unrecognized token\n";     

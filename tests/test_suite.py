@@ -28,7 +28,7 @@ def diff(expected: str, actual: str) -> str:
     return ''.join(unified_diff(expected_lines, actual_lines, fromfile='expected', tofile='actual'))
 
 def run_shell(shell: str, stdin: str) -> sp.CompletedProcess:
-    return sp.run([shell, "-X", "--parse", stdin], capture_output=True, text=True)
+    return sp.run([shell, "-X", "-o", "--parse", stdin], capture_output=True, text=True)
 
 def run_shellTC2(shell: str, stdin: str) -> sp.CompletedProcess:
     return sp.run([shell, "-XA", stdin], capture_output=True, text=True)

@@ -29,7 +29,7 @@ namespace ast
   {
     // DONE: Some code was deleted here.
     e.super_get()->accept(*this);
-    for (auto& x : e.chunks_get())
+    for (auto& x : *(e.chunks_get()))
         x->accept(*this);
   }
 
