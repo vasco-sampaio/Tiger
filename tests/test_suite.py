@@ -8,6 +8,9 @@ from typing import List
 import subprocess as sp
 import termcolor
 import yaml
+import os
+
+from difflib import unified_diff
 
 @dataclass
 class TestCase:
@@ -19,12 +22,24 @@ class TestCase:
 OK_TAG = f"[ {termcolor.colored('OK', 'green')} ]"
 KO_TAG = f"[ {termcolor.colored('KO', 'red')} ]"
 
-def run_shell(shell: str, stdin: str) -> sp.CompletedProcess:
-    return sp.run([shell, "-X", "--parse", "--parse-trace", stdin], capture_output=False, text=True)
+def diff(expected: str, actual: str) -> str:
+    expected_lines = expected.splitlines(keepends=True)
+    actual_lines = actual.splitlines(keepends=True)
+    return ''.join(unified_diff(expected_lines, actual_lines, fromfile='expected', tofile='actual'))
 
-def perform_checks(expected, actual: sp.CompletedProcess, checks):
-    assert "exitcode" not in checks or expected == actual.returncode, \
+def run_shell(shell: str, stdin: str) -> sp.CompletedProcess:
+    return sp.run([shell, "-X", "-o", "--parse", stdin], capture_output=True, text=True)
+
+def run_shellTC2(shell: str, stdin: str) -> sp.CompletedProcess:
+    return sp.run([shell, "-XA", stdin], capture_output=True, text=True)
+
+def perform_checks(expected, actual: sp.CompletedProcess):
+    assert expected == actual.returncode, \
             f"Exited with {actual.returncode} expected {expected}"
+
+def compare_out(expected, actual: sp.CompletedProcess):
+    assert expected == actual.stdout, \
+            f"stdout differ\n{diff(expected, actual.stdout)}"
 
 if __name__ == "__main__":
     parser = ArgumentParser("Testsuite")
@@ -34,18 +49,42 @@ if __name__ == "__main__":
     binary_path = args.binary.absolute()
     print(f"Testing {binary_path}")
 
-    with open("tests.yml", "r") as file:
-        testsuite = [TestCase(**testcase) for testcase in yaml.safe_load(file)]
+    for i in range(1,2):
+        for file in os.listdir("samples/tc"+str(i)+"/tests/good"):
+            expected = 0
+            sh_proc = run_shell(binary_path, "samples/tc1/tests/good/" + file)
 
-    for testcase in testsuite:
-        stdin = testcase.input
-        name = testcase.name
-        expected = testcase.retcode
-        sh_proc = run_shell(binary_path, stdin)
+            try:
+                perform_checks(expected, sh_proc)
+            except AssertionError as err:
+                print(f"{KO_TAG} {file}\n{err}")
+            else:
+                print(f"{OK_TAG} {file}")
+        for file in os.listdir("samples/tc"+str(i)+"/tests/lex"):
+            expected = 2
+            sh_proc = run_shell(binary_path, "samples/tc1/tests/lex/" + file)
 
-        try:
-            perform_checks(expected, sh_proc, testcase.checks)
-        except AssertionError as err:
-            print(f"{KO_TAG} {name}\n{err}")
-        else:
-            print(f"{OK_TAG} {name}")
+            try:
+                perform_checks(expected, sh_proc)
+            except AssertionError as err:
+                print(f"{KO_TAG} {file}\n{err}")
+            else:
+                print(f"{OK_TAG} {file}")
+        for file in os.listdir("samples/tc"+str(i)+"/tests/syntax"):
+            expected = 3
+            sh_proc = run_shell(binary_path, "samples/tc1/tests/syntax/" + file)
+
+            try:
+                perform_checks(expected, sh_proc)
+            except AssertionError as err:
+                print(f"{KO_TAG} {file}\n{err}")
+            else:
+                print(f"{OK_TAG} {file}")
+    for file in os.listdir("samples/tc2/tests/files"):
+            sh_proc = run_shellTC2(binary_path, "samples/tc2/tests/files/" + file)
+            try:
+                compare_out(open("samples/tc2/tests/res/"+file, "r").read(), sh_proc)
+            except AssertionError as err:
+                print(f"{KO_TAG} {file}\n{err}")
+            else:
+                print(f"{OK_TAG} {file}")

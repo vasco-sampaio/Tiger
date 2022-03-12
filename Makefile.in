@@ -99,8 +99,9 @@ check_PROGRAMS = lib/misc/test-deref$(EXEEXT) \
 	lib/misc/test-separator$(EXEEXT) lib/misc/test-scoped$(EXEEXT) \
 	lib/misc/test-symbol$(EXEEXT) lib/misc/test-timer$(EXEEXT) \
 	lib/misc/test-unique$(EXEEXT) lib/misc/test-variant$(EXEEXT) \
-	lib/misc/test-xalloc$(EXEEXT) src/parse/test-parse$(EXEEXT) \
-	src/parse/test-tweast$(EXEEXT) src/object/test-parse$(EXEEXT)
+	lib/misc/test-xalloc$(EXEEXT) src/ast/test-ast$(EXEEXT) \
+	src/parse/test-parse$(EXEEXT) src/parse/test-tweast$(EXEEXT) \
+	src/object/test-parse$(EXEEXT)
 @ENABLE_TCSH_TRUE@am__append_1 = tcsh
 bin_PROGRAMS = src/tc$(EXEEXT)
 subdir = .
@@ -182,13 +183,28 @@ lib_misc_libmisc_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(LDFLAGS) -o $@
 src_libtc_la_DEPENDENCIES = $(top_builddir)/lib/misc/libmisc.la \
 	$(am__DEPENDENCIES_1)
-am__objects_1 = src/parse/parsetiger.lo
+am__objects_1 = src/ast/array-exp.lo src/ast/array-ty.lo \
+	src/ast/assign-exp.lo src/ast/ast.lo src/ast/break-exp.lo \
+	src/ast/call-exp.lo src/ast/cast-exp.lo src/ast/chunk-list.lo \
+	src/ast/class-ty.lo src/ast/dec.lo src/ast/exp.lo \
+	src/ast/field.lo src/ast/field-init.lo src/ast/field-var.lo \
+	src/ast/for-exp.lo src/ast/function-dec.lo src/ast/if-exp.lo \
+	src/ast/int-exp.lo src/ast/let-exp.lo \
+	src/ast/method-call-exp.lo src/ast/method-dec.lo \
+	src/ast/name-ty.lo src/ast/nil-exp.lo src/ast/object-exp.lo \
+	src/ast/op-exp.lo src/ast/record-exp.lo src/ast/record-ty.lo \
+	src/ast/seq-exp.lo src/ast/simple-var.lo src/ast/string-exp.lo \
+	src/ast/subscript-var.lo src/ast/ty.lo src/ast/type-dec.lo \
+	src/ast/var.lo src/ast/var-dec.lo src/ast/while-exp.lo
+am__objects_2 = src/parse/parsetiger.lo
 am_src_libtc_la_OBJECTS = src/task/task.lo src/task/boolean-task.lo \
 	src/task/function-task.lo src/task/int-task.lo \
 	src/task/string-task.lo src/task/multiple-string-task.lo \
 	src/task/disjunctive-task.lo src/task/task-register.lo \
 	src/task/simple-task.lo src/task/argument-task.lo \
-	$(am__objects_1) src/parse/libparse.lo src/parse/scantiger.lo \
+	$(am__objects_1) src/ast/pretty-printer.lo \
+	src/ast/dumper-dot.lo src/ast/libast.lo $(am__objects_2) \
+	src/parse/libparse.lo src/parse/scantiger.lo \
 	src/parse/tiger-parser.lo src/parse/tweast.lo \
 	src/object/libobject.lo
 nodist_src_libtc_la_OBJECTS = src/version.lo src/parse/prelude.lo
@@ -250,6 +266,9 @@ lib_misc_test_xalloc_SOURCES = lib/misc/test-xalloc.cc
 lib_misc_test_xalloc_OBJECTS = lib/misc/test-xalloc.$(OBJEXT)
 lib_misc_test_xalloc_LDADD = $(LDADD)
 lib_misc_test_xalloc_DEPENDENCIES = lib/misc/libmisc.la
+src_ast_test_ast_SOURCES = src/ast/test-ast.cc
+src_ast_test_ast_OBJECTS = src/ast/test-ast.$(OBJEXT)
+src_ast_test_ast_DEPENDENCIES = src/libtc.la
 src_object_test_parse_SOURCES = src/object/test-parse.cc
 src_object_test_parse_OBJECTS = src/object/test-parse.$(OBJEXT)
 src_object_test_parse_DEPENDENCIES = src/libtc.la
@@ -260,9 +279,9 @@ src_parse_test_parse_DEPENDENCIES = src/libtc.la
 src_parse_test_tweast_SOURCES = src/parse/test-tweast.cc
 src_parse_test_tweast_OBJECTS = src/parse/test-tweast.$(OBJEXT)
 src_parse_test_tweast_DEPENDENCIES = src/libtc.la
-am__objects_2 = src/task/tasks.$(OBJEXT) src/parse/tasks.$(OBJEXT) \
-	src/object/tasks.$(OBJEXT)
-dist_src_tc_OBJECTS = $(am__objects_2) src/common.$(OBJEXT) \
+am__objects_3 = src/task/tasks.$(OBJEXT) src/ast/tasks.$(OBJEXT) \
+	src/parse/tasks.$(OBJEXT) src/object/tasks.$(OBJEXT)
+dist_src_tc_OBJECTS = $(am__objects_3) src/common.$(OBJEXT) \
 	src/tc.$(OBJEXT)
 src_tc_OBJECTS = $(dist_src_tc_OBJECTS)
 src_tc_DEPENDENCIES = src/libtc.la
@@ -301,6 +320,32 @@ am__depfiles_remade = lib/misc/$(DEPDIR)/contract.Plo \
 	lib/misc/$(DEPDIR)/test_variant-test-variant.Po \
 	lib/misc/$(DEPDIR)/timer.Plo src/$(DEPDIR)/common.Po \
 	src/$(DEPDIR)/tc.Po src/$(DEPDIR)/version.Plo \
+	src/ast/$(DEPDIR)/array-exp.Plo src/ast/$(DEPDIR)/array-ty.Plo \
+	src/ast/$(DEPDIR)/assign-exp.Plo src/ast/$(DEPDIR)/ast.Plo \
+	src/ast/$(DEPDIR)/break-exp.Plo src/ast/$(DEPDIR)/call-exp.Plo \
+	src/ast/$(DEPDIR)/cast-exp.Plo \
+	src/ast/$(DEPDIR)/chunk-list.Plo \
+	src/ast/$(DEPDIR)/class-ty.Plo src/ast/$(DEPDIR)/dec.Plo \
+	src/ast/$(DEPDIR)/dumper-dot.Plo src/ast/$(DEPDIR)/exp.Plo \
+	src/ast/$(DEPDIR)/field-init.Plo \
+	src/ast/$(DEPDIR)/field-var.Plo src/ast/$(DEPDIR)/field.Plo \
+	src/ast/$(DEPDIR)/for-exp.Plo \
+	src/ast/$(DEPDIR)/function-dec.Plo \
+	src/ast/$(DEPDIR)/if-exp.Plo src/ast/$(DEPDIR)/int-exp.Plo \
+	src/ast/$(DEPDIR)/let-exp.Plo src/ast/$(DEPDIR)/libast.Plo \
+	src/ast/$(DEPDIR)/method-call-exp.Plo \
+	src/ast/$(DEPDIR)/method-dec.Plo src/ast/$(DEPDIR)/name-ty.Plo \
+	src/ast/$(DEPDIR)/nil-exp.Plo src/ast/$(DEPDIR)/object-exp.Plo \
+	src/ast/$(DEPDIR)/op-exp.Plo \
+	src/ast/$(DEPDIR)/pretty-printer.Plo \
+	src/ast/$(DEPDIR)/record-exp.Plo \
+	src/ast/$(DEPDIR)/record-ty.Plo src/ast/$(DEPDIR)/seq-exp.Plo \
+	src/ast/$(DEPDIR)/simple-var.Plo \
+	src/ast/$(DEPDIR)/string-exp.Plo \
+	src/ast/$(DEPDIR)/subscript-var.Plo src/ast/$(DEPDIR)/tasks.Po \
+	src/ast/$(DEPDIR)/test-ast.Po src/ast/$(DEPDIR)/ty.Plo \
+	src/ast/$(DEPDIR)/type-dec.Plo src/ast/$(DEPDIR)/var-dec.Plo \
+	src/ast/$(DEPDIR)/var.Plo src/ast/$(DEPDIR)/while-exp.Plo \
 	src/object/$(DEPDIR)/libobject.Plo \
 	src/object/$(DEPDIR)/tasks.Po \
 	src/object/$(DEPDIR)/test-parse.Po \
@@ -367,9 +412,9 @@ SOURCES = $(lib_misc_libmisc_la_SOURCES) $(src_libtc_la_SOURCES) \
 	lib/misc/test-scoped.cc lib/misc/test-separator.cc \
 	lib/misc/test-symbol.cc lib/misc/test-timer.cc \
 	lib/misc/test-unique.cc lib/misc/test-variant.cc \
-	lib/misc/test-xalloc.cc src/object/test-parse.cc \
-	src/parse/test-parse.cc src/parse/test-tweast.cc \
-	$(dist_src_tc_SOURCES)
+	lib/misc/test-xalloc.cc src/ast/test-ast.cc \
+	src/object/test-parse.cc src/parse/test-parse.cc \
+	src/parse/test-tweast.cc $(dist_src_tc_SOURCES)
 DIST_SOURCES = $(lib_misc_libmisc_la_SOURCES) $(src_libtc_la_SOURCES) \
 	lib/misc/test-deref.cc lib/misc/test-error.cc \
 	lib/misc/test-escape.cc lib/misc/test-graph.cc \
@@ -377,8 +422,9 @@ DIST_SOURCES = $(lib_misc_libmisc_la_SOURCES) $(src_libtc_la_SOURCES) \
 	lib/misc/test-separator.cc lib/misc/test-symbol.cc \
 	lib/misc/test-timer.cc lib/misc/test-unique.cc \
 	lib/misc/test-variant.cc lib/misc/test-xalloc.cc \
-	src/object/test-parse.cc src/parse/test-parse.cc \
-	src/parse/test-tweast.cc $(dist_src_tc_SOURCES)
+	src/ast/test-ast.cc src/object/test-parse.cc \
+	src/parse/test-parse.cc src/parse/test-tweast.cc \
+	$(dist_src_tc_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
 	install-data-recursive install-dvi-recursive \
@@ -620,6 +666,7 @@ am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/build-aux/local.am \
 	$(srcdir)/lib/range/v3/utility/local.am \
 	$(srcdir)/lib/range/v3/view/local.am \
 	$(srcdir)/lib/std/local.am $(srcdir)/licenses/local.am \
+	$(srcdir)/src/ast/ast-nodes.mk $(srcdir)/src/ast/local.am \
 	$(srcdir)/src/local.am $(srcdir)/src/object/local.am \
 	$(srcdir)/src/parse/local.am $(srcdir)/src/task/local.am \
 	$(top_srcdir)/build-aux/ar-lib \
@@ -851,21 +898,23 @@ FORMAT_IGNORE = lib/misc/flex-lexer.hh src/parse/scantiger.hh
 CLEANFILES = $(EXTRA_PROGRAMS) src/version.stamp \
 	$(nodist_src_libtc_la_SOURCES) src/parse/prelude.cc \
 	doc/Doxyfile authors.h tc.log.bz2
+# Don't use ast_srcdir in the include, otherwise Automake can't resolve it.
 
 # Compile the parser and save cycles.
 # This code comes from "Handling Tools that Produce Many Outputs",
 # from the Automake documentation.
 EXTRA_DIST = $(dist_TESTS) build-aux/tiger-syntax.vim \
 	build-aux/tiger-ftdetect.vim lib/misc/tiger_misc.i \
-	src/tiger_common.i src/version.cc.in src/parse/tiger_parse.i \
-	src/parse/scantiger.ll src/parse/parsetiger.stamp \
-	src/parse/parsetiger.yy src/object/tiger_object.i \
-	doc/Doxyfile.in licenses/range-v3.license bootstrap \
-	AUTHORS.txt NEWS.txt THANKS.txt .clang-format flake.nix \
-	flake.lock AUTHORS.txt $(AUTHORS_H_GEN)
+	src/tiger_common.i src/version.cc.in src/ast/tiger_ast.i \
+	src/parse/tiger_parse.i src/parse/scantiger.ll \
+	src/parse/parsetiger.stamp src/parse/parsetiger.yy \
+	src/object/tiger_object.i doc/Doxyfile.in \
+	licenses/range-v3.license bootstrap AUTHORS.txt NEWS.txt \
+	THANKS.txt .clang-format flake.nix flake.lock AUTHORS.txt \
+	$(AUTHORS_H_GEN)
 MAINTAINERCLEANFILES = src/parse/scantiger.cc
 dist_TESTS = 
-dist_noinst_DATA = data/prelude.tih
+dist_noinst_DATA = data/prelude.tih src/ast/README.txt
 
 # Our tests should be run only if the sources are updated: they are
 # self contained, and two runs in a row cannot differ.
@@ -1185,12 +1234,22 @@ src_libtc_la_SOURCES = src/version.hh src/task/fwd.hh \
 	src/task/task-register.cc src/task/task-register.hxx \
 	src/task/simple-task.hh src/task/simple-task.cc \
 	src/task/argument-task.hh src/task/argument-task.cc \
-	$(SOURCES_PARSETIGER_YY) src/parse/fwd.hh \
+	src/ast/location.hh src/ast/all.hh src/ast/chunk-interface.hh \
+	src/ast/chunk-interface.hxx src/ast/chunk.hh src/ast/chunk.hxx \
+	src/ast/fwd.hh src/ast/visitor.hh $(AST_NODES) \
+	src/ast/default-visitor.hh src/ast/default-visitor.hxx \
+	src/ast/non-object-visitor.hh src/ast/non-object-visitor.hxx \
+	src/ast/object-visitor.hh src/ast/object-visitor.hxx \
+	src/ast/pretty-printer.hh src/ast/pretty-printer.cc \
+	src/ast/dumper-dot.hh src/ast/dumper-dot.hxx \
+	src/ast/dumper-dot.cc src/ast/visitor.hxx src/ast/libast.hh \
+	src/ast/libast.cc $(SOURCES_PARSETIGER_YY) src/parse/fwd.hh \
 	src/parse/libparse.hh src/parse/libparse.cc \
 	src/parse/metavar-map.hh src/parse/metavar-map.hxx \
 	src/parse/scantiger.hh src/parse/scantiger.cc \
 	src/parse/tiger-parser.hh src/parse/tiger-parser.cc \
 	src/parse/tweast.hh src/parse/tweast.cc src/parse/tweast.hxx \
+	src/parse/tiger-driver.hh src/parse/tiger-driver.hxx \
 	src/object/libobject.hh src/object/libobject.cc
 nodist_src_libtc_la_SOURCES = src/version.cc src/parse/prelude.cc
 src_libtc_la_LDFLAGS = $(BOOST_PROGRAM_OPTIONS_LDFLAGS)
@@ -1205,8 +1264,50 @@ dist_src_tc_SOURCES = \
   src/tc.cc
 
 src_tc_LDADD = src/libtc.la
-TASKS = src/task/tasks.hh src/task/tasks.cc src/parse/tasks.hh \
-	src/parse/tasks.cc src/object/tasks.hh src/object/tasks.cc
+TASKS = src/task/tasks.hh src/task/tasks.cc src/ast/tasks.hh \
+	src/ast/tasks.cc src/parse/tasks.hh src/parse/tasks.cc \
+	src/object/tasks.hh src/object/tasks.cc
+ast_basedir = src/ast/
+ast_srcdir = $(srcdir)/src/ast
+AST_NODES = \
+  src/ast/array-exp.hh src/ast/array-exp.hxx src/ast/array-exp.cc \
+  src/ast/array-ty.hh src/ast/array-ty.hxx src/ast/array-ty.cc \
+  src/ast/assign-exp.hh src/ast/assign-exp.hxx src/ast/assign-exp.cc \
+  src/ast/ast.hh src/ast/ast.hxx src/ast/ast.cc \
+  src/ast/break-exp.hh src/ast/break-exp.hxx src/ast/break-exp.cc \
+  src/ast/call-exp.hh src/ast/call-exp.hxx src/ast/call-exp.cc \
+  src/ast/cast-exp.hh src/ast/cast-exp.hxx src/ast/cast-exp.cc \
+  src/ast/chunk-list.hh src/ast/chunk-list.hxx src/ast/chunk-list.cc \
+  src/ast/class-ty.hh src/ast/class-ty.hxx src/ast/class-ty.cc \
+  src/ast/dec.hh src/ast/dec.hxx src/ast/dec.cc \
+  src/ast/exp.hh src/ast/exp.hxx src/ast/exp.cc \
+  src/ast/field.hh src/ast/field.hxx src/ast/field.cc \
+  src/ast/field-init.hh src/ast/field-init.hxx src/ast/field-init.cc \
+  src/ast/field-var.hh src/ast/field-var.hxx src/ast/field-var.cc \
+  src/ast/for-exp.hh src/ast/for-exp.hxx src/ast/for-exp.cc \
+  src/ast/function-dec.hh src/ast/function-dec.hxx src/ast/function-dec.cc \
+  src/ast/if-exp.hh src/ast/if-exp.hxx src/ast/if-exp.cc \
+  src/ast/int-exp.hh src/ast/int-exp.hxx src/ast/int-exp.cc \
+  src/ast/let-exp.hh src/ast/let-exp.hxx src/ast/let-exp.cc \
+  src/ast/method-call-exp.hh src/ast/method-call-exp.hxx src/ast/method-call-exp.cc \
+  src/ast/method-dec.hh src/ast/method-dec.hxx src/ast/method-dec.cc \
+  src/ast/name-ty.hh src/ast/name-ty.hxx src/ast/name-ty.cc \
+  src/ast/nil-exp.hh src/ast/nil-exp.hxx src/ast/nil-exp.cc \
+  src/ast/object-exp.hh src/ast/object-exp.hxx src/ast/object-exp.cc \
+  src/ast/op-exp.hh src/ast/op-exp.hxx src/ast/op-exp.cc \
+  src/ast/record-exp.hh src/ast/record-exp.hxx src/ast/record-exp.cc \
+  src/ast/record-ty.hh src/ast/record-ty.hxx src/ast/record-ty.cc \
+  src/ast/seq-exp.hh src/ast/seq-exp.hxx src/ast/seq-exp.cc \
+  src/ast/simple-var.hh src/ast/simple-var.hxx src/ast/simple-var.cc \
+  src/ast/string-exp.hh src/ast/string-exp.hxx src/ast/string-exp.cc \
+  src/ast/subscript-var.hh src/ast/subscript-var.hxx src/ast/subscript-var.cc \
+  src/ast/ty.hh src/ast/ty.hxx src/ast/ty.cc \
+  src/ast/type-dec.hh src/ast/type-dec.hxx src/ast/type-dec.cc \
+  src/ast/var.hh src/ast/var.hxx src/ast/var.cc \
+  src/ast/var-dec.hh src/ast/var-dec.hxx src/ast/var-dec.cc \
+  src/ast/while-exp.hh src/ast/while-exp.hxx src/ast/while-exp.cc
+
+src_ast_test_ast_LDADD = src/libtc.la
 
 # A Flex wrapper for C++.
 FLEXXX = $(top_builddir)/build-aux/bin/flex++
@@ -1254,7 +1355,7 @@ all: $(BUILT_SOURCES) config.h
 .SUFFIXES: .cc .lo .log .o .obj .test .test$(EXEEXT) .trs
 am--refresh: Makefile
 	@:
-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/build-aux/local.am $(srcdir)/data/local.am $(srcdir)/lib/local.am $(srcdir)/lib/misc/local.am $(srcdir)/lib/concepts/local.am $(srcdir)/lib/meta/local.am $(srcdir)/lib/range/v3/local.am $(srcdir)/lib/range/v3/action/local.am $(srcdir)/lib/range/v3/algorithm/local.am $(srcdir)/lib/range/v3/algorithm/aux_/local.am $(srcdir)/lib/range/v3/detail/local.am $(srcdir)/lib/range/v3/experimental/local.am $(srcdir)/lib/range/v3/functional/local.am $(srcdir)/lib/range/v3/iterator/local.am $(srcdir)/lib/range/v3/numeric/local.am $(srcdir)/lib/range/v3/range/local.am $(srcdir)/lib/range/v3/utility/local.am $(srcdir)/lib/range/v3/view/local.am $(srcdir)/lib/std/local.am $(srcdir)/src/local.am $(srcdir)/src/task/local.am $(srcdir)/src/parse/local.am $(srcdir)/src/object/local.am $(srcdir)/doc/local.am $(srcdir)/licenses/local.am $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/build-aux/local.am $(srcdir)/data/local.am $(srcdir)/lib/local.am $(srcdir)/lib/misc/local.am $(srcdir)/lib/concepts/local.am $(srcdir)/lib/meta/local.am $(srcdir)/lib/range/v3/local.am $(srcdir)/lib/range/v3/action/local.am $(srcdir)/lib/range/v3/algorithm/local.am $(srcdir)/lib/range/v3/algorithm/aux_/local.am $(srcdir)/lib/range/v3/detail/local.am $(srcdir)/lib/range/v3/experimental/local.am $(srcdir)/lib/range/v3/functional/local.am $(srcdir)/lib/range/v3/iterator/local.am $(srcdir)/lib/range/v3/numeric/local.am $(srcdir)/lib/range/v3/range/local.am $(srcdir)/lib/range/v3/utility/local.am $(srcdir)/lib/range/v3/view/local.am $(srcdir)/lib/std/local.am $(srcdir)/src/local.am $(srcdir)/src/task/local.am $(srcdir)/src/ast/local.am $(srcdir)/src/ast/ast-nodes.mk $(srcdir)/src/parse/local.am $(srcdir)/src/object/local.am $(srcdir)/doc/local.am $(srcdir)/licenses/local.am $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -1276,7 +1377,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $@ $(am__maybe_remake_depfiles)'; \
 	    cd $(top_builddir) && $(SHELL) ./config.status $@ $(am__maybe_remake_depfiles);; \
 	esac;
-$(srcdir)/build-aux/local.am $(srcdir)/data/local.am $(srcdir)/lib/local.am $(srcdir)/lib/misc/local.am $(srcdir)/lib/concepts/local.am $(srcdir)/lib/meta/local.am $(srcdir)/lib/range/v3/local.am $(srcdir)/lib/range/v3/action/local.am $(srcdir)/lib/range/v3/algorithm/local.am $(srcdir)/lib/range/v3/algorithm/aux_/local.am $(srcdir)/lib/range/v3/detail/local.am $(srcdir)/lib/range/v3/experimental/local.am $(srcdir)/lib/range/v3/functional/local.am $(srcdir)/lib/range/v3/iterator/local.am $(srcdir)/lib/range/v3/numeric/local.am $(srcdir)/lib/range/v3/range/local.am $(srcdir)/lib/range/v3/utility/local.am $(srcdir)/lib/range/v3/view/local.am $(srcdir)/lib/std/local.am $(srcdir)/src/local.am $(srcdir)/src/task/local.am $(srcdir)/src/parse/local.am $(srcdir)/src/object/local.am $(srcdir)/doc/local.am $(srcdir)/licenses/local.am $(am__empty):
+$(srcdir)/build-aux/local.am $(srcdir)/data/local.am $(srcdir)/lib/local.am $(srcdir)/lib/misc/local.am $(srcdir)/lib/concepts/local.am $(srcdir)/lib/meta/local.am $(srcdir)/lib/range/v3/local.am $(srcdir)/lib/range/v3/action/local.am $(srcdir)/lib/range/v3/algorithm/local.am $(srcdir)/lib/range/v3/algorithm/aux_/local.am $(srcdir)/lib/range/v3/detail/local.am $(srcdir)/lib/range/v3/experimental/local.am $(srcdir)/lib/range/v3/functional/local.am $(srcdir)/lib/range/v3/iterator/local.am $(srcdir)/lib/range/v3/numeric/local.am $(srcdir)/lib/range/v3/range/local.am $(srcdir)/lib/range/v3/utility/local.am $(srcdir)/lib/range/v3/view/local.am $(srcdir)/lib/std/local.am $(srcdir)/src/local.am $(srcdir)/src/task/local.am $(srcdir)/src/ast/local.am $(srcdir)/src/ast/ast-nodes.mk $(srcdir)/src/parse/local.am $(srcdir)/src/object/local.am $(srcdir)/doc/local.am $(srcdir)/licenses/local.am $(am__empty):
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	$(SHELL) ./config.status --recheck
@@ -1462,6 +1563,90 @@ src/task/simple-task.lo: src/task/$(am__dirstamp) \
 	src/task/$(DEPDIR)/$(am__dirstamp)
 src/task/argument-task.lo: src/task/$(am__dirstamp) \
 	src/task/$(DEPDIR)/$(am__dirstamp)
+src/ast/$(am__dirstamp):
+	@$(MKDIR_P) src/ast
+	@: > src/ast/$(am__dirstamp)
+src/ast/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) src/ast/$(DEPDIR)
+	@: > src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/array-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/array-ty.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/assign-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/ast.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/break-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/call-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/cast-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/chunk-list.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/class-ty.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/dec.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/field.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/field-init.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/field-var.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/for-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/function-dec.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/if-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/int-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/let-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/method-call-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/method-dec.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/name-ty.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/nil-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/object-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/op-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/record-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/record-ty.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/seq-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/simple-var.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/string-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/subscript-var.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/ty.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/type-dec.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/var.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/var-dec.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/while-exp.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/pretty-printer.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/dumper-dot.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+src/ast/libast.lo: src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
 src/parse/$(am__dirstamp):
 	@$(MKDIR_P) src/parse
 	@: > src/parse/$(am__dirstamp)
@@ -1570,6 +1755,12 @@ lib/misc/test-xalloc.$(OBJEXT): lib/misc/$(am__dirstamp) \
 lib/misc/test-xalloc$(EXEEXT): $(lib_misc_test_xalloc_OBJECTS) $(lib_misc_test_xalloc_DEPENDENCIES) $(EXTRA_lib_misc_test_xalloc_DEPENDENCIES) lib/misc/$(am__dirstamp)
 	@rm -f lib/misc/test-xalloc$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(lib_misc_test_xalloc_OBJECTS) $(lib_misc_test_xalloc_LDADD) $(LIBS)
+src/ast/test-ast.$(OBJEXT): src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
+
+src/ast/test-ast$(EXEEXT): $(src_ast_test_ast_OBJECTS) $(src_ast_test_ast_DEPENDENCIES) $(EXTRA_src_ast_test_ast_DEPENDENCIES) src/ast/$(am__dirstamp)
+	@rm -f src/ast/test-ast$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(src_ast_test_ast_OBJECTS) $(src_ast_test_ast_LDADD) $(LIBS)
 src/object/test-parse.$(OBJEXT): src/object/$(am__dirstamp) \
 	src/object/$(DEPDIR)/$(am__dirstamp)
 
@@ -1590,6 +1781,8 @@ src/parse/test-tweast$(EXEEXT): $(src_parse_test_tweast_OBJECTS) $(src_parse_tes
 	$(AM_V_CXXLD)$(CXXLINK) $(src_parse_test_tweast_OBJECTS) $(src_parse_test_tweast_LDADD) $(LIBS)
 src/task/tasks.$(OBJEXT): src/task/$(am__dirstamp) \
 	src/task/$(DEPDIR)/$(am__dirstamp)
+src/ast/tasks.$(OBJEXT): src/ast/$(am__dirstamp) \
+	src/ast/$(DEPDIR)/$(am__dirstamp)
 src/parse/tasks.$(OBJEXT): src/parse/$(am__dirstamp) \
 	src/parse/$(DEPDIR)/$(am__dirstamp)
 src/object/tasks.$(OBJEXT): src/object/$(am__dirstamp) \
@@ -1608,6 +1801,8 @@ mostlyclean-compile:
 	-rm -f lib/misc/*.lo
 	-rm -f src/*.$(OBJEXT)
 	-rm -f src/*.lo
+	-rm -f src/ast/*.$(OBJEXT)
+	-rm -f src/ast/*.lo
 	-rm -f src/object/*.$(OBJEXT)
 	-rm -f src/object/*.lo
 	-rm -f src/parse/*.$(OBJEXT)
@@ -1641,6 +1836,47 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/common.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/tc.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/version.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/array-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/array-ty.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/assign-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/ast.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/break-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/call-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/cast-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/chunk-list.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/class-ty.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/dec.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/dumper-dot.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/field-init.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/field-var.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/field.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/for-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/function-dec.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/if-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/int-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/let-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/libast.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/method-call-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/method-dec.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/name-ty.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/nil-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/object-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/op-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/pretty-printer.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/record-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/record-ty.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/seq-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/simple-var.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/string-exp.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/subscript-var.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/tasks.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/test-ast.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/ty.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/type-dec.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/var-dec.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/var.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/ast/$(DEPDIR)/while-exp.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/object/$(DEPDIR)/libobject.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/object/$(DEPDIR)/tasks.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/object/$(DEPDIR)/test-parse.Po@am__quote@ # am--include-marker
@@ -1730,6 +1966,7 @@ clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf lib/misc/.libs lib/misc/_libs
 	-rm -rf src/.libs src/_libs
+	-rm -rf src/ast/.libs src/ast/_libs
 	-rm -rf src/object/.libs src/object/_libs
 	-rm -rf src/parse/.libs src/parse/_libs
 	-rm -rf src/task/.libs src/task/_libs
@@ -2089,6 +2326,13 @@ lib/misc/test-xalloc.log: lib/misc/test-xalloc$(EXEEXT)
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+src/ast/test-ast.log: src/ast/test-ast$(EXEEXT)
+	@p='src/ast/test-ast$(EXEEXT)'; \
+	b='src/ast/test-ast'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 src/parse/test-parse.log: src/parse/test-parse$(EXEEXT)
 	@p='src/parse/test-parse$(EXEEXT)'; \
 	b='src/parse/test-parse'; \
@@ -2374,6 +2618,8 @@ distclean-generic:
 	-rm -f lib/misc/$(am__dirstamp)
 	-rm -f src/$(DEPDIR)/$(am__dirstamp)
 	-rm -f src/$(am__dirstamp)
+	-rm -f src/ast/$(DEPDIR)/$(am__dirstamp)
+	-rm -f src/ast/$(am__dirstamp)
 	-rm -f src/object/$(DEPDIR)/$(am__dirstamp)
 	-rm -f src/object/$(am__dirstamp)
 	-rm -f src/parse/$(DEPDIR)/$(am__dirstamp)
@@ -2417,6 +2663,47 @@ distclean: distclean-recursive
 	-rm -f src/$(DEPDIR)/common.Po
 	-rm -f src/$(DEPDIR)/tc.Po
 	-rm -f src/$(DEPDIR)/version.Plo
+	-rm -f src/ast/$(DEPDIR)/array-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/array-ty.Plo
+	-rm -f src/ast/$(DEPDIR)/assign-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/ast.Plo
+	-rm -f src/ast/$(DEPDIR)/break-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/call-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/cast-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/chunk-list.Plo
+	-rm -f src/ast/$(DEPDIR)/class-ty.Plo
+	-rm -f src/ast/$(DEPDIR)/dec.Plo
+	-rm -f src/ast/$(DEPDIR)/dumper-dot.Plo
+	-rm -f src/ast/$(DEPDIR)/exp.Plo
+	-rm -f src/ast/$(DEPDIR)/field-init.Plo
+	-rm -f src/ast/$(DEPDIR)/field-var.Plo
+	-rm -f src/ast/$(DEPDIR)/field.Plo
+	-rm -f src/ast/$(DEPDIR)/for-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/function-dec.Plo
+	-rm -f src/ast/$(DEPDIR)/if-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/int-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/let-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/libast.Plo
+	-rm -f src/ast/$(DEPDIR)/method-call-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/method-dec.Plo
+	-rm -f src/ast/$(DEPDIR)/name-ty.Plo
+	-rm -f src/ast/$(DEPDIR)/nil-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/object-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/op-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/pretty-printer.Plo
+	-rm -f src/ast/$(DEPDIR)/record-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/record-ty.Plo
+	-rm -f src/ast/$(DEPDIR)/seq-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/simple-var.Plo
+	-rm -f src/ast/$(DEPDIR)/string-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/subscript-var.Plo
+	-rm -f src/ast/$(DEPDIR)/tasks.Po
+	-rm -f src/ast/$(DEPDIR)/test-ast.Po
+	-rm -f src/ast/$(DEPDIR)/ty.Plo
+	-rm -f src/ast/$(DEPDIR)/type-dec.Plo
+	-rm -f src/ast/$(DEPDIR)/var-dec.Plo
+	-rm -f src/ast/$(DEPDIR)/var.Plo
+	-rm -f src/ast/$(DEPDIR)/while-exp.Plo
 	-rm -f src/object/$(DEPDIR)/libobject.Plo
 	-rm -f src/object/$(DEPDIR)/tasks.Po
 	-rm -f src/object/$(DEPDIR)/test-parse.Po
@@ -2510,6 +2797,47 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f src/$(DEPDIR)/common.Po
 	-rm -f src/$(DEPDIR)/tc.Po
 	-rm -f src/$(DEPDIR)/version.Plo
+	-rm -f src/ast/$(DEPDIR)/array-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/array-ty.Plo
+	-rm -f src/ast/$(DEPDIR)/assign-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/ast.Plo
+	-rm -f src/ast/$(DEPDIR)/break-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/call-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/cast-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/chunk-list.Plo
+	-rm -f src/ast/$(DEPDIR)/class-ty.Plo
+	-rm -f src/ast/$(DEPDIR)/dec.Plo
+	-rm -f src/ast/$(DEPDIR)/dumper-dot.Plo
+	-rm -f src/ast/$(DEPDIR)/exp.Plo
+	-rm -f src/ast/$(DEPDIR)/field-init.Plo
+	-rm -f src/ast/$(DEPDIR)/field-var.Plo
+	-rm -f src/ast/$(DEPDIR)/field.Plo
+	-rm -f src/ast/$(DEPDIR)/for-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/function-dec.Plo
+	-rm -f src/ast/$(DEPDIR)/if-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/int-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/let-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/libast.Plo
+	-rm -f src/ast/$(DEPDIR)/method-call-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/method-dec.Plo
+	-rm -f src/ast/$(DEPDIR)/name-ty.Plo
+	-rm -f src/ast/$(DEPDIR)/nil-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/object-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/op-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/pretty-printer.Plo
+	-rm -f src/ast/$(DEPDIR)/record-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/record-ty.Plo
+	-rm -f src/ast/$(DEPDIR)/seq-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/simple-var.Plo
+	-rm -f src/ast/$(DEPDIR)/string-exp.Plo
+	-rm -f src/ast/$(DEPDIR)/subscript-var.Plo
+	-rm -f src/ast/$(DEPDIR)/tasks.Po
+	-rm -f src/ast/$(DEPDIR)/test-ast.Po
+	-rm -f src/ast/$(DEPDIR)/ty.Plo
+	-rm -f src/ast/$(DEPDIR)/type-dec.Plo
+	-rm -f src/ast/$(DEPDIR)/var-dec.Plo
+	-rm -f src/ast/$(DEPDIR)/var.Plo
+	-rm -f src/ast/$(DEPDIR)/while-exp.Plo
 	-rm -f src/object/$(DEPDIR)/libobject.Plo
 	-rm -f src/object/$(DEPDIR)/tasks.Po
 	-rm -f src/object/$(DEPDIR)/test-parse.Po

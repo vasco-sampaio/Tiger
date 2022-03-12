@@ -10,6 +10,8 @@
 #include <regex>
 #include <string>
 
+#include <sstream>
+
 #include <boost/lexical_cast.hpp>
 
 #include <misc/contract.hh>
@@ -27,7 +29,9 @@
   // DONE: Some code was deleted here.
   static std::string grown_string;
   static std::string grown_comment;
+  std::stringstream sstream;
   int nested = 0;
+  int finished = 1;
 
 // Convenient shortcuts.
 #define TOKEN_VAL(Type, Value)                  \
@@ -46,6 +50,15 @@
       tp.error_ << misc::error::error_type::scan        \
                 << tp.location_                         \
                 << ": invalid identifier: `"            \
+                << misc::escape(yytext) << "'\n";       \
+  } while (false)
+
+  # define CHECK_OBJECT()                               \
+  do {                                                  \
+    if (!tp.enable_object_extensions_p_)                \
+      tp.error_ << misc::error::error_type::scan        \
+                << tp.location_                         \
+                << ": objects not activated: `"         \
                 << misc::escape(yytext) << "'\n";       \
   } while (false)
 
@@ -78,7 +91,18 @@ digit           [0-9]
 {int}         {
                 int val = 0;
   // DONE: Some code was deleted here (Decode, and check the value).
-                val = strtol(yytext, 0, 10);
+                try
+                {
+                  val = std::stoi(yytext, 0, 10);
+                }
+                catch(const std::out_of_range&)
+                {
+                    do {                                                  
+                        tp.error_ << misc::error::error_type::scan        
+                        << tp.location_                         
+                        << ": int too big\n";     
+                    } while (false);
+                }
                 return TOKEN_VAL(INT, val);
               }
 
@@ -109,10 +133,10 @@ digit           [0-9]
 "type"      {return TOKEN(TYPE);}
 "import"    {return TOKEN(IMPORT);}
 "primitive" {return TOKEN(PRIMITIVE);}
-"class"     {return TOKEN(CLASS);}
-"extends"   {return TOKEN(EXTENDS);}
-"method"    {return TOKEN(METHOD);}
-"new"       {return TOKEN(NEW);}
+"class"     {CHECK_OBJECT(); return TOKEN(CLASS);}
+"extends"   {CHECK_OBJECT(); return TOKEN(EXTENDS);}
+"method"    {CHECK_OBJECT(); return TOKEN(METHOD);}
+"new"       {CHECK_OBJECT(); return TOKEN(NEW);}
 ","         {return TOKEN(COMMA);}
 ":"         {return TOKEN(COLON);}
 ";"         {return TOKEN(SEMI);}
@@ -123,8 +147,8 @@ digit           [0-9]
 "["         {return TOKEN(LBRACK);}
 "]"         {return TOKEN(RBRACK);}
 "+"         {return TOKEN(PLUS);}
-"."         {return TOKEN(MINUS);}
-"-"         {return TOKEN(DOT);}
+"."         {return TOKEN(DOT);}
+"-"         {return TOKEN(MINUS);}
 "*"         {return TOKEN(TIMES);}
 "/"         {return TOKEN(DIVIDE);}
 "="         {return TOKEN(EQ);}
@@ -136,9 +160,11 @@ digit           [0-9]
 "&"         {return TOKEN(AND);}
 "|"         {return TOKEN(OR);}
 ":="        {return TOKEN(ASSIGN);}
-"_chunks"   {return TOKEN(CHUNKS);}
-"_namety"   {return TOKEN(NAMETY);}
-"_cast"     {return TOKEN(CAST);}
+"_chunks"   {CHECK_EXTENSION(); return TOKEN(CHUNKS);}
+"_namety"   {CHECK_EXTENSION(); return TOKEN(NAMETY);}
+"_exp"      {CHECK_EXTENSION(); return TOKEN(EXP);}
+"_lvalue"   {CHECK_EXTENSION(); return TOKEN(LVALUE);}
+"_cast"     {CHECK_EXTENSION(); return TOKEN(CAST);}
 
 
 "\""        grown_string.clear(); BEGIN SC_STRING;
@@ -146,9 +172,46 @@ digit           [0-9]
 <SC_STRING>{ /* Handling of the strings.  Initial " is eaten. */
   "\"" {
     BEGIN INITIAL; // Return to main context
+    finished = 1;
     return TOKEN_VAL(STRING, grown_string);
   }
+
+  "\\"[abfrntv] {
+      finished = 0;
+      grown_string.append(yytext);
+    }
+
+    "\\"[0-7]{3} {
+      finished = 0;
+      grown_string.push_back(std::stoi(++yytext, 0, 8));
+    }
+
+    "\\x"[0-9A-Fa-f]{2} {
+      finished = 0;
+      yytext += 2;
+      grown_string.push_back(std::stoi(yytext, 0, 16));
+    }
+
+    "\\\\" {
+      finished = 0;
+      grown_string.append(yytext);
+    }
+
+    "\\\"" {
+      finished = 0;
+      grown_string.append(yytext);
+    }
+
+    "\\". {
+      do {                                                 
+        tp.error_ << misc::error::error_type::scan        
+                  << tp.location_                         
+                  << ": invalid escape\n";     
+      } while (false);
+    }
+
   . {
+    finished = 0;
     grown_string.append(yytext);
   }
 }
@@ -177,20 +240,18 @@ digit           [0-9]
 [a-zA-Z][a-zA-Z0-9_]* {return TOKEN_VAL(ID, misc::symbol(yytext));}
 [_][a-zA-Z0-9_]+      {return TOKEN_VAL(ID, misc::symbol(yytext));}
 <<EOF>>                 {
-  if (grown_comment.size() > 0)
+  if (grown_comment.size() > 0 || !finished)
 {
   do {                                                  
-    if (!tp.enable_extensions_p_)                       
       tp.error_ << misc::error::error_type::scan        
                 << tp.location_                         
-                << ": unexpected end of file in a comment\n";     
+                << ": unexpected end of file in a comment or string\n";     
   } while (false);
 }
 return TOKEN(EOF);
 }
 .                     {
-  do {                                                  
-    if (!tp.enable_extensions_p_)                       
+  do {                                                   
       tp.error_ << misc::error::error_type::scan        
                 << tp.location_                         
                 << ": unrecognized token\n";     
