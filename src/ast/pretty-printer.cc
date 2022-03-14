@@ -76,7 +76,7 @@ namespace ast
 
   void PrettyPrinter::operator()(const IfExp& e)
   {
-    ostr_ << "(if ";
+    ostr_ << "if ";
     e.test_get().accept(*this);
     ostr_ << misc::incendl << "then ";
     e.then_clause_get().accept(*this);
@@ -87,27 +87,27 @@ namespace ast
         e.else_clause_get()->accept(*this);
         ostr_ << misc::decindent;
       }
-    ostr_ << ")" << misc::decindent;
+    ostr_  << misc::decindent;
   }
 
   void PrettyPrinter::operator()(const WhileExp& e)
   {
-    ostr_ << "(while" << '(';
+    ostr_ << "while" << '(';
     e.test_get().accept(*this);
     ostr_ << ')' << " do" << misc::incendl;
     e.body_get().accept(*this);
-    ostr_  << ")" << misc::decindent;
+    ostr_  << misc::decindent;
   }
 
   void PrettyPrinter::operator()(const ForExp& e)
   {
-    ostr_ << "(for ";
+    ostr_ << "for ";
     e.vardec_get().accept(*this);
     ostr_ << " to ";
     e.hi_get().accept(*this);
     ostr_ << " do" << misc::incendl;
     e.body_get().accept(*this);
-    ostr_ << ")" << misc::decindent;
+    ostr_ << misc::decindent;
   }
 
   void PrettyPrinter::operator()(const NilExp& e) { ostr_ << "nil"; }
@@ -126,12 +126,23 @@ namespace ast
   void PrettyPrinter::operator()(const SeqExp& e)
   {
     auto v = e.exps_get();
+    if (v.empty())
+      return;
+    if (v.size() == 1)
+    {
+      v.at(0)->accept(*this);
+      return;
+    }
+    ostr_ << '(';
     for (size_t i = 0; i < v.size(); i++)
     {
+        ostr_ << '(';
         v.at(i)->accept(*this);
+        ostr_ << ')';
         if (i != v.size() - 1)
           ostr_ << ';' << misc::iendl;
     }
+    ostr_ << ')';
   }
 
   void PrettyPrinter::operator()(const OpExp& e)
@@ -216,8 +227,6 @@ namespace ast
       ostr_ << misc::iendl;
       ostr_ << '(' << misc::incendl;
       e.body_get()->accept(*this);
-      if (e.result_get() == nullptr)
-        ostr_ << "()";
       ostr_ << misc::decendl << ')';
     }
     ostr_ << misc::decindent;

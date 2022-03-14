@@ -1,14 +1,14 @@
 /* == Abstract Syntax Tree. == */
 function _main() =
   (
-    let
+    ((let
       function say(str : string) =
         (
-          print(string);
-          ()
+          ((print(string));
+          ())
         )
     in
       say("hello")
-    end;
-    ()
+    end);
+    ())
   )

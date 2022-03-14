@@ -217,8 +217,6 @@
 %precedence CHUNKS
 %precedence TYPE
 
-%precedence VAR
-
 %precedence PRIMITIVE
 %precedence FUNCTION
 
@@ -228,13 +226,14 @@
 %precedence THEN
 %precedence ELSE
 
+%precedence ASSIGN
+
 %left OR
 %left AND
 %nonassoc GE LE EQ NE LT GT
 %left PLUS MINUS
 %left TIMES DIVIDE
 %precedence UMINUS
-%precedence ASSIGN
 
 
 // Solving conflicts on:
@@ -258,9 +257,9 @@ program:
 
 
 exps:
-   exp  { $$ = new ast::exps_type{$1}; }
+   exp  { $$ = tp.td_.make_exps_type($1); }
 |  exp SEMI exps { $$ = $3; $$->insert($$->begin(), $1); }
-|  %empty { $$ = new ast::exps_type(); }
+|  %empty { $$ = tp.td_.make_exps_type(); }
 ;
 
 record_creation:
@@ -369,7 +368,6 @@ funchunk:
 
 varchunk:
   vardec %prec CHUNKS  { $$ = tp.td_.make_VarChunk(@1); $$->push_front(*$1); }
-| vardec varchunk       { $$ = $2; $$->push_front(*$1); }
 ;
 
 
