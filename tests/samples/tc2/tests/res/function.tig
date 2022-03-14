@@ -1,0 +1,6 @@
+/* == Abstract Syntax Tree. == */
+function say(s : string) =
+  (
+    print(s);
+    ()
+  )

@@ -1,0 +1,5 @@
+let
+    import "../using/test.tih"
+in
+    say("hello")
+end

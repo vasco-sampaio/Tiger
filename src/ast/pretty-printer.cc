@@ -69,6 +69,7 @@ namespace ast
 
   void PrettyPrinter::operator()(const ObjectExp& e)
   {
+    ostr_ << "new ";
     e.type_name_get().accept(*this);
     //ostr_ << e.type_name_get();
   }
@@ -113,9 +114,11 @@ namespace ast
 
   void PrettyPrinter::operator()(const AssignExp& e)
   {
+    ostr_ << '(';
     e.var_get().accept(*this);
     ostr_ << " := ";
     e.exp_get().accept(*this);
+    ostr_ << ')';
   }
 
   void PrettyPrinter::operator()(const BreakExp& e) { ostr_ << "break"; }
@@ -225,7 +228,8 @@ namespace ast
   void PrettyPrinter::operator()(const LetExp& e)
   {
     ostr_ << "let" << misc::incindent << misc::iendl;
-    e.decs_get().accept(*this);
+    if (e.decs_get() != nullptr)
+      e.decs_get()->accept(*this);
     ostr_ << misc::decindent << misc::iendl << "in" << misc::incendl;
     if (e.body_get() != nullptr)
     {
@@ -243,6 +247,8 @@ namespace ast
     size_t i = 0;
     for (auto k : e.decs_get())
       {
+        if (k->init_get() != nullptr)
+          ostr_ << "var ";
         k->accept(*this);
         if (i != size - 1)
           ostr_ << ", ";
