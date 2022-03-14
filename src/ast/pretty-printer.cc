@@ -355,13 +355,14 @@ namespace ast
   {
     ostr_ << "method " << e.name_get() << "(" << misc::incindent;
     e.formals_get().accept(*this);
-    ostr_ << ") :";
+    ostr_ << ") ";
     if (e.result_get() != nullptr)
     {
-        ostr_ << ' ';
+        ostr_ << ": ";
         e.result_get()->accept(*this);
+        ostr_ << ' ';
     }
-    ostr_ << " =" << misc::iendl;
+    ostr_ << "=" << misc::iendl;
     if (e.body_get() != nullptr)
     {
       e.body_get()->accept(*this);

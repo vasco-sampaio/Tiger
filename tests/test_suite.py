@@ -37,6 +37,10 @@ def perform_checks(expected, actual: sp.CompletedProcess):
     assert expected == actual.returncode, \
             f"Exited with {actual.returncode} expected {expected}"
 
+def compare_code(actual: sp.CompletedProcess, ret):
+    assert ret == actual.returncode, \
+            f"Exited with {actual.returncode} expected {ret}"
+
 def compare_out(expected, actual: sp.CompletedProcess, ret):
     assert ret == actual.returncode, \
             f"Exited with {actual.returncode} expected {ret}"
@@ -88,7 +92,7 @@ if __name__ == "__main__":
             try:
                 compare_out(open("samples/tc2/tests/res/"+file, "r").read(), sh_proc, 0)
             except AssertionError as err:
-                print(f"{KO_TAG} {file}\n{err}")
+                print(f"{KO_TAG} {file} 2\n{err}")
             else:
                 print(f"{OK_TAG} {file} 1")
             text_file = open("tmp.tig", "w")
@@ -98,6 +102,24 @@ if __name__ == "__main__":
             try:
                 compare_out(open("samples/tc2/tests/res/"+file, "r").read(), sh_proc2, 0)
             except AssertionError as err:
-                print(f"{KO_TAG} {file}\n{err}")
+                print(f"{KO_TAG} {file} 2\n{err}")
+            else:
+                print(f"{OK_TAG} {file} 2")
+    for file in os.listdir("samples/tc2/tests/good"):
+            sh_proc = run_shellTC2(binary_path, "samples/tc2/tests/good/" + file)
+            try:
+                compare_code(sh_proc, 0)
+            except AssertionError as err:
+                print(f"{KO_TAG} {file} 2\n{err}")
+            else:
+                print(f"{OK_TAG} {file} 1")
+            text_file = open("tmp.tig", "w")
+            n = text_file.write(sh_proc.stdout)
+            text_file.close()
+            sh_proc2 = run_shellTC2(binary_path, "tmp.tig")
+            try:
+                compare_code(sh_proc2, 0)
+            except AssertionError as err:
+                print(f"{KO_TAG} {file} 2\n{err}")
             else:
                 print(f"{OK_TAG} {file} 2")
