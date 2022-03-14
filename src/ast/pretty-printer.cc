@@ -250,8 +250,10 @@ namespace ast
         if (k->init_get() != nullptr)
           ostr_ << "var ";
         k->accept(*this);
-        if (i != size - 1)
+        if (i != size - 1 && k->init_get() == nullptr)
           ostr_ << ", ";
+        else if (i != size - 1 && k->init_get() != nullptr)
+          ostr_ << misc::iendl;
         i++;
       }
   }
@@ -264,6 +266,8 @@ namespace ast
     {
       ostr_ << ' ';
       e.type_name_get()->accept(*this);
+      if (e.init_get())
+        ostr_ << " :";
     }
     if (e.init_get())
       {
@@ -314,17 +318,16 @@ namespace ast
 
   void PrettyPrinter::operator()(const FieldInit& e)
   {
-    ostr_ << e.name_get() << " {" << misc::incindent;
+    ostr_ << e.name_get() << " = " << misc::incindent;
     e.init_get().accept(*this);
-    ostr_ << "}" << misc::decindent;
+    ostr_ << misc::decindent;
   }
 
   void PrettyPrinter::operator()(const RecordExp& e)
   {
-    size_t size = e.fields_get().size();
-    e.type_name_get().accept(*this);
-    ostr_ << " {" << misc::incindent;
+    ostr_ << e.type_name_get() << "{" << misc::incindent;
     size_t i = 0;
+    size_t size = e.fields_get().size();
     for (auto k : e.fields_get())
       {
         k->accept(*this);
@@ -416,7 +419,7 @@ namespace ast
 
   void PrettyPrinter::operator()(const RecordTy& e)
   {
-    ostr_ << " {" << misc::incindent;
+    ostr_ << "{" << misc::incindent;
     size_t i = 0;
     size_t size = e.fields_get().size();
     for (auto k : e.fields_get())
@@ -431,8 +434,8 @@ namespace ast
 
   void PrettyPrinter::operator()(const Field& e)
   {
+    ostr_ << e.name_get() << " : ";
     e.type_name_get().accept(*this);
-    ostr_ << ' ' << e.name_get();
   }
 
 } // namespace ast
