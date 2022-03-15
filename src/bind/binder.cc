@@ -30,12 +30,14 @@ namespace bind
 
   void Binder::scope_begin()
   {
-    // FIXME: Some code was deleted here.
+    // Done: Some code was deleted here.
+    sc_map_.scope_begin();
   }
 
   void Binder::scope_end()
   {
-    // FIXME: Some code was deleted here.
+    // Done: Some code was deleted here.
+    sc_map_.scope_end();
   }
 
   /*---------.
@@ -46,24 +48,46 @@ namespace bind
 
   void Binder::operator()(ast::LetExp& e)
   {
-    // FIXME: Some code was deleted here.
+    this->scope_begin();
+    e.decs_get()->accept(*this);
+    if (e.body_get() != nullptr)
+      e.body_get()->accept(*this);
+    this->scope_end();
   }
+
+  void Binder::operator()(ast::FunctionDec& e) 
+  {
+    this->scope_begin();
+    e.formals_get().accept(*this);
+    e.result_get()->accept(*this);
+    e.body_get()->accept(*this);
+    this->scope_end();
+  }
+
+  void Binder::operator()(ast::VarDec& e)
+  void Binder::operator()(ast::TypeDec& e)
+  void Binder::operator()(ast::MethodDec& e)
+  void Binder::operator()(ast::WhileExp& e)
+  void Binder::operator()(ast::ForExp& e)
 
   /*-------------------.
   | Visiting VarChunk. |
   `-------------------*/
 
   // FIXME: Some code was deleted here.
+  void Binder::operator()(ast::VarChunk& e)
 
   /*------------------------.
   | Visiting FunctionChunk. |
   `------------------------*/
 
   // FIXME: Some code was deleted here.
+  void Binder::operator()(ast::FunctionChunk& e)
 
   /*--------------------.
   | Visiting TypeChunk. |
   `--------------------*/
   // FIXME: Some code was deleted here.
+  void Binder::operator()(ast::TypeChunk& e)
 
 } // namespace bind
