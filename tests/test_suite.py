@@ -55,7 +55,8 @@ if __name__ == "__main__":
 
     binary_path = args.binary.absolute()
     print(f"Testing {binary_path}")
-
+    suceed = 0
+    total = 0
     for i in range(1,2):
         for file in os.listdir("samples/tc"+str(i)+"/tests/good"):
             expected = 0
@@ -67,6 +68,8 @@ if __name__ == "__main__":
                 print(f"{KO_TAG} {file}\n{err}")
             else:
                 print(f"{OK_TAG} {file}")
+                suceed += 1
+            total += 1
         for file in os.listdir("samples/tc"+str(i)+"/tests/lex"):
             expected = 2
             sh_proc = run_shell(binary_path, "samples/tc1/tests/lex/" + file)
@@ -77,6 +80,8 @@ if __name__ == "__main__":
                 print(f"{KO_TAG} {file}\n{err}")
             else:
                 print(f"{OK_TAG} {file}")
+                suceed += 1
+            total += 1
         for file in os.listdir("samples/tc"+str(i)+"/tests/syntax"):
             expected = 3
             sh_proc = run_shell(binary_path, "samples/tc1/tests/syntax/" + file)
@@ -87,6 +92,8 @@ if __name__ == "__main__":
                 print(f"{KO_TAG} {file}\n{err}")
             else:
                 print(f"{OK_TAG} {file}")
+                suceed += 1
+            total += 1
     for file in os.listdir("samples/tc2/tests/files"):
             sh_proc = run_shellTC2(binary_path, "samples/tc2/tests/files/" + file)
             try:
@@ -95,6 +102,8 @@ if __name__ == "__main__":
                 print(f"{KO_TAG} {file} 2\n{err}")
             else:
                 print(f"{OK_TAG} {file} 1")
+                suceed += 1
+            total += 1
             text_file = open("tmp.tig", "w")
             n = text_file.write(sh_proc.stdout)
             text_file.close()
@@ -105,6 +114,8 @@ if __name__ == "__main__":
                 print(f"{KO_TAG} {file} 2\n{err}")
             else:
                 print(f"{OK_TAG} {file} 2")
+                suceed += 1
+            total += 1
     for file in os.listdir("samples/tc2/tests/good"):
             sh_proc = run_shellTC2(binary_path, "samples/tc2/tests/good/" + file)
             try:
@@ -113,6 +124,8 @@ if __name__ == "__main__":
                 print(f"{KO_TAG} {file} 2\n{err}")
             else:
                 print(f"{OK_TAG} {file} 1")
+                suceed += 1
+            total += 1
             text_file = open("tmp.tig", "w")
             n = text_file.write(sh_proc.stdout)
             text_file.close()
@@ -123,3 +136,9 @@ if __name__ == "__main__":
                 print(f"{KO_TAG} {file} 2\n{err}")
             else:
                 print(f"{OK_TAG} {file} 2")
+                suceed += 1
+            total += 1
+    print()
+    print(f"{OK_TAG}" "Suceed: " + str(suceed))
+    print(f"{KO_TAG}" "Failed: " + str(total - suceed))
+    print("Total: " + str(total))
