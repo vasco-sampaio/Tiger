@@ -428,10 +428,7 @@ namespace ast
   void PrettyPrinter::operator()(const ClassTy& e)
   {
     ostr_ << "class extends ";
-    if (e.super_get() != nullptr)
-      e.super_get()->accept(*this);
-    else
-      ostr_ << "Object";
+    e.super_get().accept(*this);
     ostr_ << misc::iendl << '{';
     ostr_ << misc::incendl;
     if (e.chunks_get() != nullptr)

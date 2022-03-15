@@ -413,7 +413,7 @@ tychunk:
 
 tydec:
   "type" ID "=" ty { $$ = tp.td_.make_TypeDec(@$, $2, $4); }
-| CLASS ID LBRACE classfields RBRACE { $$ = tp.td_.make_TypeDec(@$, $2, tp.td_.make_ClassTy(@$, nullptr, $4)); }
+| CLASS ID LBRACE classfields RBRACE { $$ = tp.td_.make_TypeDec(@$, $2, tp.td_.make_ClassTy(@$, tp.td_.make_NameTy(@1, "Object"), $4)); }
 | CLASS ID EXTENDS typeid LBRACE classfields RBRACE { $$ = tp.td_.make_TypeDec(@$, $2, tp.td_.make_ClassTy(@$, $4, $6)); }
 ;
 
@@ -421,8 +421,8 @@ ty:
   typeid               { $$ = $1; }
 | "{" tyfields "}"     { $$ = tp.td_.make_RecordTy(@$, $2); }
 | "array" "of" typeid  { $$ = tp.td_.make_ArrayTy(@$, $3); }
-| CLASS LBRACE RBRACE { $$ = tp.td_.make_ClassTy(@$, nullptr, nullptr); }
-| CLASS LBRACE classfields RBRACE { $$ = tp.td_.make_ClassTy(@$, nullptr, $3); }
+| CLASS LBRACE RBRACE { $$ = tp.td_.make_ClassTy(@$, tp.td_.make_NameTy(@1, "Object"), nullptr); }
+| CLASS LBRACE classfields RBRACE { $$ = tp.td_.make_ClassTy(@$, tp.td_.make_NameTy(@1, "Object"), $3); }
 | CLASS EXTENDS typeid LBRACE RBRACE  { $$ = tp.td_.make_ClassTy(@$, $3, nullptr); }
 | CLASS EXTENDS typeid LBRACE classfields RBRACE  { $$ = tp.td_.make_ClassTy(@$, $3, $5); }
 ;

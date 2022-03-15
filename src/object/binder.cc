@@ -58,7 +58,8 @@ namespace object
     within_class_ty_ = true;
     bool saved_within_method_dec = within_method_dec_;
     within_method_dec_ = false;
-    e.chunks_get().accept(*this);
+    if (e.chunks_get() != nullptr)
+      e.chunks_get()->accept(*this);
     within_method_dec_ = saved_within_method_dec;
     within_class_ty_ = saved_within_class_ty;
     scope_end();
