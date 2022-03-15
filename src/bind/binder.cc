@@ -58,6 +58,8 @@ namespace bind
   void Binder::operator()(ast::FunctionDec& e) 
   {
     this->scope_begin();
+    // manage error in case of mutliple declaration with this var's name
+    sc_map_.put(e.name_get(), e);
     e.formals_get().accept(*this);
     e.result_get()->accept(*this);
     e.body_get()->accept(*this);
@@ -65,7 +67,18 @@ namespace bind
   }
 
   void Binder::operator()(ast::VarDec& e)
+  {
+    this->scope_begin();
+    // manage error in case of mutliple declaration with this var's name
+    sc_map_.put(new pair<std::string, >(e.name_get()), e);
+    this->accept(e.init_get());
+    this->scope_end();
+  }
   void Binder::operator()(ast::TypeDec& e)
+  {
+    this->scope_begin();
+    this->scope_end();
+  }
   void Binder::operator()(ast::MethodDec& e)
   void Binder::operator()(ast::WhileExp& e)
   void Binder::operator()(ast::ForExp& e)

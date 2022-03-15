@@ -157,7 +157,6 @@ namespace bind
     // PartiallyDone: Some code was deleted here (More members).
     scoped_map sc_map_;
   };
-
 } // namespace bind
 
 #include <bind/binder.hxx>
