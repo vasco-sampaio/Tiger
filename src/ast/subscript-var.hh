@@ -7,11 +7,12 @@
 
 #include <ast/exp.hh>
 #include <ast/var.hh>
+#include "bindable.hh"
 
 namespace ast
 {
   /// SubscriptVar.
-  class SubscriptVar : public Var
+  class SubscriptVar : public Var, public Bindable
   {
   public:
     /** \name Ctor & dtor.

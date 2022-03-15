@@ -8,11 +8,12 @@
 #include <ast/exp.hh>
 #include <ast/function-dec.hh>
 #include <misc/symbol.hh>
+#include "bindable.hh"
 
 namespace ast
 {
   /// CallExp.
-  class CallExp : public Exp
+  class CallExp : public Exp, public Bindable
   {
     // DONE: Some code was deleted here.
     public:
