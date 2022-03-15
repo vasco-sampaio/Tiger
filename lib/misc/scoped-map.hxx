@@ -15,7 +15,7 @@
 
 namespace misc
 {
-  // FIXME: Some code was deleted here.
+  // DONE: Some code was deleted here.
   template <typename Key, typename Data>
   inline void scoped_map<Key, Data>::put(const Key& key, const Data& value)
   {
@@ -45,6 +45,7 @@ namespace misc
       {
         ostr << '(' << j->first << ',' << j->second << ") ";
       }
+      ostr << '\n';
     }
     return ostr;
   }

@@ -19,7 +19,7 @@ namespace misc
 {
   template <typename Key, typename Data> class scoped_map
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
   public:
     // Associate value to key in the current scope
     void put(const Key& key, const Data& value);
