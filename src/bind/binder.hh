@@ -154,8 +154,10 @@ namespace bind
     /// Binding errors handler.
     misc::error error_;
 
-    // PartiallyDone: Some code was deleted here (More members).
-    scoped_map sc_map_;
+    // DONE: Some code was deleted here (More members).
+    misc::scoped_map<misc::symbol, ast::FunctionDec*> func_map_;
+    misc::scoped_map<misc::symbol, ast::VarDec*> var_map_;
+    misc::scoped_map<misc::symbol, ast::TypeDec*> type_map_;
   };
 } // namespace bind
 

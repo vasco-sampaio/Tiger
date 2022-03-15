@@ -30,14 +30,18 @@ namespace bind
 
   void Binder::scope_begin()
   {
-    // Done: Some code was deleted here.
-    sc_map_.scope_begin();
+    // DONE: Some code was deleted here.
+    func_map_.scope_begin();
+    var_map_.scope_begin();
+    type_map_.scope_begin();
   }
 
   void Binder::scope_end()
   {
-    // Done: Some code was deleted here.
-    sc_map_.scope_end();
+    // DONE: Some code was deleted here.
+    func_map_.scope_end();
+    var_map_.scope_end();
+    type_map_.scope_end();
   }
 
   /*---------.
@@ -59,7 +63,7 @@ namespace bind
   {
     this->scope_begin();
     // manage error in case of mutliple declaration with this var's name
-    sc_map_.put(e.name_get(), e);
+    func_map_.put(e.name_get(), &e);
     e.formals_get().accept(*this);
     e.result_get()->accept(*this);
     e.body_get()->accept(*this);
@@ -70,37 +74,39 @@ namespace bind
   {
     this->scope_begin();
     // manage error in case of mutliple declaration with this var's name
-    sc_map_.put(new pair<std::string, >(e.name_get()), e);
+    var_map_.put(e.name_get(), &e);
     this->accept(e.init_get());
     this->scope_end();
   }
   void Binder::operator()(ast::TypeDec& e)
   {
     this->scope_begin();
+    type_map_.put(e.name_get(), &e);
+    e.ty_get().accept(*this);
     this->scope_end();
   }
-  void Binder::operator()(ast::MethodDec& e)
-  void Binder::operator()(ast::WhileExp& e)
-  void Binder::operator()(ast::ForExp& e)
+  // void Binder::operator()(ast::MethodDec& e)
+  // void Binder::operator()(ast::WhileExp& e)
+  // void Binder::operator()(ast::ForExp& e)
 
   /*-------------------.
   | Visiting VarChunk. |
   `-------------------*/
 
   // FIXME: Some code was deleted here.
-  void Binder::operator()(ast::VarChunk& e)
+  //void Binder::operator()(ast::VarChunk& e)
 
   /*------------------------.
   | Visiting FunctionChunk. |
   `------------------------*/
 
   // FIXME: Some code was deleted here.
-  void Binder::operator()(ast::FunctionChunk& e)
+  //void Binder::operator()(ast::FunctionChunk& e)
 
   /*--------------------.
   | Visiting TypeChunk. |
   `--------------------*/
   // FIXME: Some code was deleted here.
-  void Binder::operator()(ast::TypeChunk& e)
+  //void Binder::operator()(ast::TypeChunk& e)
 
 } // namespace bind
