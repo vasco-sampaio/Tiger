@@ -1,6 +1,6 @@
 /* == Abstract Syntax Tree. == */
 function _main() =
   (
-    0;
-    ()
+    ((0);
+    ())
   )

@@ -23,8 +23,8 @@ namespace ast
     void accept(Visitor& v) override;
 
 
-    const ChunkList& decs_get() const;
-    ChunkList& decs_get();
+    const ChunkList* decs_get() const;
+    ChunkList* decs_get();
     const Exp* body_get() const;
     Exp* body_get();
 

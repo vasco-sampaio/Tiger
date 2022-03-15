@@ -186,6 +186,14 @@ digit           [0-9]
       grown_string.push_back(std::stoi(++yytext, 0, 8));
     }
 
+    "\\"[0-9]{3} {
+      do {                                                  
+      tp.error_ << misc::error::error_type::scan        
+                << tp.location_                         
+                << ": invalid octal escape\n";     
+      } while (false);
+    }
+
     "\\x"[0-9A-Fa-f]{2} {
       finished = 0;
       yytext += 2;
@@ -228,8 +236,13 @@ digit           [0-9]
     else
       nested -= 1;
   }
+  
   "/*" {
     nested += 1;
+  }
+
+  <<EOF>>  {
+    BEGIN INITIAL;
   }
 
   . {

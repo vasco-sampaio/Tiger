@@ -127,7 +127,7 @@ namespace ast
   void GenDefaultVisitor<Const>::operator()(const_t<LetExp>& e)
   {
     // DONE: Some code was deleted here.
-    e.decs_get().accept(*this);
+    e.decs_get()->accept(*this);
     if (e.body_get() != nullptr)
       e.body_get()->accept(*this);
   }
