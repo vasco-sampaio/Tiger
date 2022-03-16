@@ -1,7 +1,10 @@
-function _main /* 0xfaa8b0 */() =
+hello
+hello
+hello
+function _main /* 0x86f8b0 */() =
   (
     ((let
-      var a /* 0xfaa560 */ := 0
+      var a /* 0x86f560 */ := 0
     in
       a /* 0 */
     end);

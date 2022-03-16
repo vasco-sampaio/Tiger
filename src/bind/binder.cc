@@ -67,7 +67,10 @@ namespace bind
   void Binder::operator()(ast::SeqExp& e)
   {
     this->scope_begin();
-    super_type::operator()(e);
+    for (auto& x : e.exps_get())
+    {
+      x->accept(*this);
+    }
     this->scope_end();
   }
 
