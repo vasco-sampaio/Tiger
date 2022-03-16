@@ -17,9 +17,23 @@ namespace bind
     return newName;
   }
 
-  template <class E, class Def> void Renamer::visit(E& e, const Def* def)
+  template <typename Def> 
+  inline misc::symbol Renamer::new_name(const Def& e)
   {
-    // FIXME: Some code was deleted here.
+    if (new_names_.contains(&e))
+      return new_names_.at(&e);
+    else
+      return new_name_compute(e);
+  }
+
+  template <class E, class Def>
+  void Renamer::visit(E& e, const Def* def)
+  {
+    // DONE: Some code was deleted here.
+    if (new_names_.contains(&e))
+    {
+      e.name_set(new_names_.at(def));
+    }
   }
 
 } // namespace bind

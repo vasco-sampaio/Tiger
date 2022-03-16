@@ -16,5 +16,6 @@ namespace bind {
     {
         Binder binder;
         binder(c);
+        return binder.error_get();
     }
 }
