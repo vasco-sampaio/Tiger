@@ -16,6 +16,8 @@ namespace ast::tasks
   void display_bindings()
   {
     ast::bindings_display(std::cout) = true;
+
+    
   }
 
 } // namespace ast::tasks

@@ -9,6 +9,7 @@
 
 #include <ast/default-visitor.hh>
 #include <ast/non-object-visitor.hh>
+#include <ast/dec.hh>
 
 namespace bind
 {
@@ -53,12 +54,16 @@ namespace bind
 
     /// \name Visiting definition sites.
     /// \{
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    void operator()(ast::FunctionDec& e) override;
+    void operator()(ast::VarDec& e) override;
+    void operator()(ast::TypeDec& e) override;
     /// \}
 
     /// \name Visiting usage sites.
     /// \{
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    void operator()(ast::CallExp& e) override;
     /// \}
 
   private:

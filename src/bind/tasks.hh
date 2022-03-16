@@ -15,4 +15,9 @@ namespace ast::tasks
 
   TASK_DECLARE("B|bindings-display", "display binding addresses", display_bindings, "parse");
 
+  TASK_DECLARE("rename",
+               "display renamed identifiers",
+               rename,
+               "parse");
+
 } // namespace ast::tasks
