@@ -64,6 +64,7 @@ namespace bind
     /// \{
     // DONE: Some code was deleted here.
     void operator()(ast::CallExp& e) override;
+    void operator()(ast::ChunkList& e) override;
     /// \}
 
   private:

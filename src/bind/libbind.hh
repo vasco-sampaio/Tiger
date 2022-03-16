@@ -14,4 +14,6 @@
 
 namespace bind {
     misc::error bind(ast::ChunkList& c);
+
+    void rename(ast::ChunkList& c);
 }

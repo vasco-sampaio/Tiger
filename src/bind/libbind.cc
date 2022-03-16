@@ -9,6 +9,7 @@
 #include <ast/libast.hh>
 #include <bind/libbind.hh>
 #include <parse/libparse.hh>
+#include "renamer.hh"
 #include "binder.hh"
 
 namespace bind {
@@ -17,5 +18,11 @@ namespace bind {
         Binder binder;
         binder(c);
         return binder.error_get();
+    }
+
+    void rename(ast::ChunkList& c)
+    {
+        Renamer r;
+        r(c);
     }
 }

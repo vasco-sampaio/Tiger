@@ -46,4 +46,12 @@ namespace bind
     super_type::operator()(e);
   }
 
+  void Renamer::operator()(ast::ChunkList& e)
+  {
+    for (auto &x : e)
+    {
+      x->accept(*this);
+    }
+  }
+
 } // namespace bind
