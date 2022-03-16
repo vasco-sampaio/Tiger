@@ -1,0 +1,13 @@
+hello
+hello
+hello
+function _main /* 0x86f8b0 */() =
+  (
+    ((let
+      var a /* 0x86f560 */ := 0
+    in
+      a /* 0 */
+    end);
+    ())
+  )
+error-->FAIL src/bind/test-bind (exit status: 139)

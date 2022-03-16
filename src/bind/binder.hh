@@ -62,15 +62,16 @@ namespace bind
     const misc::error& error_get() const;
 
     /* The visiting methods. */
-    void operator()(ast::ChunkList& e) override;
     void operator()(ast::LetExp& e) override;
-    
-    void operator()(ast::FunctionDec& e) override;
-    void operator()(ast::VarDec& e) override;
-    void operator()(ast::TypeDec& e) override;
-    //void operator()(ast::MethodDec& e) override;
-    //void operator()(ast::WhileExp& e) override;
-    //void operator()(ast::ForExp& e) override;
+  
+    void operator()(ast::SeqExp& e) override;
+    void operator()(ast::VarChunk& e);
+    void operator()(ast::FunctionChunk& e);
+    void operator()(ast::TypeChunk& e);
+    void operator()(ast::SimpleVar& e);
+    void operator()(ast::FieldVar& e);
+    void operator()(ast::SubscriptVar& e);
+    void operator()(ast::CallExp& e);
 
     // FIXME: Some code was deleted here.
 
@@ -110,16 +111,18 @@ namespace bind
 
     /// Check a set of definitions: unique names, browse headers, then
     /// bodies.
-    template <class D> void chunk_visit(ast::Chunk<D>& e);
+    template <class D>
+    void chunk_visit(ast::Chunk<D>& e);
 
     /// Check a Function or Type declaration header.
-    template <class D> void visit_dec_header(D& e);
+    template <class D>
+    void visit_dec_header(D& e);
 
     /// Check a Function or Type declaration body.
-    template <class D> void visit_dec_body(D& e);
+    template <class D>
+    void visit_dec_body(D& e);
 
     // FIXME: Some code was deleted here.
-
     /// \}
 
     /// \name Error handling

@@ -17,7 +17,12 @@ namespace bind
   /// The error handler.
   const misc::error& Binder::error_get() const { return error_; }
 
-  // FIXME: Some code was deleted here (Error reporting).
+  // DONE: Some code was deleted here (Error reporting).
+  template <typename T>
+  void Binder::undeclared(const std::string& k, const T& e)
+  {
+    error_ << ": undeclared " << k << ": " << e.name_get();
+  }
 
   void Binder::check_main(const ast::FunctionDec& e)
   {
@@ -48,15 +53,7 @@ namespace bind
   | Visits.  |
   `---------*/
 
-  // FIXME: Some code was deleted here.
-
-  void Binder::operator()(ast::ChunkList& e)
-  {
-    for (auto& x : e)
-    {
-      x->accept(*this);
-    }
-  }
+  // DONE: Some code was deleted here.
 
   void Binder::operator()(ast::LetExp& e)
   {
@@ -67,55 +64,84 @@ namespace bind
     this->scope_end();
   }
 
-  void Binder::operator()(ast::FunctionDec& e) 
+  void Binder::operator()(ast::SeqExp& e)
   {
     this->scope_begin();
-    // manage error in case of mutliple declaration with this var's name
-    func_map_.put(e.name_get(), &e);
-    e.formals_get().accept(*this);
-    if (e.result_get() != nullptr)
-      e.result_get()->accept(*this);
-    e.body_get()->accept(*this);
+    for (auto& x : e.exps_get())
+    {
+      x->accept(*this);
+    }
     this->scope_end();
   }
 
-  void Binder::operator()(ast::VarDec& e)
+  void Binder::operator()(ast::CallExp& e)
   {
-    this->scope_begin();
-    // manage error in case of mutliple declaration with this var's name
-    var_map_.put(e.name_get(), &e);
-    this->accept(e.init_get());
-    this->scope_end();
+    try
+    {
+      e.def_set(func_map_.get(e.name_get()));
+    }
+    catch (std::range_error)
+    {
+      undeclared("function", e);
+    }
   }
-  void Binder::operator()(ast::TypeDec& e)
+
+  void Binder::operator()(ast::SimpleVar& e)
   {
-    this->scope_begin();
-    type_map_.put(e.name_get(), &e);
-    e.ty_get().accept(*this);
-    this->scope_end();
+    try
+    {
+      e.def_set(var_map_.get(e.name_get()));
+    }
+    catch (std::range_error)
+    {
+      undeclared("variable", e);
+    }
   }
-  // void Binder::operator()(ast::MethodDec& e)
-  // void Binder::operator()(ast::WhileExp& e)
-  // void Binder::operator()(ast::ForExp& e)
+
+  void Binder::operator()(ast::FieldVar& e)
+  {
+    // e.def_set(var_map_.get(e.name_get()));
+  }
+
+  void Binder::operator()(ast::SubscriptVar& e)
+  {
+    //e.def_set(var_map_.get(e.var_get().name_get()));
+  }
+
+  
+/*
+  void Binder::operator()(ast::SimpleVar& e)
+  {
+    e.def_set(*(var_map_.find(e.name_get())).value);
+  }*/
 
   /*-------------------.
   | Visiting VarChunk. |
   `-------------------*/
 
-  // FIXME: Some code was deleted here.
-  //void Binder::operator()(ast::VarChunk& e)
+  // DONE: Some code was deleted here.
+  void Binder::operator()(ast::VarChunk& e)
+  {
+    chunk_visit<ast::VarDec>(e);
+  }
 
   /*------------------------.
   | Visiting FunctionChunk. |
   `------------------------*/
 
-  // FIXME: Some code was deleted here.
-  //void Binder::operator()(ast::FunctionChunk& e)
+  // DONE: Some code was deleted here.
+  void Binder::operator()(ast::FunctionChunk& e)
+  {
+    chunk_visit<ast::FunctionDec>(e);
+  }
 
   /*--------------------.
   | Visiting TypeChunk. |
   `--------------------*/
-  // FIXME: Some code was deleted here.
-  //void Binder::operator()(ast::TypeChunk& e)
+  // DONE: Some code was deleted here.
+  void Binder::operator()(ast::TypeChunk& e)
+  {
+    chunk_visit<ast::TypeDec>(e);
+  }
 
 } // namespace bind
