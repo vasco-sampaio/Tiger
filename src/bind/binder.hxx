@@ -25,7 +25,7 @@ namespace bind
     // Shorthand.
     using chunk_type = ast::Chunk<D>;
 
-
+    this->scope_begin();
     // DONE: Some code was deleted here (Two passes: once on headers, then on bodies).
     for (auto elt : e.decs_get())
     {
@@ -38,6 +38,7 @@ namespace bind
       visit_dec_body(*elt);
       this->scope_end();
     }
+    this->scope_end();
   }
 
   /// Check a Function or Type declaration header.
@@ -56,8 +57,6 @@ namespace bind
     if (e.init_get() != nullptr)
       e.init_get()->accept(*this);
   }
-
-
   
   /* These specializations are in bind/binder.hxx, so that derived
      visitors can use them (otherwise, they wouldn't see them).  */

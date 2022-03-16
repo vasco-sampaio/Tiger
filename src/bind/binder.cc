@@ -17,7 +17,12 @@ namespace bind
   /// The error handler.
   const misc::error& Binder::error_get() const { return error_; }
 
-  // FIXME: Some code was deleted here (Error reporting).
+  // DONE: Some code was deleted here (Error reporting).
+  template <typename T>
+  void Binder::undeclared(const std::string& k, const T& e)
+  {
+    error_ << ": undeclared " << k << ": " << e.name_get();
+  }
 
   void Binder::check_main(const ast::FunctionDec& e)
   {
@@ -65,6 +70,47 @@ namespace bind
     super_type::operator()(e);
     this->scope_end();
   }
+
+  void Binder::operator()(ast::CallExp& e)
+  {
+    try
+    {
+      e.def_set(func_map_.get(e.name_get()));
+    }
+    catch (std::range_error)
+    {
+      undeclared("function", e);
+    }
+  }
+
+  void Binder::operator()(ast::SimpleVar& e)
+  {
+    try
+    {
+      e.def_set(var_map_.get(e.name_get()));
+    }
+    catch (std::range_error)
+    {
+      undeclared("variable", e);
+    }
+  }
+
+  void Binder::operator()(ast::FieldVar& e)
+  {
+    // e.def_set(var_map_.get(e.name_get()));
+  }
+
+  void Binder::operator()(ast::SubscriptVar& e)
+  {
+    //e.def_set(var_map_.get(e.var_get().name_get()));
+  }
+
+  
+/*
+  void Binder::operator()(ast::SimpleVar& e)
+  {
+    e.def_set(*(var_map_.find(e.name_get())).value);
+  }*/
 
   /*-------------------.
   | Visiting VarChunk. |

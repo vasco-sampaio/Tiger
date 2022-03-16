@@ -68,6 +68,10 @@ namespace bind
     void operator()(ast::VarChunk& e);
     void operator()(ast::FunctionChunk& e);
     void operator()(ast::TypeChunk& e);
+    void operator()(ast::SimpleVar& e);
+    void operator()(ast::FieldVar& e);
+    void operator()(ast::SubscriptVar& e);
+    void operator()(ast::CallExp& e);
 
     // FIXME: Some code was deleted here.
 
@@ -107,13 +111,16 @@ namespace bind
 
     /// Check a set of definitions: unique names, browse headers, then
     /// bodies.
-    template <class D> void chunk_visit(ast::Chunk<D>& e);
+    template <class D>
+    void chunk_visit(ast::Chunk<D>& e);
 
     /// Check a Function or Type declaration header.
-    template <class D> void visit_dec_header(D& e);
+    template <class D>
+    void visit_dec_header(D& e);
 
     /// Check a Function or Type declaration body.
-    template <class D> void visit_dec_body(D& e);
+    template <class D>
+    void visit_dec_body(D& e);
 
     // FIXME: Some code was deleted here.
     /// \}
