@@ -50,6 +50,14 @@ namespace bind
 
   // FIXME: Some code was deleted here.
 
+  void Binder::operator()(ast::ChunkList& e)
+  {
+    for (auto& x : e)
+    {
+      x->accept(*this);
+    }
+  }
+
   void Binder::operator()(ast::LetExp& e)
   {
     this->scope_begin();
@@ -65,7 +73,8 @@ namespace bind
     // manage error in case of mutliple declaration with this var's name
     func_map_.put(e.name_get(), &e);
     e.formals_get().accept(*this);
-    e.result_get()->accept(*this);
+    if (e.result_get() != nullptr)
+      e.result_get()->accept(*this);
     e.body_get()->accept(*this);
     this->scope_end();
   }

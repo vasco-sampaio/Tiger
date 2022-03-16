@@ -10,7 +10,7 @@
 #include <parse/libparse.hh>
 
 const char* program_name = "test-bind";
-
+/*
 // Return true on correct binding.
 inline static bool bound(const std::string& s)
 {
@@ -22,9 +22,9 @@ inline static bool bound(const std::string& s)
   delete d;
   return !e;
 }
-
+*/
 int main()
-{
+{/*
   ast::bindings_display(std::cout) = true;
   assertion(bound(" let"
                   "   class C"
@@ -70,5 +70,5 @@ int main()
                   " in"
                   "   d.a := 2;"
                   "   d.print()"
-                  " end"));
+                  " end"));*/
 }

@@ -13,5 +13,5 @@
 #include <parse/libparse.hh>
 
 namespace bind {
-    misc::error bind(ast::ChunkList c);
+    misc::error bind(ast::ChunkList& c);
 }
