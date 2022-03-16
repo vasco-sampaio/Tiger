@@ -11,12 +11,22 @@
 #include <ast/tasks.hh>
 #undef DEFINE_TASKS
 
+#include <bind/libbind.hh>
+
 namespace ast::tasks
 {
   void display_bindings()
   {
     ast::bindings_display(std::cout) = true;
+  }
 
+  void compute_bindings()
+  {
+    bind::bind(*the_program);
+  }
+
+  void rename()
+  {
     
   }
 

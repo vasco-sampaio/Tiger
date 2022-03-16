@@ -11,13 +11,18 @@
 
 namespace ast::tasks
 {
-  TASK_GROUP("3. Binder");
+  TASK_GROUP("3. Bind");
 
-  TASK_DECLARE("B|bindings-display", "display binding addresses", display_bindings, "parse");
-
-  TASK_DECLARE("rename",
-               "display renamed identifiers",
-               rename,
+  TASK_DECLARE("B|bindings-display",
+               "enable bindings display in the AST",
+               display_bindings,
                "parse");
+
+  TASK_DECLARE("b|bindings-compute",
+               "bind the identifiers",
+               compute_bindings,
+               "parse");
+
+  TASK_DECLARE("rename", "rename identifiers to unique names", rename, "parse");
 
 } // namespace ast::tasks
