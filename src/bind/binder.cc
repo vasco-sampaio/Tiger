@@ -48,7 +48,7 @@ namespace bind
   | Visits.  |
   `---------*/
 
-  // Done: Some code was deleted here.
+  // DONE: Some code was deleted here.
 
   void Binder::operator()(ast::LetExp& e)
   {
@@ -70,7 +70,7 @@ namespace bind
   | Visiting VarChunk. |
   `-------------------*/
 
-  // Done: Some code was deleted here.
+  // DONE: Some code was deleted here.
   void Binder::operator()(ast::VarChunk& e)
   {
     chunk_visit<ast::VarDec>(e);
@@ -80,7 +80,7 @@ namespace bind
   | Visiting FunctionChunk. |
   `------------------------*/
 
-  // Done: Some code was deleted here.
+  // DONE: Some code was deleted here.
   void Binder::operator()(ast::FunctionChunk& e)
   {
     chunk_visit<ast::FunctionDec>(e);
@@ -89,7 +89,7 @@ namespace bind
   /*--------------------.
   | Visiting TypeChunk. |
   `--------------------*/
-  // Done: Some code was deleted here.
+  // DONE: Some code was deleted here.
   void Binder::operator()(ast::TypeChunk& e)
   {
     chunk_visit<ast::TypeDec>(e);
