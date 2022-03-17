@@ -1,6 +1,18 @@
 /* == Abstract Syntax Tree. == */
-function _main() =
+function _main /* 0x1a65b70 */() =
   (
-    (((a + "a"));
+    ((let
+      function f /* 0x1a59720 */() =
+        (
+          
+        )
+      var a /* 0x1a58d90 */ := 0
+      function f /* 0x1a592b0 */() =
+        (
+          
+        )
+    in
+      a /* 0x1a58d90 */
+    end);
     ())
   )
