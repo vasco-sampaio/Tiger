@@ -21,9 +21,15 @@ namespace bind
   template <typename T>
   void Binder::undeclared(const std::string& k, const T& e)
   {
-    //error_ << ": undeclared " << k << ": " << e.name_get();
     error_ << misc::error::error_type::bind << e.location_get() << k
-           << " : undeclared " << e.name_get();
+           << " : undeclared " << e.name_get() << '\n';
+  }
+
+  template <typename T> void Binder::redefinition(const T& e1, const T& e2)
+  {
+    error_ << misc::error::error_type::bind << e2.location_get()
+           << " : redefinition: " << e2.name_get() << '\n'
+           << e1.location_get() << ": first definition\n";
   }
 
   void Binder::check_main(const ast::FunctionDec& e)
@@ -55,7 +61,7 @@ namespace bind
   | Visits.  |
   `---------*/
 
-  // DONE: Some code was deleted here.
+  // DONE: Some code was deleted here
 
   void Binder::operator()(ast::LetExp& e)
   {
@@ -63,16 +69,6 @@ namespace bind
     e.decs_get()->accept(*this);
     if (e.body_get() != nullptr)
       e.body_get()->accept(*this);
-    this->scope_end();
-  }
-
-  void Binder::operator()(ast::SeqExp& e)
-  {
-    this->scope_begin();
-    for (auto& x : e.exps_get())
-      {
-        x->accept(*this);
-      }
     this->scope_end();
   }
 
@@ -92,6 +88,7 @@ namespace bind
   {
     try
       {
+        //var_map_.dump(std::cout);
         e.def_set(var_map_.get(e.name_get()));
       }
     catch (std::range_error)
@@ -129,7 +126,9 @@ namespace bind
   // DONE: Some code was deleted here.
   void Binder::operator()(ast::FunctionChunk& e)
   {
+    this->scope_begin();
     chunk_visit<ast::FunctionDec>(e);
+    this->scope_end();
   }
 
   /*--------------------.

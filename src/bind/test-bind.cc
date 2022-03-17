@@ -28,11 +28,11 @@ int main()
 
   assert(!bound("a"));
   assert(bound("let var a := 0 in a end"));
-  /*assert(bound("let var a := 0 in let var a := a in a end; a end"));
+  assert(bound("let var a := 0 in let var a := a in a end; a end"));
   assert(bound("let function f(a : int, b : string) : int = a in "
                " 5 "
                "end"));
   assert(!bound("let function f(a : int, a : string) : int = a in "
                 " 5 "
-                "end"));*/
+                "end"));
 }

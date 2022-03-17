@@ -62,16 +62,15 @@ namespace bind
     const misc::error& error_get() const;
 
     /* The visiting methods. */
-    void operator()(ast::LetExp& e) override;
   
-    void operator()(ast::SeqExp& e) override;
-    void operator()(ast::VarChunk& e);
-    void operator()(ast::FunctionChunk& e);
-    void operator()(ast::TypeChunk& e);
-    void operator()(ast::SimpleVar& e);
-    void operator()(ast::FieldVar& e);
-    void operator()(ast::SubscriptVar& e);
-    void operator()(ast::CallExp& e);
+    void operator()(ast::LetExp& e) override;
+    void operator()(ast::VarChunk& e) override;
+    void operator()(ast::FunctionChunk& e) override;
+    void operator()(ast::TypeChunk& e) override;
+    void operator()(ast::SimpleVar& e) override;
+    void operator()(ast::FieldVar& e) override;
+    void operator()(ast::SubscriptVar& e) override;
+    void operator()(ast::CallExp& e) override;
 
     // FIXME: Some code was deleted here.
 

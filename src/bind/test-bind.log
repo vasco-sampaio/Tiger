@@ -1,18 +1,58 @@
-function _main /* 0x1218610 */() =
+function _main /* 0xc3c610 */() =
   (
     ((a /* 0 */);
     ())
   )
 error-->:1.18variable : undeclared a
-function _main /* 0x12161a0 */() =
+
+function _main /* 0xc3a1a0 */() =
   (
     ((let
-      var a /* 0x120def0 */ := 0
+      var a /* 0xc31ef0 */ := 0
     in
-      a /* 0 */
+      a /* 0xc31ef0 */
     end);
     ())
   )
-error-->:1.31variable : undeclared a
-test-bind: src/bind/test-bind.cc:30: int main(): Assertion `bound("let var a := 0 in a end")' failed.
-FAIL src/bind/test-bind (exit status: 134)
+function _main /* 0xc3c610 */() =
+  (
+    ((let
+      var a /* 0xc3c6d0 */ := 0
+    in
+      ((let
+        var a /* 0xc3a520 */ := a /* 0xc3a520 */
+      in
+        a /* 0xc3a520 */
+      end);
+      (a /* 0xc3c6d0 */))
+    end);
+    ())
+  )
+function _main /* 0xc3b300 */() =
+  (
+    ((let
+      function f /* 0xc3a1a0 */(a /* 0xc3af80 */ : int, b /* 0xc3b0c0 */ : string) : int =
+        (
+          a /* 0xc3af80 */
+        )
+    in
+      5
+    end);
+    ())
+  )
+function _main /* 0xc3b810 */() =
+  (
+    ((let
+      function f /* 0xc3c610 */(a /* 0xc3b530 */ : int, a /* 0xc3b5d0 */ : string) : int =
+        (
+          a /* 0xc3b530 */
+        )
+    in
+      5
+    end);
+    ())
+  )
+error-->:1.32-33 : redefinition: a
+:1.38-39: first definition
+
+PASS src/bind/test-bind (exit status: 0)
