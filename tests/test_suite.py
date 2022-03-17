@@ -33,6 +33,9 @@ def run_shell(shell: str, stdin: str) -> sp.CompletedProcess:
 def run_shellTC2(shell: str, stdin: str) -> sp.CompletedProcess:
     return sp.run([shell, "-o", "-XA", stdin], capture_output=True, text=True)
 
+def run_shellTC3(shell: str, stdin: str) -> sp.CompletedProcess:
+    return sp.run([shell, "-o", "-XbBA", stdin], capture_output=True, text=True)
+
 def perform_checks(expected, actual: sp.CompletedProcess):
     assert expected == actual.returncode, \
             f"Exited with {actual.returncode} expected {expected}"
@@ -138,6 +141,29 @@ if __name__ == "__main__":
                 print(f"{OK_TAG} {file} 2")
                 suceed += 1
             total += 1
+    for file in os.listdir("samples/tc3/tests/good"):
+            sh_proc = run_shellTC3(binary_path, "samples/tc3/tests/good/" + file)
+            try:
+                compare_code(sh_proc, 0)
+            except AssertionError as err:
+                print(f"{KO_TAG} {file} 2\n{err}")
+            else:
+                print(f"{OK_TAG} {file} 1")
+                suceed += 1
+            total += 1
+            text_file = open("tmp.tig", "w")
+            n = text_file.write(sh_proc.stdout)
+            text_file.close()
+            sh_proc2 = run_shellTC3(binary_path, "tmp.tig")
+            try:
+                compare_code(sh_proc2, 0)
+            except AssertionError as err:
+                print(f"{KO_TAG} {file} 2\n{err}")
+            else:
+                print(f"{OK_TAG} {file} 2")
+                suceed += 1
+            total += 1
+    
     print()
     print(f"{OK_TAG}" "Suceed: " + str(suceed))
     print(f"{KO_TAG}" "Failed: " + str(total - suceed))
