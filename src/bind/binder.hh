@@ -119,6 +119,10 @@ namespace bind
     /// bodies.
     template <class D>
     void chunk_visit(ast::Chunk<D>& e);
+    template <class D>
+    void var_chunk_visit(ast::Chunk<D>& e);
+    template <class D>
+    void func_chunk_visit(ast::Chunk<D>& e);
 
     /// Check a Function or Type declaration header.
     template <class D>

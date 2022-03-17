@@ -40,6 +40,10 @@ namespace misc
     // Close the last scope, forgetting everything since the latest scope_begin()
     void scope_end();
 
+    int size_get();
+
+    bool contains(Key key);
+
   private:
     // Top of the stack is the last element
     std::vector<std::map<Key, Data>> stack_;
@@ -49,6 +53,7 @@ namespace misc
   std::ostream& operator<<(std::ostream& ostr,
                            const scoped_map<Key, Data>& tbl);
 
+  
   // FIXME: Some code was deleted here.
 
 } // namespace misc

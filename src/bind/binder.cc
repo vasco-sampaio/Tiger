@@ -119,7 +119,7 @@ namespace bind
   `-------------------*/
 
   // DONE: Some code was deleted here.
-  void Binder::operator()(ast::VarChunk& e) { chunk_visit<ast::VarDec>(e); }
+  void Binder::operator()(ast::VarChunk& e) { var_chunk_visit<ast::VarDec>(e); }
 
   /*------------------------.
   | Visiting FunctionChunk. |
@@ -128,7 +128,7 @@ namespace bind
   // DONE: Some code was deleted here.
   void Binder::operator()(ast::FunctionChunk& e)
   {
-    chunk_visit<ast::FunctionDec>(e);
+    func_chunk_visit<ast::FunctionDec>(e);
   }
 
   /*--------------------.

@@ -69,4 +69,24 @@ namespace misc
     return tbl.dump(ostr);
   }
 
+  template <typename Key, typename Data> 
+  inline int scoped_map<Key, Data>::size_get()
+  {
+    int res = 0;
+    for (auto i = stack_.rbegin(); i != stack_.rend(); i++)
+    {
+      res += i->size();
+    }
+    return res;
+  }
+
+  template <typename Key, typename Data> 
+  inline bool scoped_map<Key, Data>::contains(Key key)
+  {
+    auto find = stack_.rbegin()->find(key);
+    if (find != stack_.rbegin()->end())
+      return true;
+    return false;
+  }
+
 } // namespace misc

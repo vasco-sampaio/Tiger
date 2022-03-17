@@ -23,9 +23,61 @@ namespace bind
   template <class D> void Binder::chunk_visit(ast::Chunk<D>& e)
   {
     // Shorthand.
-    using chunk_type = ast::Chunk<D>;
+    // using chunk_type = ast::Chunk<D>; useless ?
 
     // DONE: Some code was deleted here (Two passes: once on headers, then on bodies).
+    int tmp = type_map_.size_get();
+    bool increase = false;
+    for (auto& elt : e.decs_get())
+      {
+        if (type_map_.contains(elt->name_get()))
+          increase = true;
+        visit_dec_header(*elt);
+        if (tmp + 1 != type_map_.size_get() && !increase)
+        {
+          redefinition(*elt, *type_map_.get(elt->name_get()));
+          return;
+        }
+        if (increase)
+          ++tmp;
+        increase = false;
+      }
+    for (auto& elt : e.decs_get())
+      {
+        this->scope_begin();
+        visit_dec_body(*elt);
+        this->scope_end();
+      }
+  }
+
+  template <class D>void Binder::func_chunk_visit(ast::Chunk<D>& e)
+  {
+    int tmp = func_map_.size_get();
+    bool increase = false;
+    for (auto& elt : e.decs_get())
+      {
+        if (func_map_.contains(elt->name_get()))
+          increase = true;
+        visit_dec_header(*elt);
+        if (tmp + 1 != func_map_.size_get() && !increase)
+        {
+          redefinition(*elt, *func_map_.get(elt->name_get()));
+          return;
+        }
+        if (increase)
+          ++tmp;
+        increase = false;
+      }
+    for (auto& elt : e.decs_get())
+      {
+        this->scope_begin();
+        visit_dec_body(*elt);
+        this->scope_end();
+      }
+  }
+
+  template <class D>void Binder::var_chunk_visit(ast::Chunk<D>& e)
+  {    
     for (auto& elt : e.decs_get())
       {
         visit_dec_header(*elt);
@@ -42,15 +94,8 @@ namespace bind
   /// Check a Function or Type declaration header.
   template <> inline void Binder::visit_dec_header(ast::VarDec& e)
   {
-    try
-      {
-        var_map_.put(e.name_get(), &e);
-      }
-    catch (std::invalid_argument)
-      {
-        redefinition(e, *var_map_.get(e.name_get()));
-        return;
-      }
+    var_map_.put(e.name_get(), &e);
+
     if (e.type_name_get() != nullptr)
       e.type_name_get()->accept(*this);
   }
@@ -69,15 +114,8 @@ namespace bind
   /// Check a Function or Type declaration header.
   template <> inline void Binder::visit_dec_header(ast::FunctionDec& e)
   {
-    try
-      {
-        func_map_.put(e.name_get(), &e);
-      }
-    catch (std::invalid_argument)
-      {
-        redefinition(e, *func_map_.get(e.name_get()));
-        return;
-      }
+    func_map_.put(e.name_get(), &e);
+
     if (e.result_get() != nullptr)
       e.result_get()->accept(*this);
   }
@@ -85,7 +123,17 @@ namespace bind
   /// Check a Function or Type declaration body.
   template <> inline void Binder::visit_dec_body(ast::FunctionDec& e)
   {
+    int tmp = var_map_.size_get();
+    int size = 0;
+    for (auto& elt: e.formals_get())
+      ++size;
     e.formals_get().accept(*this);
+    if (tmp + size != var_map_.size_get())
+    {
+      redefinition(*var_map_.get(e.name_get()), *var_map_.get(e.name_get()));
+      return;
+    }
+
     if (e.body_get() != nullptr)
       e.body_get()->accept(*this);
   }
@@ -93,15 +141,7 @@ namespace bind
   /// Check a Function or Type declaration header.
   template <> inline void Binder::visit_dec_header(ast::TypeDec& e)
   {
-    try
-      {
-        type_map_.put(e.name_get(), &e);
-      }
-    catch (std::invalid_argument)
-      {
-        redefinition(e, *type_map_.get(e.name_get()));
-        return;
-      }
+    type_map_.put(e.name_get(), &e);
   }
 
   /// Check a Function or Type declaration body.
