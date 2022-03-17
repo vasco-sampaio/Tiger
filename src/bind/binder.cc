@@ -21,7 +21,9 @@ namespace bind
   template <typename T>
   void Binder::undeclared(const std::string& k, const T& e)
   {
-    error_ << ": undeclared " << k << ": " << e.name_get();
+    //error_ << ": undeclared " << k << ": " << e.name_get();
+    error_ << misc::error::error_type::bind << e.location_get() << k
+           << " : undeclared " << e.name_get();
   }
 
   void Binder::check_main(const ast::FunctionDec& e)
@@ -68,34 +70,34 @@ namespace bind
   {
     this->scope_begin();
     for (auto& x : e.exps_get())
-    {
-      x->accept(*this);
-    }
+      {
+        x->accept(*this);
+      }
     this->scope_end();
   }
 
   void Binder::operator()(ast::CallExp& e)
   {
     try
-    {
-      e.def_set(func_map_.get(e.name_get()));
-    }
+      {
+        e.def_set(func_map_.get(e.name_get()));
+      }
     catch (std::range_error)
-    {
-      undeclared("function", e);
-    }
+      {
+        undeclared("function", e);
+      }
   }
 
   void Binder::operator()(ast::SimpleVar& e)
   {
     try
-    {
-      e.def_set(var_map_.get(e.name_get()));
-    }
+      {
+        e.def_set(var_map_.get(e.name_get()));
+      }
     catch (std::range_error)
-    {
-      undeclared("variable", e);
-    }
+      {
+        undeclared("variable", e);
+      }
   }
 
   void Binder::operator()(ast::FieldVar& e)
@@ -108,9 +110,7 @@ namespace bind
     //e.def_set(var_map_.get(e.var_get().name_get()));
   }
 
-  
-/*
-  void Binder::operator()(ast::SimpleVar& e)
+  /*void Binder::operator()(ast::SimpleVar& e)
   {
     e.def_set(*(var_map_.find(e.name_get())).value);
   }*/
@@ -120,10 +120,7 @@ namespace bind
   `-------------------*/
 
   // DONE: Some code was deleted here.
-  void Binder::operator()(ast::VarChunk& e)
-  {
-    chunk_visit<ast::VarDec>(e);
-  }
+  void Binder::operator()(ast::VarChunk& e) { chunk_visit<ast::VarDec>(e); }
 
   /*------------------------.
   | Visiting FunctionChunk. |
@@ -139,9 +136,6 @@ namespace bind
   | Visiting TypeChunk. |
   `--------------------*/
   // DONE: Some code was deleted here.
-  void Binder::operator()(ast::TypeChunk& e)
-  {
-    chunk_visit<ast::TypeDec>(e);
-  }
+  void Binder::operator()(ast::TypeChunk& e) { chunk_visit<ast::TypeDec>(e); }
 
 } // namespace bind

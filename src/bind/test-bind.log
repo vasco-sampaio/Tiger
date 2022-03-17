@@ -1,0 +1,18 @@
+function _main /* 0x1218610 */() =
+  (
+    ((a /* 0 */);
+    ())
+  )
+error-->:1.18variable : undeclared a
+function _main /* 0x12161a0 */() =
+  (
+    ((let
+      var a /* 0x120def0 */ := 0
+    in
+      a /* 0 */
+    end);
+    ())
+  )
+error-->:1.31variable : undeclared a
+test-bind: src/bind/test-bind.cc:30: int main(): Assertion `bound("let var a := 0 in a end")' failed.
+FAIL src/bind/test-bind (exit status: 134)
