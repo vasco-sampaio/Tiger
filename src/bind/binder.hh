@@ -64,6 +64,9 @@ namespace bind
     /* The visiting methods. */
   
     void operator()(ast::LetExp& e) override;
+
+    // DONE: Some code was deleted here.
+
     void operator()(ast::VarChunk& e) override;
     void operator()(ast::FunctionChunk& e) override;
     void operator()(ast::TypeChunk& e) override;
@@ -72,7 +75,11 @@ namespace bind
     void operator()(ast::SubscriptVar& e) override;
     void operator()(ast::CallExp& e) override;
 
-    // FIXME: Some code was deleted here.
+    Binder() {
+      func_map_.scope_begin();
+      var_map_.scope_begin();
+      type_map_.scope_begin();
+    }
 
     // ---------------- //
     // Visiting /Dec/.  //

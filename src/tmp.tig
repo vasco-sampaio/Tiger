@@ -1,6 +1,9 @@
 let
   var me := 0
+  function f() = ()
+  var test := 0
+  function f() = ()
 in
-  me
+  f()
 end
 

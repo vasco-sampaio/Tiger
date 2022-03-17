@@ -25,7 +25,8 @@ namespace bind
            << " : undeclared " << e.name_get() << '\n';
   }
 
-  template <typename T> void Binder::redefinition(const T& e1, const T& e2)
+  template <typename T>
+  void Binder::redefinition(const T& e1, const T& e2)
   {
     error_ << misc::error::error_type::bind << e2.location_get()
            << " : redefinition: " << e2.name_get() << '\n'
@@ -34,7 +35,8 @@ namespace bind
 
   void Binder::check_main(const ast::FunctionDec& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+
   }
 
   /*----------------.
@@ -126,9 +128,7 @@ namespace bind
   // DONE: Some code was deleted here.
   void Binder::operator()(ast::FunctionChunk& e)
   {
-    this->scope_begin();
     chunk_visit<ast::FunctionDec>(e);
-    this->scope_end();
   }
 
   /*--------------------.

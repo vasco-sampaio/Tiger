@@ -23,7 +23,8 @@ namespace bind::tasks
 
   void compute_bindings()
   {
-    bind::bind(*ast::tasks::the_program);
+    misc::error e = bind::bind(*ast::tasks::the_program);
+    e.exit_on_error();
   }
 
   void rename()
