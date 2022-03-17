@@ -7,13 +7,14 @@
 
 #include <ast/libast.hh>
 #include <misc/contract.hh>
-#define DEFINE_TASKS 1
+#include <bind/libbind.hh>
 #include <ast/tasks.hh>
+
+#define DEFINE_TASKS 1
+#include <bind/tasks.hh>
 #undef DEFINE_TASKS
 
-#include <bind/libbind.hh>
-
-namespace ast::tasks
+namespace bind::tasks
 {
   void display_bindings()
   {
@@ -22,12 +23,12 @@ namespace ast::tasks
 
   void compute_bindings()
   {
-    bind::bind(*the_program);
+    bind::bind(*ast::tasks::the_program);
   }
 
   void rename()
   {
-    
+    bind::rename(*ast::tasks::the_program);
   }
 
 } // namespace ast::tasks

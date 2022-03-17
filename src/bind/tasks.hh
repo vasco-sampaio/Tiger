@@ -9,7 +9,7 @@
 
 #include <task/libtask.hh>
 
-namespace ast::tasks
+namespace bind::tasks
 {
   TASK_GROUP("3. Bind");
 
