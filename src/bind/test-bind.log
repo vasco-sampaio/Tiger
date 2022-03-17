@@ -1,51 +1,51 @@
-function _main /* 0x1cd9610 */() =
+function _main /* 0x1805610 */() =
   (
     ((a /* 0 */);
     ())
   )
 error-->:1.18variable : undeclared a
 
-function _main /* 0x1cd71a0 */() =
+function _main /* 0x18031a0 */() =
   (
     ((let
-      var a /* 0x1cceef0 */ := 0
+      var a /* 0x17faef0 */ := 0
     in
-      a /* 0x1cceef0 */
+      a /* 0x17faef0 */
     end);
     ())
   )
-function _main /* 0x1cd9610 */() =
+function _main /* 0x1805610 */() =
   (
     ((let
-      var a /* 0x1cd96d0 */ := 0
+      var a /* 0x18056d0 */ := 0
     in
       ((let
-        var a /* 0x1cd7520 */ := a /* 0x1cd7520 */
+        var a /* 0x1803520 */ := a /* 0x1803520 */
       in
-        a /* 0x1cd7520 */
+        a /* 0x1803520 */
       end);
-      (a /* 0x1cd96d0 */))
+      (a /* 0x18056d0 */))
     end);
     ())
   )
-function _main /* 0x1cd8300 */() =
+function _main /* 0x1804300 */() =
   (
     ((let
-      function f /* 0x1cd71a0 */(a /* 0x1cd7f80 */ : int, b /* 0x1cd80c0 */ : string) : int =
+      function f /* 0x18031a0 */(a /* 0x1803f80 */ : int, b /* 0x18040c0 */ : string) : int =
         (
-          a /* 0x1cd7f80 */
+          a /* 0x1803f80 */
         )
     in
       5
     end);
     ())
   )
-function _main /* 0x1cd8810 */() =
+function _main /* 0x1804810 */() =
   (
     ((let
-      function f /* 0x1cd9610 */(a /* 0x1cd8530 */ : int, a /* 0x1cd85d0 */ : string) : int =
+      function f /* 0x1805610 */(a /* 0x1804530 */ : int, a /* 0x18045d0 */ : string) : int =
         (
-          a /* 0x1cd8530 */
+          a /* 0x1804530 */
         )
     in
       5

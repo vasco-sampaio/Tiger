@@ -58,6 +58,8 @@ namespace bind
     void operator()(ast::FunctionDec& e) override;
     void operator()(ast::VarDec& e) override;
     void operator()(ast::TypeDec& e) override;
+
+    void operator()(ast::SimpleVar& e) override;
     /// \}
 
     /// \name Visiting usage sites.

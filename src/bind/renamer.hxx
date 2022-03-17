@@ -30,7 +30,7 @@ namespace bind
   void Renamer::visit(E& e, const Def* def)
   {
     // DONE: Some code was deleted here.
-    if (new_names_.contains(&e))
+    if (new_names_.contains(def))
       {
         e.name_set(new_names_.at(def));
       }
