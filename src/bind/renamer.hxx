@@ -31,9 +31,9 @@ namespace bind
   {
     // DONE: Some code was deleted here.
     if (new_names_.contains(&e))
-    {
-      e.name_set(new_names_.at(def));
-    }
+      {
+        e.name_set(new_names_.at(def));
+      }
   }
 
 } // namespace bind
