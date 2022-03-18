@@ -60,7 +60,6 @@ namespace bind
     void operator()(ast::TypeDec& e) override;
 
     void operator()(ast::SimpleVar& e) override;
-    void operator()(ast::FieldVar& e) override;
       /// \}
 
       /// \name Visiting usage sites.
@@ -70,6 +69,9 @@ namespace bind
       operator()(ast::CallExp& e) override;
     void operator()(ast::ChunkList& e) override;
     /// \}
+
+    // DEBUG:
+    void map_dump();
 
   private:
     /// \name New names.

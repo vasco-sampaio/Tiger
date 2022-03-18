@@ -71,8 +71,6 @@ namespace bind
     void operator()(ast::FunctionChunk& e) override;
     void operator()(ast::TypeChunk& e) override;
     void operator()(ast::SimpleVar& e) override;
-    void operator()(ast::FieldVar& e) override;
-    void operator()(ast::SubscriptVar& e) override;
     void operator()(ast::CallExp& e) override;
 
 

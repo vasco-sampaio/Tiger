@@ -38,12 +38,7 @@ namespace bind
     super_type::operator()(e);
   }
 
-  void Renamer::operator()(ast::FieldVar& e)
-  {
-    super_type::operator()(e);
-  }
-
-    void Renamer::operator()(ast::TypeDec& e)
+  void Renamer::operator()(ast::TypeDec& e)
   { 
     new_names_.insert(std::pair<const ast::Dec*, misc::symbol>(&e, new_name_compute(e)));
     visit(e, new_names_.find(&e)->first);

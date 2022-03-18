@@ -1,5 +1,6 @@
 let
   type a = { b: int }
+  var x : a := a{ b = 1 }
 in
-  a.b
+  x.b
 end

@@ -36,4 +36,13 @@ namespace bind
       }
   }
 
+  // DEBUG: print map of renamer
+  inline void Renamer::map_dump()
+  {
+    for (auto i = new_names_.begin(); i != new_names_.end(); ++i)
+    {
+      std::cout << "Name: " << i->second << "\tAddress: " << i->first << "\n";
+    }
+  }
+
 } // namespace bind
