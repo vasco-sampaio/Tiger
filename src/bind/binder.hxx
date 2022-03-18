@@ -26,21 +26,18 @@ namespace bind
     // using chunk_type = ast::Chunk<D>; useless ?
 
     // DONE: Some code was deleted here (Two passes: once on headers, then on bodies).
-    int tmp = type_map_.size_get();
-    bool increase = false;
+    int tmp = 0;
+    std::map<misc::symbol, int> err_check_map {};
     for (auto& elt : e.decs_get())
       {
-        if (type_map_.contains(elt->name_get()))
-          increase = true;
         visit_dec_header(*elt);
-        if (tmp + 1 != type_map_.size_get() && !increase)
+        err_check_map.insert({elt->name_get(), tmp});
+        if (err_check_map.size() != tmp + 1)
         {
           redefinition(*elt, *type_map_.get(elt->name_get()));
           return;
         }
-        if (increase)
-          ++tmp;
-        increase = false;
+        ++tmp;
       }
     for (auto& elt : e.decs_get())
       {
@@ -52,21 +49,18 @@ namespace bind
 
   template <class D>void Binder::func_chunk_visit(ast::Chunk<D>& e)
   {
-    int tmp = func_map_.size_get();
-    bool increase = false;
+    int tmp = 0;
+    std::map<misc::symbol, int> err_check_map {};
     for (auto& elt : e.decs_get())
       {
-        if (func_map_.contains(elt->name_get()))
-          increase = true;
         visit_dec_header(*elt);
-        if (tmp + 1 != func_map_.size_get() && !increase)
+        err_check_map.insert({elt->name_get(), tmp});
+        if (err_check_map.size() != tmp + 1)
         {
           redefinition(*elt, *func_map_.get(elt->name_get()));
           return;
         }
-        if (increase)
-          ++tmp;
-        increase = false;
+        ++tmp;
       }
     for (auto& elt : e.decs_get())
       {
@@ -78,15 +72,17 @@ namespace bind
 
   template <class D>void Binder::var_chunk_visit(ast::Chunk<D>& e)
   {
-    int tmp = var_map_.size_get();
+    int tmp = 0;
+    std::map<misc::symbol, int> err_check_map {};
     for (auto& elt : e.decs_get())
       {
         visit_dec_header(*elt);
-        if (tmp + 1 != var_map_.size_get())
-        {
-          redefinition(*elt, *var_map_.get(elt->name_get()));
-          return;
-        }
+        err_check_map.insert({elt->name_get(), tmp});
+        if (err_check_map.size() != tmp + 1)
+          {
+            redefinition(*elt, *var_map_.get(elt->name_get()));
+            return;
+          }
         ++tmp;
       }
 
