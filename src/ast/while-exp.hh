@@ -6,11 +6,12 @@
 #pragma once
 
 #include <ast/exp.hh>
+#include "bindable.hh"
 
 namespace ast
 {
   /// WhileExp.
-  class WhileExp : public Exp
+  class WhileExp : public Exp, public Bindable
   {
   public:
     /** \name Ctor & dtor.

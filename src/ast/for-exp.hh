@@ -7,11 +7,12 @@
 
 #include <ast/exp.hh>
 #include <ast/var-dec.hh>
+#include "bindable.hh"
 
 namespace ast
 {
   /// ForExp.
-  class ForExp : public Exp
+  class ForExp : public Exp, public Bindable
   {
   public:
     /** \name Ctor & dtor.

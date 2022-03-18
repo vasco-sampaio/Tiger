@@ -109,7 +109,13 @@ namespace ast
 
   void PrettyPrinter::operator()(const WhileExp& e)
   {
-    ostr_ << "while" << '(';
+    ostr_ << "while" ;
+    if (bindings_display(ostr_))
+    {
+      if (std::holds_alternative<ast::WhileExp*>(e.def_get_exp()))
+        ostr_ << " /* " << std::get<ast::WhileExp*>(e.def_get_exp()) << " */ ";
+    }
+    ostr_ << '(';
     e.test_get().accept(*this);
     ostr_ << ')' << " do" << misc::incendl;
     e.body_get().accept(*this);
@@ -119,6 +125,11 @@ namespace ast
   void PrettyPrinter::operator()(const ForExp& e)
   {
     ostr_ << "for ";
+    if (bindings_display(ostr_))
+    {
+      if (std::holds_alternative<ast::ForExp*>(e.def_get_exp()))
+        ostr_ << " /* " << std::get<ast::ForExp*>(e.def_get_exp()) << " */ ";
+    }
     e.vardec_get().accept(*this);
     ostr_ << " to ";
     e.hi_get().accept(*this);
@@ -138,8 +149,18 @@ namespace ast
     ostr_ << ')';
   }
 
-  void PrettyPrinter::operator()(const BreakExp& e) { ostr_ << "break"; }
-
+  void PrettyPrinter::operator()(const BreakExp& e) 
+  { 
+    ostr_ << "break";
+    if (bindings_display(ostr_))
+    {
+      if (std::holds_alternative<ast::ForExp*>(e.def_get_exp()))
+        ostr_ << " /* " << std::get<ast::ForExp*>(e.def_get_exp()) << " */";
+      if (std::holds_alternative<ast::WhileExp*>(e.def_get_exp()))
+        ostr_ << " /* " << std::get<ast::WhileExp*>(e.def_get_exp()) << " */ ";
+    }
+      
+  }
   void PrettyPrinter::operator()(const SeqExp& e)
   {
     auto v = e.exps_get();

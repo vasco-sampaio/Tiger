@@ -6,14 +6,15 @@
 #pragma once
 
 #include <ast/exp.hh>
+#include "bindable.hh"
 
 namespace ast
 {
   /// BreakExp.
-  class BreakExp : public Exp
+  class BreakExp : public Exp, public Bindable
   {
      // DONE: Some code was deleted here.
-    public:
+  public:
     
     BreakExp(const Location& location);
     BreakExp(const BreakExp&) = delete;
