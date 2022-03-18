@@ -1,0 +1,5 @@
+let
+  type a = { b: int }
+in
+  a.b
+end

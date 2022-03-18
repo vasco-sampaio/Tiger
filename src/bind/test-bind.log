@@ -1,58 +1,16 @@
-function _main /* 0xe36600 */() =
-  (
-    ((a /* 0 */);
-    ())
-  )
-error-->:1.18variable : undeclared a
-
-function _main /* 0xe34160 */() =
+function _main /* 0xf57c60 */() =
   (
     ((let
-      var a /* 0xe2bf00 */ := 0
-    in
-      a /* 0xe2bf00 */
-    end);
-    ())
-  )
-function _main /* 0xe36600 */() =
-  (
-    ((let
-      var a /* 0xe366c0 */ := 0
-    in
-      ((let
-        var a /* 0xe344d0 */ := a /* 0xe344d0 */
-      in
-        a /* 0xe344d0 */
-      end);
-      (a /* 0xe366c0 */))
-    end);
-    ())
-  )
-function _main /* 0xe352e0 */() =
-  (
-    ((let
-      function f /* 0xe34160 */(a /* 0xe34f40 */ : int, b /* 0xe35080 */ : string) : int =
+      function f /* 0xf4ce10 */(a /* 0xf57710 */ : int /* 0xf576c0 */, a /* 0xf57880 */ : string /* 0xf57830 */) : int /* 0xf578f0 */ =
         (
-          a /* 0xe34f40 */
+          a /* 0xf57710 */
         )
     in
       5
     end);
     ())
   )
-function _main /* 0xe35880 */() =
-  (
-    ((let
-      function f /* 0xe36600 */(a /* 0xe35340 */ : int, a /* 0xe35660 */ : string) : int =
-        (
-          a /* 0xe35340 */
-        )
-    in
-      5
-    end);
-    ())
-  )
-error-->:1.32-33 : redefinition: a
-:1.38-39: first definition
+error-->:1.31-32 : redefinition: a
+:1.37-38: first definition
 
 PASS src/bind/test-bind (exit status: 0)

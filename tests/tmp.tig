@@ -16,17 +16,13 @@ primitive exit(status : int)
 function _main() =
   (
     ((let
-      function f() =
+      var me := 0
+      function id(me : int) : int =
         (
-          
-        )
-      var a := 0
-      function f() =
-        (
-          
+          me
         )
     in
-      a
+      print_int(me)
     end);
     ())
   )

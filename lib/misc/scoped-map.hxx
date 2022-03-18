@@ -41,7 +41,7 @@ namespace misc
   {
     for (auto i = stack_.rbegin(); i != stack_.rend(); i++)
     {
-      for (auto j = i->begin(); j != i->end(); i++)
+      for (auto j = i->begin(); j != i->end(); j++)
       {
         ostr << '(' << j->first << ',' << j->second << ") ";
       }

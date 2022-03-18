@@ -90,7 +90,6 @@ namespace bind
   {
     try
       {
-        //var_map_.dump(std::cout);
         e.def_set(var_map_.get(e.name_get()));
       }
     catch (std::range_error)
@@ -101,18 +100,15 @@ namespace bind
 
   void Binder::operator()(ast::FieldVar& e)
   {
-    // e.def_set(var_map_.get(e.name_get()));
+    /*type_map_.dump(std::cout);
+    std::cout << e.var_get()->name_get();
+    e.def_set(type_map_.get(e.name_get()));*/
   }
 
   void Binder::operator()(ast::SubscriptVar& e)
   {
     //e.def_set(var_map_.get(e.var_get().name_get()));
   }
-
-  /*void Binder::operator()(ast::SimpleVar& e)
-  {
-    e.def_set(*(var_map_.find(e.name_get())).value);
-  }*/
 
   /*-------------------.
   | Visiting VarChunk. |

@@ -75,6 +75,7 @@ namespace bind
     void operator()(ast::SubscriptVar& e) override;
     void operator()(ast::CallExp& e) override;
 
+
     Binder() {
       func_map_.scope_begin();
       var_map_.scope_begin();

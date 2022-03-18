@@ -255,7 +255,13 @@ namespace ast
   { 
     ostr_ << e.name_get();
     if (bindings_display(ostr_))
-      ostr_ << " /* " << &e << " */";
+    {
+      if (e.name_get() == "string" || e.name_get() == "int")
+        ostr_ << " /* 0 */";
+      else
+        ostr_ << " /* " << &e << " */";
+    }
+      
   }
 
   void PrettyPrinter::operator()(const LetExp& e)
