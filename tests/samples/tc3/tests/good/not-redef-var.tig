@@ -1,8 +1,6 @@
 let
     var a := 0
     var a := 4
-    function f () = ()
-    var a := 5
 in
     a
 end

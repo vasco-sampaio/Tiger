@@ -3,60 +3,12 @@
 ==================================================
 
 # TOTAL: 18
-# PASS:  17
+# PASS:  18
 # SKIP:  0
 # XFAIL: 0
-# FAIL:  1
+# FAIL:  0
 # XPASS: 0
 # ERROR: 0
 
 .. contents:: :depth: 2
-
-FAIL: src/bind/test-bind
-========================
-
-function _main /* 0x22e7600 */() =
-  (
-    ((a /* 0 */);
-    ())
-  )
-error-->:1.18variable : undeclared a
-
-function _main /* 0x22e5190 */() =
-  (
-    ((let
-      var a /* 0x22dcf00 */ := 0
-    in
-      a /* 0x22dcf00 */
-    end);
-    ())
-  )
-function _main /* 0x22e7600 */() =
-  (
-    ((let
-      var a /* 0x22e76c0 */ := 0
-    in
-      ((let
-        var a /* 0x22e5510 */ := a /* 0x22e5510 */
-      in
-        a /* 0x22e5510 */
-      end);
-      (a /* 0x22e76c0 */))
-    end);
-    ())
-  )
-function _main /* 0x22e62f0 */() =
-  (
-    ((let
-      function f /* 0x22e5190 */(a /* 0x22e5f70 */ : int, b /* 0x22e60b0 */ : string) : int =
-        (
-          a /* 0x22e5f70 */
-        )
-    in
-      5
-    end);
-    ())
-terminate called after throwing an instance of 'std::range_error'
-  what():  Data not found
-FAIL src/bind/test-bind (exit status: 134)
 
