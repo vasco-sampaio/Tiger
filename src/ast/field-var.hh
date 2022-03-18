@@ -7,11 +7,12 @@
 
 #include <ast/var.hh>
 #include <misc/symbol.hh>
+#include "bindable.hh"
 
 namespace ast
 {
   /// FieldVar.
-  class FieldVar : public Var
+  class FieldVar : public Var, public Bindable
   {
     // DONE: Some code was deleted here.
     public:

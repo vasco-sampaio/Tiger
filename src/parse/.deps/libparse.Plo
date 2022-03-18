@@ -1199,11 +1199,12 @@ src/parse/libparse.lo: src/parse/libparse.cc \
  src/ast/field.hxx src/ast/field-init.hh src/ast/field-init.hxx \
  src/ast/function-dec.hh src/ast/chunk.hh src/ast/chunk.hxx \
  src/ast/visitor.hh lib/misc/select-const.hh src/ast/visitor.hxx \
- src/ast/var-dec.hh src/ast/var-dec.hxx src/ast/function-dec.hxx \
- src/parse/location.hh src/parse/tiger-driver.hh src/ast/all.hh \
- src/ast/array-exp.hh src/ast/array-exp.hxx src/ast/array-ty.hh \
- src/ast/array-ty.hxx src/ast/assign-exp.hh src/ast/assign-exp.hxx \
- src/ast/break-exp.hh src/ast/break-exp.hxx src/ast/call-exp.hh \
+ src/ast/var-dec.hh src/ast/escapable.hh src/ast/escapable.hxx \
+ src/ast/var-dec.hxx src/ast/function-dec.hxx src/parse/location.hh \
+ src/parse/tiger-driver.hh src/ast/all.hh src/ast/array-exp.hh \
+ src/ast/array-exp.hxx src/ast/array-ty.hh src/ast/array-ty.hxx \
+ src/ast/assign-exp.hh src/ast/assign-exp.hxx src/ast/break-exp.hh \
+ src/ast/bindable.hh src/ast/break-exp.hxx src/ast/call-exp.hh \
  src/ast/call-exp.hxx src/ast/cast-exp.hh src/ast/cast-exp.hxx \
  src/ast/class-ty.hh src/ast/class-ty.hxx src/ast/field-var.hh \
  src/ast/field-var.hxx src/ast/for-exp.hh src/ast/for-exp.hxx \
@@ -2509,6 +2510,8 @@ src/ast/visitor.hh:
 lib/misc/select-const.hh:
 src/ast/visitor.hxx:
 src/ast/var-dec.hh:
+src/ast/escapable.hh:
+src/ast/escapable.hxx:
 src/ast/var-dec.hxx:
 src/ast/function-dec.hxx:
 src/parse/location.hh:
@@ -2521,6 +2524,7 @@ src/ast/array-ty.hxx:
 src/ast/assign-exp.hh:
 src/ast/assign-exp.hxx:
 src/ast/break-exp.hh:
+src/ast/bindable.hh:
 src/ast/break-exp.hxx:
 src/ast/call-exp.hh:
 src/ast/call-exp.hxx:

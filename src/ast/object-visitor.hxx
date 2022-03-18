@@ -28,7 +28,7 @@ namespace ast
   void GenObjectVisitor<Const>::operator()(const_t<ClassTy>& e)
   {
     // DONE: Some code was deleted here.
-    e.super_get()->accept(*this);
+    e.super_get().accept(*this);
     for (auto& x : *(e.chunks_get()))
         x->accept(*this);
   }

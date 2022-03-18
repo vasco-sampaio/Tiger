@@ -279,9 +279,12 @@ src/ast/record-exp.lo: src/ast/record-exp.cc \
  src/ast/field-init.hxx src/ast/name-ty.hh src/ast/ty.hh src/ast/ty.hxx \
  src/ast/type-dec.hh src/ast/dec.hh src/ast/dec.hxx src/ast/type-dec.hxx \
  src/ast/name-ty.hxx src/ast/record-exp.hxx src/ast/field-var.hh \
- src/ast/var.hh src/ast/var.hxx src/ast/field-var.hxx src/ast/visitor.hh \
- lib/misc/select-const.hh src/ast/visitor.hxx lib/misc/algorithm.hh \
- lib/misc/concepts.hh lib/misc/algorithm.hxx lib/range/v3/algorithm.hpp \
+ src/ast/var.hh src/ast/var.hxx src/ast/bindable.hh \
+ /nix/store/04m8psaiac9b24qcb6fpwd33lxjgi4py-gcc-10.3.0/include/c++/10.3.0/variant \
+ /nix/store/04m8psaiac9b24qcb6fpwd33lxjgi4py-gcc-10.3.0/include/c++/10.3.0/bits/parse_numbers.h \
+ src/ast/field-var.hxx src/ast/visitor.hh lib/misc/select-const.hh \
+ src/ast/visitor.hxx lib/misc/algorithm.hh lib/misc/concepts.hh \
+ lib/misc/algorithm.hxx lib/range/v3/algorithm.hpp \
  lib/range/v3/algorithm/adjacent_find.hpp \
  lib/range/v3/algorithm/adjacent_remove_if.hpp \
  lib/range/v3/algorithm/move.hpp lib/range/v3/algorithm/result_types.hpp \
@@ -711,6 +714,9 @@ src/ast/record-exp.hxx:
 src/ast/field-var.hh:
 src/ast/var.hh:
 src/ast/var.hxx:
+src/ast/bindable.hh:
+/nix/store/04m8psaiac9b24qcb6fpwd33lxjgi4py-gcc-10.3.0/include/c++/10.3.0/variant:
+/nix/store/04m8psaiac9b24qcb6fpwd33lxjgi4py-gcc-10.3.0/include/c++/10.3.0/bits/parse_numbers.h:
 src/ast/field-var.hxx:
 src/ast/visitor.hh:
 lib/misc/select-const.hh:

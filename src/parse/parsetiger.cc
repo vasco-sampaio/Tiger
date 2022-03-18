@@ -4040,7 +4040,7 @@ namespace parse
 
   case 75: // tydec: "class" "identifier" "{" classfields "}"
 #line 416 "parse/parsetiger.yy"
-                                     { (*yyvalp).as < ast::TypeDec* > () = tp.td_.make_TypeDec((*yylocp), (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-3)].getState().value ().as < misc::symbol > (), tp.td_.make_ClassTy((*yylocp), nullptr, (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-1)].getState().value ().as < ast::ChunkList* > ())); }
+                                     { (*yyvalp).as < ast::TypeDec* > () = tp.td_.make_TypeDec((*yylocp), (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-3)].getState().value ().as < misc::symbol > (), tp.td_.make_ClassTy((*yylocp), tp.td_.make_NameTy(((static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-4)].getState().yyloc), "Object"), (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-1)].getState().value ().as < ast::ChunkList* > ())); }
 #line 4045 "parse/parsetiger.cc"
     break;
 
@@ -4070,13 +4070,13 @@ namespace parse
 
   case 80: // ty: "class" "{" "}"
 #line 424 "parse/parsetiger.yy"
-                      { (*yyvalp).as < ast::Ty* > () = tp.td_.make_ClassTy((*yylocp), nullptr, nullptr); }
+                      { (*yyvalp).as < ast::Ty* > () = tp.td_.make_ClassTy((*yylocp), tp.td_.make_NameTy(((static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-2)].getState().yyloc), "Object"), nullptr); }
 #line 4075 "parse/parsetiger.cc"
     break;
 
   case 81: // ty: "class" "{" classfields "}"
 #line 425 "parse/parsetiger.yy"
-                                  { (*yyvalp).as < ast::Ty* > () = tp.td_.make_ClassTy((*yylocp), nullptr, (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-1)].getState().value ().as < ast::ChunkList* > ()); }
+                                  { (*yyvalp).as < ast::Ty* > () = tp.td_.make_ClassTy((*yylocp), tp.td_.make_NameTy(((static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-3)].getState().yyloc), "Object"), (static_cast<glr_stack_item const *>(yyvsp))[YYFILL (-1)].getState().value ().as < ast::ChunkList* > ()); }
 #line 4081 "parse/parsetiger.cc"
     break;
 

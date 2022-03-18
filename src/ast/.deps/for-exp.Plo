@@ -276,10 +276,14 @@ src/ast/for-exp.lo: src/ast/for-exp.cc \
  /nix/store/04m8psaiac9b24qcb6fpwd33lxjgi4py-gcc-10.3.0/include/c++/10.3.0/istream \
  /nix/store/04m8psaiac9b24qcb6fpwd33lxjgi4py-gcc-10.3.0/include/c++/10.3.0/bits/istream.tcc \
  src/ast/ast.hxx src/ast/exp.hxx src/ast/var-dec.hh src/ast/dec.hh \
- src/ast/dec.hxx src/ast/name-ty.hh src/ast/ty.hh src/ast/ty.hxx \
- src/ast/type-dec.hh src/ast/type-dec.hxx src/ast/name-ty.hxx \
- src/ast/var-dec.hxx src/ast/for-exp.hxx src/ast/visitor.hh \
- lib/misc/select-const.hh src/ast/visitor.hxx
+ src/ast/dec.hxx src/ast/escapable.hh src/ast/escapable.hxx \
+ src/ast/name-ty.hh src/ast/ty.hh src/ast/ty.hxx src/ast/type-dec.hh \
+ src/ast/type-dec.hxx src/ast/name-ty.hxx src/ast/var-dec.hxx \
+ src/ast/bindable.hh \
+ /nix/store/04m8psaiac9b24qcb6fpwd33lxjgi4py-gcc-10.3.0/include/c++/10.3.0/variant \
+ /nix/store/04m8psaiac9b24qcb6fpwd33lxjgi4py-gcc-10.3.0/include/c++/10.3.0/bits/parse_numbers.h \
+ src/ast/for-exp.hxx src/ast/visitor.hh lib/misc/select-const.hh \
+ src/ast/visitor.hxx
 /run/current-system/sw/include/stdc-predef.h:
 src/ast/for-exp.hh:
 src/ast/exp.hh:
@@ -585,6 +589,8 @@ src/ast/exp.hxx:
 src/ast/var-dec.hh:
 src/ast/dec.hh:
 src/ast/dec.hxx:
+src/ast/escapable.hh:
+src/ast/escapable.hxx:
 src/ast/name-ty.hh:
 src/ast/ty.hh:
 src/ast/ty.hxx:
@@ -592,6 +598,9 @@ src/ast/type-dec.hh:
 src/ast/type-dec.hxx:
 src/ast/name-ty.hxx:
 src/ast/var-dec.hxx:
+src/ast/bindable.hh:
+/nix/store/04m8psaiac9b24qcb6fpwd33lxjgi4py-gcc-10.3.0/include/c++/10.3.0/variant:
+/nix/store/04m8psaiac9b24qcb6fpwd33lxjgi4py-gcc-10.3.0/include/c++/10.3.0/bits/parse_numbers.h:
 src/ast/for-exp.hxx:
 src/ast/visitor.hh:
 lib/misc/select-const.hh:

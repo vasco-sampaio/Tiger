@@ -8,11 +8,12 @@
 #include <ast/exp.hh>
 #include <ast/function-dec.hh>
 #include <misc/symbol.hh>
+#include "bindable.hh"
 
 namespace ast
 {
   /// CallExp.
-  class CallExp : public Exp
+  class CallExp : public Exp, public Bindable
   {
     // DONE: Some code was deleted here.
     public:
@@ -31,7 +32,9 @@ namespace ast
     const misc::symbol& name_get() const;
  
     misc::symbol& name_get();
-   
+
+    void name_set(misc::symbol);
+
     const exps_type& args_get() const;
    
     exps_type& args_get();

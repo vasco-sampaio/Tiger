@@ -398,24 +398,28 @@ src/ast/dumper-dot.lo: src/ast/dumper-dot.cc \
  src/ast/type-dec.hxx src/ast/name-ty.hxx src/ast/array-exp.hxx \
  src/ast/array-ty.hh src/ast/array-ty.hxx src/ast/assign-exp.hh \
  src/ast/var.hh src/ast/var.hxx src/ast/assign-exp.hxx \
- src/ast/break-exp.hh src/ast/break-exp.hxx src/ast/call-exp.hh \
- src/ast/function-dec.hh src/ast/var-dec.hh src/ast/var-dec.hxx \
- src/ast/function-dec.hxx src/ast/call-exp.hxx src/ast/cast-exp.hh \
- src/ast/cast-exp.hxx src/ast/chunk-list.hh src/ast/chunk-list.hxx \
- src/ast/class-ty.hh src/ast/class-ty.hxx src/ast/field-init.hh \
- src/ast/field-init.hxx src/ast/field-var.hh src/ast/field-var.hxx \
- src/ast/field.hh src/ast/field.hxx src/ast/for-exp.hh \
- src/ast/for-exp.hxx src/ast/if-exp.hh src/ast/seq-exp.hh \
- src/ast/seq-exp.hxx src/ast/if-exp.hxx src/ast/int-exp.hh \
- src/ast/int-exp.hxx src/ast/let-exp.hh src/ast/let-exp.hxx \
- src/ast/method-call-exp.hh src/ast/method-dec.hh src/ast/method-dec.hxx \
- src/ast/method-call-exp.hxx src/ast/nil-exp.hh src/ast/nil-exp.hxx \
- src/ast/object-exp.hh src/ast/object-exp.hxx src/ast/op-exp.hh \
- src/ast/op-exp.hxx src/ast/record-exp.hh src/ast/record-exp.hxx \
- src/ast/record-ty.hh src/ast/record-ty.hxx src/ast/simple-var.hh \
- src/ast/simple-var.hxx src/ast/string-exp.hh src/ast/string-exp.hxx \
- src/ast/subscript-var.hh src/ast/subscript-var.hxx src/ast/while-exp.hh \
- src/ast/while-exp.hxx src/ast/dumper-dot.hh src/ast/default-visitor.hh \
+ src/ast/break-exp.hh src/ast/bindable.hh \
+ /nix/store/04m8psaiac9b24qcb6fpwd33lxjgi4py-gcc-10.3.0/include/c++/10.3.0/variant \
+ /nix/store/04m8psaiac9b24qcb6fpwd33lxjgi4py-gcc-10.3.0/include/c++/10.3.0/bits/parse_numbers.h \
+ src/ast/break-exp.hxx src/ast/call-exp.hh src/ast/function-dec.hh \
+ src/ast/var-dec.hh src/ast/escapable.hh src/ast/escapable.hxx \
+ src/ast/var-dec.hxx src/ast/function-dec.hxx src/ast/call-exp.hxx \
+ src/ast/cast-exp.hh src/ast/cast-exp.hxx src/ast/chunk-list.hh \
+ src/ast/chunk-list.hxx src/ast/class-ty.hh src/ast/class-ty.hxx \
+ src/ast/field-init.hh src/ast/field-init.hxx src/ast/field-var.hh \
+ src/ast/field-var.hxx src/ast/field.hh src/ast/field.hxx \
+ src/ast/for-exp.hh src/ast/for-exp.hxx src/ast/if-exp.hh \
+ src/ast/seq-exp.hh src/ast/seq-exp.hxx src/ast/if-exp.hxx \
+ src/ast/int-exp.hh src/ast/int-exp.hxx src/ast/let-exp.hh \
+ src/ast/let-exp.hxx src/ast/method-call-exp.hh src/ast/method-dec.hh \
+ src/ast/method-dec.hxx src/ast/method-call-exp.hxx src/ast/nil-exp.hh \
+ src/ast/nil-exp.hxx src/ast/object-exp.hh src/ast/object-exp.hxx \
+ src/ast/op-exp.hh src/ast/op-exp.hxx src/ast/record-exp.hh \
+ src/ast/record-exp.hxx src/ast/record-ty.hh src/ast/record-ty.hxx \
+ src/ast/simple-var.hh src/ast/simple-var.hxx src/ast/string-exp.hh \
+ src/ast/string-exp.hxx src/ast/subscript-var.hh \
+ src/ast/subscript-var.hxx src/ast/while-exp.hh src/ast/while-exp.hxx \
+ src/ast/dumper-dot.hh src/ast/default-visitor.hh \
  src/ast/default-visitor.hxx lib/misc/escape.hh lib/misc/escape.hxx \
  /run/current-system/sw/include/boost/lexical_cast.hpp \
  /run/current-system/sw/include/boost/config.hpp \
@@ -1563,10 +1567,15 @@ src/ast/var.hh:
 src/ast/var.hxx:
 src/ast/assign-exp.hxx:
 src/ast/break-exp.hh:
+src/ast/bindable.hh:
+/nix/store/04m8psaiac9b24qcb6fpwd33lxjgi4py-gcc-10.3.0/include/c++/10.3.0/variant:
+/nix/store/04m8psaiac9b24qcb6fpwd33lxjgi4py-gcc-10.3.0/include/c++/10.3.0/bits/parse_numbers.h:
 src/ast/break-exp.hxx:
 src/ast/call-exp.hh:
 src/ast/function-dec.hh:
 src/ast/var-dec.hh:
+src/ast/escapable.hh:
+src/ast/escapable.hxx:
 src/ast/var-dec.hxx:
 src/ast/function-dec.hxx:
 src/ast/call-exp.hxx:
