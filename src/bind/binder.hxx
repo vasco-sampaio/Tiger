@@ -98,7 +98,6 @@ namespace bind
   template <> inline void Binder::visit_dec_header(ast::VarDec& e)
   {
     var_map_.put(e.name_get(), &e);
-
     if (e.type_name_get() != nullptr)
       e.type_name_get()->accept(*this);
   }

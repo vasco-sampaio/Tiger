@@ -1,9 +1,5 @@
 let
-  var me := 0
-  function f() = ()
-  var test := 0
-  function f() = ()
+  type a = { b: int }
 in
-  f()
+  a.b
 end
-
