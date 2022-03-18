@@ -1,5 +1,7 @@
 let
-  type a = { b: int }
+  type a = { a: int }
+  function a(a: a): a = a{ a = a + a }
+  var a : a := a(1, 2)
 in
-  a.b
+  a.a
 end

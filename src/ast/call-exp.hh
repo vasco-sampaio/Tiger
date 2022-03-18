@@ -32,7 +32,9 @@ namespace ast
     const misc::symbol& name_get() const;
  
     misc::symbol& name_get();
-   
+
+    void name_set(misc::symbol);
+
     const exps_type& args_get() const;
    
     exps_type& args_get();
