@@ -29,6 +29,7 @@ namespace bind::tasks
 
   void rename()
   {
+    compute_bindings();
     bind::rename(*ast::tasks::the_program);
   }
 

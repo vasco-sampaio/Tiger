@@ -95,7 +95,6 @@ namespace bind
   template <> inline void Binder::visit_dec_header(ast::VarDec& e)
   {
     var_map_.put(e.name_get(), &e);
-
     if (e.type_name_get() != nullptr)
       e.type_name_get()->accept(*this);
   }
@@ -123,16 +122,7 @@ namespace bind
   /// Check a Function or Type declaration body.
   template <> inline void Binder::visit_dec_body(ast::FunctionDec& e)
   {
-    int tmp = var_map_.size_get();
-    int size = 0;
-    for (auto& elt: e.formals_get())
-      ++size;
     e.formals_get().accept(*this);
-    if (tmp + size != var_map_.size_get())
-    {
-      redefinition(*var_map_.get(e.name_get()), *var_map_.get(e.name_get()));
-      return;
-    }
 
     if (e.body_get() != nullptr)
       e.body_get()->accept(*this);

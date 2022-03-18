@@ -58,8 +58,6 @@ namespace ast
     // DONE: Some code was deleted here.
     e.var_get().accept(*this);
     ostr_ << '.' << e.name_get();
-    if (bindings_display(ostr_))
-      ostr_ << " /* " << e.def_get() << " */";
   }
 
   /* Foo[10]. */
@@ -67,8 +65,6 @@ namespace ast
   {
     ostr_ << e.var_get() << '[' << misc::incindent << e.index_get()
           << misc::decindent << ']';
-    if (bindings_display(ostr_))
-      ostr_ << " /* " << e.def_get() << " */";
   }
 
   void PrettyPrinter::operator()(const CastExp& e)
@@ -255,7 +251,12 @@ namespace ast
     ostr_ << misc::decindent;
   }
 
-  void PrettyPrinter::operator()(const NameTy& e) { ostr_ << e.name_get(); }
+  void PrettyPrinter::operator()(const NameTy& e) 
+  { 
+    ostr_ << e.name_get();
+    if (bindings_display(ostr_))
+      ostr_ << " /* " << &e << " */";
+  }
 
   void PrettyPrinter::operator()(const LetExp& e)
   {
@@ -327,7 +328,11 @@ namespace ast
 
   void PrettyPrinter::operator()(const TypeDec& e)
   {
-    ostr_ << "type " << e.name_get() << " = ";
+    ostr_ << "type " << e.name_get();
+    if (bindings_display(ostr_))
+      ostr_ << " /* " << &e << " */";
+    ostr_ << " = ";
+    
     e.ty_get().accept(*this);
   }
 
