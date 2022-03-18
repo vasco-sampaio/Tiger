@@ -104,7 +104,6 @@ namespace bind
       }
   }
 
-
   void Binder::operator()(ast::WhileExp& e)
   {
     loop_vec_.push_back(&e);
@@ -137,13 +136,27 @@ namespace bind
     e.def_set_exp(*(loop_vec_.end() - 1));
   }
 
+  void Binder::operator()(ast::NameTy& e)
+  {
+    try
+      {
+        e.def_set(type_map_.get(e.name_get()));
+      }
+    catch (std::range_error)
+      {
+        undeclared("type", e);
+      }
+  }
 
-  /*-------------------.
+    /*-------------------.
   | Visiting VarChunk. |
   `-------------------*/
 
-  // DONE: Some code was deleted here.
-  void Binder::operator()(ast::VarChunk& e) { var_chunk_visit<ast::VarDec>(e); }
+    // DONE: Some code was deleted here.
+    void Binder::operator()(ast::VarChunk& e)
+  {
+    var_chunk_visit<ast::VarDec>(e);
+  }
 
   /*------------------------.
   | Visiting FunctionChunk. |

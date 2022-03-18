@@ -77,11 +77,15 @@ namespace bind
     void operator()(ast::WhileExp& e) override;
     void operator()(ast::ForExp& e) override;
     void operator()(ast::BreakExp& e) override;
+    void operator()(ast::NameTy& e) override;
 
-    Binder() {
+      Binder()
+    {
       func_map_.scope_begin();
       var_map_.scope_begin();
       type_map_.scope_begin();
+      type_map_.put("int", 0);
+      type_map_.put("string", 0);
     }
 
     // ---------------- //
