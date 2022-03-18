@@ -1,5 +1,7 @@
 let
   type a = { b: int }
+  function f(arg: a): a = a{ b = arg + arg }
+  var v : t := f(1, 2)
 in
-  a.b
+  v.b
 end

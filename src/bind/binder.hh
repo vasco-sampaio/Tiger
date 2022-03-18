@@ -13,6 +13,8 @@
 #include <misc/error.hh>
 #include <misc/fwd.hh>
 #include <misc/scoped-map.hh>
+#include <variant>
+#include <vector>
 
 namespace bind
 {
@@ -71,10 +73,10 @@ namespace bind
     void operator()(ast::FunctionChunk& e) override;
     void operator()(ast::TypeChunk& e) override;
     void operator()(ast::SimpleVar& e) override;
-    void operator()(ast::FieldVar& e) override;
-    void operator()(ast::SubscriptVar& e) override;
     void operator()(ast::CallExp& e) override;
-
+    void operator()(ast::WhileExp& e) override;
+    void operator()(ast::ForExp& e) override;
+    void operator()(ast::BreakExp& e) override;
 
     Binder() {
       func_map_.scope_begin();
@@ -151,6 +153,12 @@ namespace bind
     /// \param e   the node using an undefined name
     template <typename T> void undeclared(const std::string& k, const T& e);
 
+    /// Report an outside block break.
+    ///
+    /// \param k   the kind of this node (function, variable, type)
+    /// \param e   the node using an undefined name
+    void outside_break(const ast::BreakExp& e);
+
     /// Report a symbol redefinition.
     ///
     /// \param e1   the first occurrence, the original
@@ -173,6 +181,7 @@ namespace bind
     misc::scoped_map<misc::symbol, ast::FunctionDec*> func_map_;
     misc::scoped_map<misc::symbol, ast::VarDec*> var_map_;
     misc::scoped_map<misc::symbol, ast::TypeDec*> type_map_;
+    std::vector <std::variant<ast::WhileExp*, ast::ForExp*>> loop_vec_;
   };
 } // namespace bind
 

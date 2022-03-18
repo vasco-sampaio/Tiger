@@ -33,6 +33,12 @@ namespace bind
            << e1.location_get() << ": first definition\n";
   }
 
+  void Binder::outside_break(const ast::BreakExp& e)
+  {
+    error_ << misc::error::error_type::bind << e.location_get()
+           << ": `break' outside any loop\n";
+  }
+
   void Binder::check_main(const ast::FunctionDec& e)
   {
     // DONE: Some code was deleted here.
@@ -98,17 +104,39 @@ namespace bind
       }
   }
 
-  void Binder::operator()(ast::FieldVar& e)
+  
+  void Binder::operator()(ast::WhileExp& e)
   {
-    /*type_map_.dump(std::cout);
-    std::cout << e.var_get()->name_get();
-    e.def_set(type_map_.get(e.name_get()));*/
+    loop_vec_.push_back(&e);
+    e.def_set_exp(&e);
+    e.test_get().accept(*this);
+    e.body_get().accept(*this);
+    loop_vec_.pop_back();
   }
 
-  void Binder::operator()(ast::SubscriptVar& e)
+  void Binder::operator()(ast::ForExp& e)
   {
-    //e.def_set(var_map_.get(e.var_get().name_get()));
+    loop_vec_.push_back(&e);
+    e.def_set_exp(&e);
+
+    visit_dec_header(e.vardec_get());
+    visit_dec_body(e.vardec_get());
+
+    e.hi_get().accept(*this);
+    e.body_get().accept(*this);
+    loop_vec_.pop_back();
   }
+
+  void Binder::operator()(ast::BreakExp& e)
+  {
+    if (loop_vec_.size() == 0)
+    {
+      outside_break(e);
+      return;
+    }
+    e.def_set_exp(*(loop_vec_.end() - 1));
+  }
+
 
   /*-------------------.
   | Visiting VarChunk. |
