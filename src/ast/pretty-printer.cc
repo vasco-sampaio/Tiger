@@ -398,6 +398,11 @@ namespace ast
     ostr_ << "}" << misc::decindent;
   }
 
+  void PrettyPrinter::operator()(const ArrayExp& e)
+  {
+    ostr_ << e.type_name_get() << " [" << e.size_get() << "] of " << e.init_get();
+  }
+
   void PrettyPrinter::operator()(const MethodCallExp& e)
   {
     e.object_get().accept(*this);
