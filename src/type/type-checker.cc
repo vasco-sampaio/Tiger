@@ -108,6 +108,15 @@ namespace type
   {
     // FIXME: Some code was deleted here.
   }
+  void TypeChecker::operator()(ast::FieldVar& e)
+  {
+    // FIXME: Some code was deleted here.
+  }
+  void TypeChecker::operator()(ast::SubscriptVar& e)
+  {
+    // FIXME: Some code was deleted here.
+  }
+
 
   // FIXME: Some code was deleted here.
 
@@ -157,6 +166,16 @@ namespace type
   }
 
   // FIXME: Some code was deleted here.
+  void TypeChecker::operator()(ast::IfExp& e) {}
+    void TypeChecker::operator()(ast::ArrayExp& e) {}
+    void TypeChecker::operator()(ast::CallExp& e) {}
+    void TypeChecker::operator()(ast::ForExp& e) {}
+    void TypeChecker::operator()(ast::WhileExp& e) {}
+    void TypeChecker::operator()(ast::LetExp& e) {}
+    void TypeChecker::operator()(ast::MethodCallExp& e) {}
+    void TypeChecker::operator()(ast::ObjectExp& e) {}
+    void TypeChecker::operator()(ast::SeqExp& e) {}
+  
 
   /*-----------------.
   | Visiting /Dec/.  |

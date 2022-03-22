@@ -80,7 +80,7 @@
 #define PACKAGE_NAME "LRDE Tiger Compiler"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "LRDE Tiger Compiler 1.91.c"
+#define PACKAGE_STRING "LRDE Tiger Compiler 1.91.d"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "tc"
@@ -89,7 +89,7 @@
 #define PACKAGE_URL "http://tiger.lrde.epita.fr"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.91.c"
+#define PACKAGE_VERSION "1.91.d"
 
 /* Define to 1 if all of the C90 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for
@@ -97,4 +97,4 @@
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "1.91.c"
+#define VERSION "1.91.d"

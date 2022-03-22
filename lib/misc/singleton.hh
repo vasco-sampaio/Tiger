@@ -9,7 +9,12 @@ namespace misc
 {
   template <typename T> class Singleton
   {
-    // FIXME: Some code was deleted here.
+    public:
+      static T& instance()
+       {
+         static T theSingleInstance;
+         return theSingleInstance;
+       }
   };
 
 } // namespace misc

@@ -11,5 +11,5 @@
 namespace type
 {
   // FIXME: Some code was deleted here (Int, String, Void).
-
+  
 } // namespace type

@@ -16,12 +16,10 @@ primitive exit(status : int)
 function _main() =
   (
     ((let
-      function f(a : int) : int =
-        (
-          a
-        )
+      type arrtype = array of int
+      var arr1 : arrtype := arrtype
     in
-      f(1)
+      arr1[2]
     end);
     ())
   )

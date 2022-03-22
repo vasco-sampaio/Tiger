@@ -243,7 +243,7 @@ namespace object
     // Make the type writable, so that we can add references to the
     // types of the members.
     current_ = const_cast<type::Class*>(class_type);
-    e.chunks_get().accept(*this);
+    e.chunks_get()->accept(*this);
 
     // Set back the status we had before we visited the members.
     current_ = saved_class_type;

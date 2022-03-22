@@ -11,13 +11,14 @@ namespace type
 {
   inline bool operator==(const Type& lhs, const Type& rhs)
   {
-    // FIXME: Some code was deleted here.
-    die("REMOVE ME!");
+    // DONE: Some code was deleted here.
+    return lhs.compatible_with(rhs);
   }
 
   inline bool operator!=(const Type& lhs, const Type& rhs)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    return !lhs.compatible_with(rhs);
   }
 
 } // namespace type
