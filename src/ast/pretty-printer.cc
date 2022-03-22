@@ -13,6 +13,8 @@
 #include <misc/separator.hh>
 #include "dec.hh"
 
+#include <type/class.hh>
+
 namespace ast
 {
   // Anonymous namespace: these functions are private to this file.
