@@ -9,5 +9,19 @@
 
 namespace ast
 {
-  // FIXME: Some code was deleted here.
+  // DONE: Some code was deleted here.
+  inline bool Escapable::escape_get()
+  {
+    return escape_;
+  }
+
+  inline bool Escapable::escape_get() const
+  {
+    return escape_;
+  }
+    
+  inline void Escapable::escape_set(bool value)
+  {
+    escape_ = value;
+  }
 } // namespace ast
