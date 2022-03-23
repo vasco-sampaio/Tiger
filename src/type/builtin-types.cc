@@ -15,6 +15,12 @@ namespace type
   bool Int::compatible_with(const Type& other) const
   {
     auto x = dynamic_cast<const Int*>(&other);
+    if (x == nullptr)
+    {
+      auto y = dynamic_cast<const Named*>(&other);
+      if (y != nullptr)
+        return type_->compatible_with(*(y->type_));
+    }
     return x != nullptr;
   }
   bool String::compatible_with(const Type& other) const
