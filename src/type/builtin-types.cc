@@ -26,16 +26,40 @@ namespace type
   }
   bool String::compatible_with(const Type& other) const
   {
-    return dynamic_cast<const String*>(&other) != nullptr;
+    auto x = dynamic_cast<const String*>(&other);
+    if (x == nullptr)
+    {
+      auto y = dynamic_cast<const Named*>(&other);
+      if (y != nullptr)
+        return this->compatible_with(*(y->type_get()));
+    }
+    return x != nullptr;
   }
   bool Void::compatible_with(const Type& other) const
   {
-    return dynamic_cast<const Void*>(&other) != nullptr;
+    auto x = dynamic_cast<const Void*>(&other);
+    if (x == nullptr)
+    {
+      auto y = dynamic_cast<const Named*>(&other);
+      if (y != nullptr)
+        return this->compatible_with(*(y->type_get()));
+    }
+    return x != nullptr;
   }
 
     void Int::accept(ConstVisitor&) const
     {}
     void Int::accept(Visitor&)
+    {}
+
+    void String::accept(ConstVisitor&) const
+    {}
+    void String::accept(Visitor&)
+    {}
+
+    void Void::accept(ConstVisitor&) const
+    {}
+    void Void::accept(Visitor&)
     {}
   
 } // namespace type

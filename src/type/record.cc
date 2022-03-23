@@ -59,7 +59,9 @@ namespace type
         return true;
       for (size_t i = 0; i < fields_.size(); i++)
       {
-        if (!field_type(fields_.at(i).name_get())->compatible_with(*(field_type(rec->fields_get().at(i).name_get()))))
+        const Type* t1 = field_type(fields_.at(i).name_get());
+        const Type* t2 = rec->field_type(rec->fields_get().at(i).name_get());
+        if (!t1->compatible_with(*t2))
           return false;
       }
       return true;

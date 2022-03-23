@@ -6,9 +6,10 @@ b.compatible_with(a)
 a.compatible_with(Int::instance())
 Int::instance().compatible_with(a)
 !c.sound()
+j != k
+r1 != r2
 x.sound()
 x == rec
 rec == x
 rec1 == rec2
-src/type/test-type.cc:60: Assertion `rec1 == rec2' failed.
-FAIL src/type/test-type (exit status: 134)
+FAIL src/type/test-type (exit status: 139)

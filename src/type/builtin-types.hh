@@ -24,11 +24,15 @@ namespace type
   {
     public:
     bool compatible_with(const Type& other) const override;
+    void accept(ConstVisitor& v) const override;
+    void accept(Visitor& v) override;
   };
 
   class Void : public misc::Singleton<Void>, public Type
   {
     public:
     bool compatible_with(const Type& other) const override;
+    void accept(ConstVisitor& v) const override;
+    void accept(Visitor& v) override;
   };
 } // namespace type

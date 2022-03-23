@@ -39,6 +39,16 @@ int main()
 
   // Check the case of records.  Make it recursive for fun, and more
   // in depth checking anyway.
+  Record r1;
+  Record r2;
+  const Named j("j", &Int::instance());
+  const Named k("k", &String::instance());
+  r1.field_add("s", j);
+  r2.field_add("s", k);
+  ASSERT(j != k);
+  ASSERT(r1 != r2);
+
+
   const Named x("f");
   Record rec;
   rec.field_add("y", x);
@@ -49,7 +59,7 @@ int main()
   ASSERT(rec == x);
 
   const Named y("y", &Int::instance());
-  const Named z = Named("z", &y);
+  const Named z("z", &Int::instance());
   Record rec1;
   Record rec2;
   rec1.field_add("rec2", rec2);
