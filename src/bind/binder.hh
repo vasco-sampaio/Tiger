@@ -186,6 +186,7 @@ namespace bind
     misc::scoped_map<misc::symbol, ast::VarDec*> var_map_;
     misc::scoped_map<misc::symbol, ast::TypeDec*> type_map_;
     std::vector <std::variant<ast::WhileExp*, ast::ForExp*>> loop_vec_;
+    int in_body = 0;
   };
 } // namespace bind
 

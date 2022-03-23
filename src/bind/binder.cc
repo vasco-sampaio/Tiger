@@ -90,6 +90,8 @@ namespace bind
       {
         undeclared("function", e);
       }
+    for (auto& x : e.args_get())
+      x->accept(*this);
   }
 
   void Binder::operator()(ast::SimpleVar& e)
@@ -109,7 +111,11 @@ namespace bind
     loop_vec_.push_back(&e);
     e.def_set_exp(&e);
     e.test_get().accept(*this);
+
+    in_body++;
     e.body_get().accept(*this);
+    in_body--;
+
     loop_vec_.pop_back();
   }
 
@@ -122,13 +128,17 @@ namespace bind
     visit_dec_body(e.vardec_get());
 
     e.hi_get().accept(*this);
+
+    in_body++;
     e.body_get().accept(*this);
+    in_body--;
+
     loop_vec_.pop_back();
   }
 
   void Binder::operator()(ast::BreakExp& e)
   {
-    if (loop_vec_.size() == 0)
+    if (loop_vec_.size() == 0 || !in_body)
     {
       outside_break(e);
       return;
@@ -155,7 +165,10 @@ namespace bind
     // DONE: Some code was deleted here.
     void Binder::operator()(ast::VarChunk& e)
   {
+    int save = in_body;
+    in_body = 0;
     var_chunk_visit<ast::VarDec>(e);
+    in_body = save;
   }
 
   /*------------------------.
@@ -165,13 +178,22 @@ namespace bind
   // DONE: Some code was deleted here.
   void Binder::operator()(ast::FunctionChunk& e)
   {
+    int save = in_body;
+    in_body = 0;
     func_chunk_visit<ast::FunctionDec>(e);
+    in_body = save;
   }
 
   /*--------------------.
   | Visiting TypeChunk. |
   `--------------------*/
   // DONE: Some code was deleted here.
-  void Binder::operator()(ast::TypeChunk& e) { chunk_visit<ast::TypeDec>(e); }
+  void Binder::operator()(ast::TypeChunk& e) 
+  { 
+    int save = in_body;
+    in_body = 0;
+    chunk_visit<ast::TypeDec>(e);
+    in_body = save;
+  }
 
 } // namespace bind

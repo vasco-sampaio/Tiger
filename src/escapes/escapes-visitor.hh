@@ -48,12 +48,24 @@ namespace escapes
     , public ast::NonObjectVisitor
   {
   public:
+
     /// Super class type.
     using super_type = ast::DefaultVisitor;
     /// Import all the overloaded visit methods.
     using super_type::operator();
 
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    EscapesVisitor()
+    {
+      scopes_.push_back(std::vector<std::pair<misc::symbol, ast::VarDec*>>());
+    }
+
+    void operator()(ast::VarDec& e) override;
+    void operator()(ast::SimpleVar& e) override;
+    void operator()(ast::FunctionDec& e) override;
+
+  private:
+    std::vector<std::vector<std::pair<misc::symbol, ast::VarDec*>>> scopes_;
   };
 
 } // namespace escapes

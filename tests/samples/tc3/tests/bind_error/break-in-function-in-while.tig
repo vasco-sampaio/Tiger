@@ -1,0 +1,7 @@
+while 1 do
+    let
+        function f()=
+            break
+    in
+        f()
+    end

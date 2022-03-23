@@ -36,6 +36,7 @@ namespace ast
     void operator()(const CallExp& e) override;
     void operator()(const MethodCallExp& e) override;
     void operator()(const RecordExp& e) override;
+    void operator()(const ArrayExp& e) override;
     void operator()(const NilExp& e) override;
     void operator()(const SeqExp& e) override;
     void operator()(const AssignExp& e) override;
