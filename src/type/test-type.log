@@ -1,8 +1,11 @@
 a.sound()
 a == b
-done
 a == Int::instance()
 a.compatible_with(b)
 b.compatible_with(a)
-src/type/test-type.cc:31: Assertion `b.compatible_with(a)' failed.
-FAIL src/type/test-type (exit status: 134)
+a.compatible_with(Int::instance())
+Int::instance().compatible_with(a)
+!c.sound()
+Rec.sound()
+Rec == rec
+FAIL src/type/test-type (exit status: 139)

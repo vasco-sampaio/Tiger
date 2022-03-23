@@ -7,6 +7,7 @@
 
 #include <type/builtin-types.hh>
 #include <type/visitor.hh>
+#include <type/named.hh>
 
 namespace type
 {
@@ -19,7 +20,7 @@ namespace type
     {
       auto y = dynamic_cast<const Named*>(&other);
       if (y != nullptr)
-        return type_->compatible_with(*(y->type_));
+        return this->compatible_with(*(y->type_get()));
     }
     return x != nullptr;
   }

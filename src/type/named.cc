@@ -38,7 +38,15 @@ namespace type
     auto x = dynamic_cast<const Named*>(type_);
     if (x == nullptr)
       return type_ != this;
-    return x->sound();
+    auto cur = x->type_get();
+    while (cur != this)
+    {
+      auto tmp = dynamic_cast<const Named*>(cur);
+      if (tmp == nullptr)
+        return true;
+      cur = tmp->type_get();
+    }
+    return false;
   }
 
   // DONE: Some code was deleted here (Special implementation of "compatible_with" for Named).
