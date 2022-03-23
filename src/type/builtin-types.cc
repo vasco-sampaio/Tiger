@@ -33,9 +33,9 @@ namespace type
     return dynamic_cast<const Void*>(&other) != nullptr;
   }
 
-    void Int::accept(ConstVisitor& v) const
+    void Int::accept(ConstVisitor&) const
     {}
-    void Int::accept(Visitor& v)
+    void Int::accept(Visitor&)
     {}
   
 } // namespace type

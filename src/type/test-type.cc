@@ -39,19 +39,33 @@ int main()
 
   // Check the case of records.  Make it recursive for fun, and more
   // in depth checking anyway.
-  const Named Rec("Rec");
+  const Named x("f");
   Record rec;
-  rec.field_add("Rec", Rec);
-  Rec.type_set(&rec);
-  ASSERT(Rec.sound());
+  rec.field_add("y", x);
+  x.type_set(&rec);
+  ASSERT(x.sound());
 
-  ASSERT(Rec == rec);
-  ASSERT(rec == Rec);
+  ASSERT(x == rec);
+  ASSERT(rec == x);
+
+  const Named y("y", &Int::instance());
+  const Named z = Named("z", &y);
+  Record rec1;
+  Record rec2;
+  rec1.field_add("rec2", rec2);
+  rec1.field_add("y", y);
+  rec2.field_add("rec1", rec1);
+  rec2.field_add("z", z);
+
+  ASSERT(rec1 == rec2);
+  ASSERT(rec2 == rec1);
+
+
 
   const Nil n{};
-  ASSERT(Rec.compatible_with(n));
-  ASSERT(n.compatible_with(Rec));
+  ASSERT(x.compatible_with(n));
+  ASSERT(n.compatible_with(x));
 
-  ASSERT(!Rec.compatible_with(Int::instance()));
-  ASSERT(!Int::instance().compatible_with(Rec));
+  ASSERT(!x.compatible_with(Int::instance()));
+  ASSERT(!Int::instance().compatible_with(x));
 }
