@@ -22,6 +22,21 @@ namespace type
 
   // FIXME: Some code was deleted here (Inherited functions).
 
+  const Type& actual() const
+  {
+
+  }
+
+  void accept(ConstVisitor& v) const
+  {
+
+  }
+
+  void accept(Visitor& v)
+  {
+    
+  }
+
   // FIXME: Some code was deleted here (Sound).
   Named::bool sound() const
   {
