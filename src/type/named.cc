@@ -23,7 +23,15 @@ namespace type
   // FIXME: Some code was deleted here (Inherited functions).
 
   // FIXME: Some code was deleted here (Sound).
+  Named::bool sound() const
+  {
+    
+  }
 
   // FIXME: Some code was deleted here (Special implementation of "compatible_with" for Named).
+  bool Named::compatible_with(const Type& other) const
+  {
+
+  }
 
 } // namespace type

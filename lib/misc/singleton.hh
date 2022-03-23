@@ -10,11 +10,18 @@ namespace misc
   template <typename T> class Singleton
   {
     public:
-      static T& instance()
+      Singleton(const Singleton&) = delete;
+      Singleton(Singleton&&) = delete;
+      Singleton& operator=(const Singleton&) = delete;
+      Singleton& operator=(Singleton&&) = delete;
+
+      static Singleton& instance()
        {
-         static T theSingleInstance;
+         static Singleton theSingleInstance;
          return theSingleInstance;
        }
+    private:
+      Singleton() = default;
   };
 
 } // namespace misc

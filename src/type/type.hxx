@@ -12,7 +12,7 @@ namespace type
   inline bool operator==(const Type& lhs, const Type& rhs)
   {
     // DONE: Some code was deleted here.
-    return lhs.compatible_with(rhs);
+    return &lhs == &rhs;
   }
 
   inline bool operator!=(const Type& lhs, const Type& rhs)
