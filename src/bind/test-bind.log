@@ -1,0 +1,16 @@
+function _main /* 0x2468cc0 */() =
+  (
+    ((let
+      function f /* 0x2468990 */(a /* 0x245de30 */ : int /* 0 */, a /* 0x2468870 */ : string /* 0 */) : int /* 0 */ =
+        (
+          a /* 0x245de30 */
+        )
+    in
+      5
+    end);
+    ())
+  )
+error-->:1.31-32 : redefinition: a
+:1.37-38: first definition
+
+PASS src/bind/test-bind (exit status: 0)

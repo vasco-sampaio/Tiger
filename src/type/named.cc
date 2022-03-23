@@ -20,33 +20,31 @@ namespace type
     , type_(type)
   {}
 
-  // FIXME: Some code was deleted here (Inherited functions).
+  // DONE: Some code was deleted here (Inherited functions).
 
-  const Type& actual() const
+  void Named::accept(ConstVisitor& v) const
   {
-
+    v(*this);
   }
 
-  void accept(ConstVisitor& v) const
+  void Named::accept(Visitor& v)
   {
-
+    v(*this);
   }
 
-  void accept(Visitor& v)
+  // DONE: Some code was deleted here (Sound).
+  bool Named::sound() const
   {
-    
+    auto x = dynamic_cast<const Named*>(type_);
+    if (x == nullptr)
+      return type_ != this;
+    return x->sound();
   }
 
-  // FIXME: Some code was deleted here (Sound).
-  Named::bool sound() const
-  {
-    
-  }
-
-  // FIXME: Some code was deleted here (Special implementation of "compatible_with" for Named).
+  // DONE: Some code was deleted here (Special implementation of "compatible_with" for Named).
   bool Named::compatible_with(const Type& other) const
   {
-
+    return type_->compatible_with(other);
   }
 
 } // namespace type

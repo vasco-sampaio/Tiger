@@ -1,0 +1,3 @@
+First test...
+(((a := 5));
+FAIL src/astclone/test-cloner (exit status: 139)

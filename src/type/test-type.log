@@ -1,0 +1,3 @@
+a.sound()
+a == b
+FAIL src/type/test-type (exit status: 139)
