@@ -1,9 +1,9 @@
-function _main /* 0x2468cc0 */() =
+function _main /* 0x22c7cc0 */() =
   (
     ((let
-      function f /* 0x2468990 */(a /* 0x245de30 */ : int /* 0 */, a /* 0x2468870 */ : string /* 0 */) : int /* 0 */ =
+      function f /* 0x22c7990 */(a /* 0x22bce30 */ : int /* 0 */, a /* 0x22c7870 */ : string /* 0 */) : int /* 0 */ =
         (
-          a /* 0x245de30 */
+          a /* 0x22bce30 */
         )
     in
       5

@@ -23,7 +23,6 @@ int main()
 
   // Check that `a' points to `int'.
   ASSERT(a == b);
-  std::cout << "done\n";
   ASSERT(a == Int::instance());
 
   // Equal types are compatible.

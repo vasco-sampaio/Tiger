@@ -12,19 +12,21 @@ namespace type
 {
   // DONE: Some code was deleted here (Other types : Int, String, Void).
 
-  class Int : public Type, public misc::Singleton<Int>
+  class Int :public misc::Singleton<Int>, public Type
+  {
+    public:
+    bool compatible_with(const Type& other) const override;
+    void accept(ConstVisitor& v) const override;
+    void accept(Visitor& v) override;
+  };
+
+  class String : public misc::Singleton<String>, public Type
   {
     public:
     bool compatible_with(const Type& other) const override;
   };
 
-  class String : public Type, public misc::Singleton<String>
-  {
-    public:
-    bool compatible_with(const Type& other) const override;
-  };
-
-  class Void : public Type, public misc::Singleton<Void>
+  class Void : public misc::Singleton<Void>, public Type
   {
     public:
     bool compatible_with(const Type& other) const override;

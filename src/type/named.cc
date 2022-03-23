@@ -44,6 +44,9 @@ namespace type
   // DONE: Some code was deleted here (Special implementation of "compatible_with" for Named).
   bool Named::compatible_with(const Type& other) const
   {
+    auto x = dynamic_cast<const Named*>(&other);
+    if (x != nullptr)
+      return type_->compatible_with(*(x->type_));
     return type_->compatible_with(other);
   }
 
