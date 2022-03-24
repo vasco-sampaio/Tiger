@@ -29,8 +29,9 @@ namespace type
       return true;
     if (dynamic_cast<const Class*>(&other) != nullptr)
       return true;
-    if (dynamic_cast<const Named*>(&other) != nullptr)
-      return true;
+    auto named = dynamic_cast<const Named*>(&other);
+    if (named != nullptr)
+      return compatible_with(*(named->type_get()));
     return false;
   }
 

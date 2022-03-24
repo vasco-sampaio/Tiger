@@ -9,6 +9,11 @@
 
 namespace type
 {
-  // FIXME: Some code was deleted here.
+  // DONE: Some code was deleted here.
+
+  inline const Type& Array::elements_type_get() const
+  {
+    return elements_type_;
+  }
 
 } // namespace type

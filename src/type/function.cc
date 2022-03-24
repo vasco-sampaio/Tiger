@@ -8,6 +8,7 @@
 #include <range/v3/view/iota.hpp>
 #include <type/function.hh>
 #include <type/visitor.hh>
+#include "function.hh"
 
 namespace type
 {
@@ -25,6 +26,15 @@ namespace type
 
   void Function::accept(Visitor& v) { v(*this); }
 
-  // FIXME: Some code was deleted here.
+  // DONE: Some code was deleted here.
+  bool Function::compatible_with(const Type& other) const
+  {
+    auto fun = dynamic_cast<const Function*>(&other);
+    if (fun == nullptr)
+      return false;
+    if (!formals_->compatible_with(fun->formals_get()) || !result_.compatible_with(fun->result_get()))
+      return false;
+    return true;    
+  }
 
 } // namespace type
