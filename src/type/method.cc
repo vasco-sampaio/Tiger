@@ -25,6 +25,15 @@ namespace type
 
   void Method::accept(Visitor& v) { v(*this); }
 
-  // FIXME: Some code was deleted here.
+  // DONE: Some code was deleted here.
+  bool compatible_with(const Type& other) const
+  {
+    auto fun = dynamic_cast<const Method*>(&other);
+    if (fun == nullptr || owner_get() != fun->owner_get())
+      return false;
+    if (!formals_->compatible_with(fun->formals_get()) || !result_.compatible_with(fun->result_get()))
+      return false;
+    return true;
+  }
 
 } // namespace type

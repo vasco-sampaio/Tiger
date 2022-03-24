@@ -24,19 +24,43 @@ namespace type
 
   const Type* Class::attr_type(misc::symbol key) const
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    for (auto& e : attrs_)
+    {
+      if (e.name_get() == key)
+        return e.type_get();
+    }
+    return nullptr;
   }
 
   const Type* Class::meth_type(misc::symbol key) const
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    for (auto& e : meths_)
+    {
+      if (e->name_get() == key)
+        return e->type_get();
+    }
+    return nullptr;
   }
 
-  // FIXME: Some code was deleted here (Find common super class).
+  // DONE: Some code was deleted here (Find common super class).
+  const Class* Class::common_root(const Class& other) const
+  {
 
-  // FIXME: Some code was deleted here (Super class soundness test).
+  }
 
-  // FIXME: Some code was deleted here (Special implementation of "compatible_with" for Class).
+  // DONE: Some code was deleted here (Super class soundness test).
+  bool Class::sound() const
+  {
+
+  }
+
+  // DONE: Some code was deleted here (Special implementation of "compatible_with" for Class).
+  bool Class::compatible_with(const Type& other) const
+  {
+
+  }
 
   const Class& Class::object_instance()
   {
