@@ -45,6 +45,8 @@ namespace type
 
     bool Record::compatible_with(const Type& other) const
     {
+      if (dynamic_cast<const Nil*>(&other) != nullptr)
+        return true;
       auto rec = dynamic_cast<const Record*>(&other);
       if (rec == nullptr)
       {
@@ -65,6 +67,8 @@ namespace type
         auto r2 = dynamic_cast<const Record*>(t2);
         if (r1 != nullptr || r2 != nullptr)
         {
+          if (dynamic_cast<const Nil*>(t1) != nullptr || dynamic_cast<const Nil*>(t2) != nullptr)
+            continue;
           if (r1 == nullptr || r2 == nullptr)
             return false;
           continue;

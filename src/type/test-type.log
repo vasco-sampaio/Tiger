@@ -14,5 +14,7 @@ rec == x
 one == two
 two == one
 x.compatible_with(n)
-src/type/test-type.cc:76: Assertion `x.compatible_with(n)' failed.
-FAIL src/type/test-type (exit status: 134)
+n.compatible_with(x)
+!x.compatible_with(Int::instance())
+!Int::instance().compatible_with(x)
+PASS src/type/test-type (exit status: 0)
