@@ -60,15 +60,15 @@ int main()
 
   const Named y("y", &Int::instance());
   const Named z("z", &Int::instance());
-  Record rec1;
-  Record rec2;
-  rec1.field_add("rec2", rec2);
-  rec1.field_add("y", y);
-  rec2.field_add("rec1", rec1);
-  rec2.field_add("z", z);
+  Record one;
+  Record two;
+  one.field_add("y", y);
+  one.field_add("two", two);
+  two.field_add("z", z);
+  two.field_add("one", one);
 
-  ASSERT(rec1 == rec2);
-  ASSERT(rec2 == rec1);
+  ASSERT(one == two);
+  ASSERT(two == one);
 
 
 

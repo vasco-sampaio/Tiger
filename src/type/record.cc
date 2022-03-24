@@ -61,6 +61,14 @@ namespace type
       {
         const Type* t1 = field_type(fields_.at(i).name_get());
         const Type* t2 = rec->field_type(rec->fields_get().at(i).name_get());
+        auto r1 = dynamic_cast<const Record*>(t1);
+        auto r2 = dynamic_cast<const Record*>(t2);
+        if (r1 != nullptr || r2 != nullptr)
+        {
+          if (r1 == nullptr || r2 == nullptr)
+            return false;
+          continue;
+        }
         if (!t1->compatible_with(*t2))
           return false;
       }

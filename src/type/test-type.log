@@ -11,5 +11,8 @@ r1 != r2
 x.sound()
 x == rec
 rec == x
-rec1 == rec2
-FAIL src/type/test-type (exit status: 139)
+one == two
+two == one
+x.compatible_with(n)
+src/type/test-type.cc:76: Assertion `x.compatible_with(n)' failed.
+FAIL src/type/test-type (exit status: 134)
