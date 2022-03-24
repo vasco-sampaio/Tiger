@@ -26,7 +26,7 @@ namespace type
   void Method::accept(Visitor& v) { v(*this); }
 
   // DONE: Some code was deleted here.
-  bool compatible_with(const Type& other) const
+  bool Method::compatible_with(const Type& other) const
   {
     auto fun = dynamic_cast<const Method*>(&other);
     if (fun == nullptr || owner_get() != fun->owner_get())

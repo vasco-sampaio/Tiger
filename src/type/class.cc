@@ -29,7 +29,7 @@ namespace type
     for (auto& e : attrs_)
     {
       if (e.name_get() == key)
-        return e.type_get();
+        return &(e.type_get());
     }
     return nullptr;
   }
@@ -40,7 +40,7 @@ namespace type
     for (auto& e : meths_)
     {
       if (e->name_get() == key)
-        return e->type_get();
+        return &(e->type_get());
     }
     return nullptr;
   }
@@ -48,10 +48,10 @@ namespace type
   // DONE: Some code was deleted here (Find common super class).
   const Class* Class::common_root(const Class& other) const
   {
-    Class* cur = this;
+    const Class* cur = this;
     while (cur != nullptr)
     {
-      Class* sub = &other;
+      const Class* sub = &other;
       while (sub != nullptr)
       {
         if (sub == cur)
