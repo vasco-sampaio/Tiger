@@ -33,13 +33,19 @@ namespace type
 
   const Type* TypeChecker::type(ast::Typable& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    e.accept(*this);
+    return e.type_get();
   }
 
   const Record* TypeChecker::type(const ast::fields_type& e)
   {
     auto res = new Record;
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    for (auto& field : e)
+    {
+      // res->field_add(field->name_get(), field->type_get());
+    }
     return res;
   }
 
@@ -82,6 +88,8 @@ namespace type
                                 const Type& type2)
   {
     // FIXME: Some code was deleted here.
+    if (!type1.compatible_with(type2))
+      type_mismatch(ast, exp1, type1, exp2, type2);
   }
 
   void TypeChecker::check_types(const ast::Ast& ast,
@@ -91,9 +99,11 @@ namespace type
                                 ast::Typable& type2)
   {
     // Ensure evaluation order.
-    type(type1);
-    type(type2);
-    // FIXME: Some code was deleted here (Check types).
+    auto t1 = type(type1);
+    auto t2 = type(type2);
+    if (!t1->compatible_with(*t2))
+      type_mismatch(ast, exp1, *t1, exp2, *t2);
+    // DONE: Some code was deleted here (Check types).
   }
 
   /*--------------------------.

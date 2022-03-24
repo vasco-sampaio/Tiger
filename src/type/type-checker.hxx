@@ -25,19 +25,24 @@ namespace type
   template <typename NodeType>
   void TypeChecker::type_default(NodeType& e, const type::Type* type)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    if (e.type_get() == nullptr)
+      e.type_set(type);
   }
 
   template <typename NodeType>
   void TypeChecker::created_type_default(NodeType& e, const type::Type* type)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    if (e.type_get() == nullptr)
+      e.type_set(type);
   }
 
   template <typename NodeType>
   void TypeChecker::type_set(NodeType& e, const type::Type* type)
   {
-    // FIXME: Some code was deleted here (Basically e.type_set(type)).
+    // DONE: Some code was deleted here (Basically e.type_set(type)).
+    e.type_set(type);
   }
 
   /*-----------------.
@@ -65,7 +70,12 @@ namespace type
                                const std::string& s,
                                const Type& expected)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    if (!e.compatible_with(expected))
+    {
+      error(e, s, e);
+      e.type_set(&expected);
+    }
   }
 
   /*------------.
@@ -75,7 +85,7 @@ namespace type
   template <typename Routine_Type, typename Routine_Node>
   void TypeChecker::visit_routine_body(Routine_Node& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
   }
 
 } // namespace type
