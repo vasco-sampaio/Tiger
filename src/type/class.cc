@@ -72,7 +72,7 @@ namespace type
   // DONE: Some code was deleted here (Special implementation of "compatible_with" for Class).
   bool Class::compatible_with(const Type& other) const
   {
-
+    
   }
 
   const Class& Class::object_instance()
