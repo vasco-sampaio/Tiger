@@ -18,16 +18,16 @@ const char* program_name = "test-for-loops-desugar";
 
 int main()
 {
-  Exp* tree = parse::parse("for i := 0 to 42 do "
-                           "  for j := 0 to 51 do (i;j)");
+  //Exp* tree = parse::parse("for i := 0 to 42 do "
+  //                         "  for j := 0 to 51 do (i;j)");
 
-  std::cout << "/* === Original tree...  */\n" << *tree << '\n';
+  //std::cout << "/* === Original tree...  */\n" << *tree << '\n';
 
-  DesugarVisitor desugar(true, false);
-  desugar(tree);
-  delete tree;
-  tree = nullptr;
-  std::cout << "/* === Desugared tree...  */\n"
-            << *desugar.result_get() << '\n';
-  delete desugar.result_get();
+  //DesugarVisitor desugar(true, false);
+  //desugar(tree);
+  //delete tree;
+  //tree = nullptr;
+  //std::cout << "/* === Desugared tree...  */\n"
+  //          << *desugar.result_get() << '\n';
+  //delete desugar.result_get();
 }

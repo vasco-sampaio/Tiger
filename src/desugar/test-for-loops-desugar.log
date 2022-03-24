@@ -1,5 +1,1 @@
-/* === Original tree...  */
-for i := 0 to 42 do
-  for j := 0 to 51 do
-    ((i);
-FAIL src/desugar/test-for-loops-desugar (exit status: 139)
+PASS src/desugar/test-for-loops-desugar (exit status: 0)
