@@ -21,7 +21,16 @@ namespace ast
 
   class Typable
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+  public:  
+    virtual void type_set(const type::Type*);
+    virtual const type::Type* type_get() const;
+
+    virtual void accept(ConstVisitor& v) const = 0;
+    virtual void accept(Visitor& v) = 0;
+
+  private:
+    const type::Type* type_;
   };
 } // namespace ast
 #include <ast/typable.hxx>
