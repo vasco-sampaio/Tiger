@@ -3,6 +3,7 @@
  ** \brief Implementation for type/class.hh.
  */
 
+#include <cstddef>
 #include <ostream>
 
 #include <range/v3/algorithm/find.hpp>
@@ -47,7 +48,19 @@ namespace type
   // DONE: Some code was deleted here (Find common super class).
   const Class* Class::common_root(const Class& other) const
   {
-
+    Class* cur = this;
+    while (cur != nullptr)
+    {
+      Class* sub = &other;
+      while (sub != nullptr)
+      {
+        if (sub == cur)
+          return cur;
+        sub = sub->super_get();
+      }
+      cur = cur->super_get();
+    }
+    return nullptr;
   }
 
   // DONE: Some code was deleted here (Super class soundness test).
@@ -64,7 +77,9 @@ namespace type
 
   const Class& Class::object_instance()
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    static Class obj;
+    return obj;
   }
 
   unsigned Class::fresh_id()
