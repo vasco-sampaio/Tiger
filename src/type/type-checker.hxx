@@ -85,7 +85,7 @@ namespace type
   template <typename Routine_Type, typename Routine_Node>
   void TypeChecker::visit_routine_body(Routine_Node& e)
   {
-    // DONE: Some code was deleted here.
+    // FIXME: Some code was deleted here.
   }
 
 } // namespace type

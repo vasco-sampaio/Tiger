@@ -69,7 +69,7 @@ namespace type
   template <template <typename> class Const>
   void GenDefaultVisitor<Const>::operator()(const_t<Function>& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
     e.formals_get().accept(*this);
     e.result_get().accept(*this);
   }

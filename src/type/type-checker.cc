@@ -144,12 +144,18 @@ namespace type
 
   void TypeChecker::operator()(ast::IntExp& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    auto int_ptr = std::make_unique<Int>();
+    type_default(e, int_ptr.get());
+    created_type_default(e, int_ptr.release());
   }
 
   void TypeChecker::operator()(ast::StringExp& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    auto string_ptr = std::make_unique<String>();
+    type_default(e, string_ptr.get());
+    created_type_default(e, string_ptr.release());
   }
 
   // Complex values.
@@ -165,8 +171,11 @@ namespace type
 
   void TypeChecker::operator()(ast::OpExp& e)
   {
-    // FIXME: Some code was deleted here.
-
+    // DONE: Some code was deleted here.
+    if (!e.left_get().type_get()->compatible_with(*e.right_get().type_get()))
+    {
+      type_mismatch(e, "left op", *e.left_get().type_get(), "right op", *e.right_get().type_get());
+    }
     // If any of the operands are of type Nil, set the `record_type_` to the
     // type of the opposite operand.
     if (!error_)
@@ -176,7 +185,7 @@ namespace type
   }
 
   // FIXME: Some code was deleted here.
-  void TypeChecker::operator()(ast::IfExp& e) {}
+    void TypeChecker::operator()(ast::IfExp& e) {}
     void TypeChecker::operator()(ast::ArrayExp& e) {}
     void TypeChecker::operator()(ast::CallExp& e) {}
     void TypeChecker::operator()(ast::ForExp& e) {}
