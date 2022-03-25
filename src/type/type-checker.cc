@@ -87,7 +87,7 @@ namespace type
                                 const std::string& exp2,
                                 const Type& type2)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
     if (!type1.compatible_with(type2))
       type_mismatch(ast, exp1, type1, exp2, type2);
   }
@@ -116,7 +116,8 @@ namespace type
 
   void TypeChecker::operator()(ast::SimpleVar& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    // check_types(e, e.def_get()->type_name_get(), e.type_get(), )
   }
   void TypeChecker::operator()(ast::FieldVar& e)
   {
@@ -172,15 +173,21 @@ namespace type
   void TypeChecker::operator()(ast::OpExp& e)
   {
     // DONE: Some code was deleted here.
-    if (!e.left_get().type_get()->compatible_with(*e.right_get().type_get()))
-    {
-      type_mismatch(e, "left op", *e.left_get().type_get(), "right op", *e.right_get().type_get());
-    }
+
+    // Strings dubious
+    check_types(e, "left op", *e.left_get().type_get(), "right op", *e.right_get().type_get());
     // If any of the operands are of type Nil, set the `record_type_` to the
     // type of the opposite operand.
     if (!error_)
       {
-        // FIXME: Some code was deleted here.
+        // DONE: Some code was deleted here.
+        auto leftNil = dynamic_cast<const Nil*>(e.left_get().type_get());
+        if (leftNil)
+          leftNil->record_type_set(*(e.right_get().type_get()));
+
+        auto rightNil = dynamic_cast<const Nil*>(e.right_get().type_get());
+        if (rightNil)
+          rightNil->record_type_set(*(e.left_get().type_get()));
       }
   }
 
