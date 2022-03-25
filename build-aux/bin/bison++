@@ -228,8 +228,8 @@ status=0
 : ${BISON='bison'}
 
 me=$(basename $0)
-fuse_switch='/home/thibault.boutet/tigre/build-aux/bin/fuse-switch'
-move_if_change='/home/thibault.boutet/tigre/build-aux/bin/move-if-change --color'
+fuse_switch='/home/jean.fechter/tigre/build-aux/bin/fuse-switch'
+move_if_change='/home/jean.fechter/tigre/build-aux/bin/move-if-change --color'
 verbose=false
 
 get_options "$@"

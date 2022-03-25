@@ -1,0 +1,10 @@
+let
+    var e := let 
+                var i := 5
+            in
+                i
+            end
+    var k := 8
+in
+    e + k
+end

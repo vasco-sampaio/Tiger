@@ -16,6 +16,8 @@
 
 namespace bind::tasks
 {
+  void bound() { compute_bindings(); }
+
   void display_bindings()
   {
     ast::bindings_display(std::cout) = true;
@@ -29,7 +31,6 @@ namespace bind::tasks
 
   void rename()
   {
-    compute_bindings();
     bind::rename(*ast::tasks::the_program);
   }
 

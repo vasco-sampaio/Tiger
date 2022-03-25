@@ -102,6 +102,8 @@ namespace ast
     // DONE: Some code was deleted here.
     e.test_get().accept(*this);
     e.then_clause_get().accept(*this);
+    if (e.else_clause_get() != nullptr)
+      e.else_clause_get()->accept(*this);
   }
 
   template <template <typename> class Const>

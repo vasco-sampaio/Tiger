@@ -13,6 +13,8 @@
 #include <misc/separator.hh>
 #include "dec.hh"
 
+#include <type/class.hh>
+
 namespace ast
 {
   // Anonymous namespace: these functions are private to this file.
@@ -22,7 +24,8 @@ namespace ast
     inline std::ostream& operator<<(std::ostream& ostr, const Escapable& e)
     {
       if (escapes_display(ostr)
-          // FIXME: Some code was deleted here.
+          // DONE: Some code was deleted here.
+          && e.escape_get()
       )
         ostr << "/* escaping */ ";
 
@@ -314,6 +317,11 @@ namespace ast
 
   void PrettyPrinter::operator()(const VarDec& e)
   {
+    if (escapes_display(ostr_)
+          // DONE: Some code was deleted here.
+          && e.escape_get()
+      )
+        ostr_ << "/* escaping */ ";
     ostr_ << e.name_get();
     if (bindings_display(ostr_))
       ostr_ << " /* " << &e << " */";
@@ -396,6 +404,11 @@ namespace ast
         i++;
       }
     ostr_ << "}" << misc::decindent;
+  }
+
+  void PrettyPrinter::operator()(const ArrayExp& e)
+  {
+    ostr_ << e.type_name_get() << " [" << e.size_get() << "] of " << e.init_get();
   }
 
   void PrettyPrinter::operator()(const MethodCallExp& e)

@@ -1,0 +1,2 @@
+for i := break to 2 do
+    print_int(1)

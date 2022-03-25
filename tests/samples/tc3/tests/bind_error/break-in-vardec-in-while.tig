@@ -1,0 +1,6 @@
+while 1 do
+    let
+        var x := break
+    in
+        x
+    end
