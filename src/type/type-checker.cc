@@ -33,13 +33,19 @@ namespace type
 
   const Type* TypeChecker::type(ast::Typable& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    e.accept(*this);
+    return e.type_get();
   }
 
   const Record* TypeChecker::type(const ast::fields_type& e)
   {
     auto res = new Record;
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    for (auto& field : e)
+    {
+      // res->field_add(field->name_get(), field->type_get());
+    }
     return res;
   }
 
@@ -82,6 +88,8 @@ namespace type
                                 const Type& type2)
   {
     // FIXME: Some code was deleted here.
+    if (!type1.compatible_with(type2))
+      type_mismatch(ast, exp1, type1, exp2, type2);
   }
 
   void TypeChecker::check_types(const ast::Ast& ast,
@@ -91,9 +99,11 @@ namespace type
                                 ast::Typable& type2)
   {
     // Ensure evaluation order.
-    type(type1);
-    type(type2);
-    // FIXME: Some code was deleted here (Check types).
+    auto t1 = type(type1);
+    auto t2 = type(type2);
+    if (!t1->compatible_with(*t2))
+      type_mismatch(ast, exp1, *t1, exp2, *t2);
+    // DONE: Some code was deleted here (Check types).
   }
 
   /*--------------------------.
@@ -134,12 +144,18 @@ namespace type
 
   void TypeChecker::operator()(ast::IntExp& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    auto int_ptr = std::make_unique<Int>();
+    type_default(e, int_ptr.get());
+    created_type_default(e, int_ptr.release());
   }
 
   void TypeChecker::operator()(ast::StringExp& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    auto string_ptr = std::make_unique<String>();
+    type_default(e, string_ptr.get());
+    created_type_default(e, string_ptr.release());
   }
 
   // Complex values.
@@ -155,8 +171,11 @@ namespace type
 
   void TypeChecker::operator()(ast::OpExp& e)
   {
-    // FIXME: Some code was deleted here.
-
+    // DONE: Some code was deleted here.
+    if (!e.left_get().type_get()->compatible_with(*e.right_get().type_get()))
+    {
+      type_mismatch(e, "left op", *e.left_get().type_get(), "right op", *e.right_get().type_get());
+    }
     // If any of the operands are of type Nil, set the `record_type_` to the
     // type of the opposite operand.
     if (!error_)
@@ -166,7 +185,7 @@ namespace type
   }
 
   // FIXME: Some code was deleted here.
-  void TypeChecker::operator()(ast::IfExp& e) {}
+    void TypeChecker::operator()(ast::IfExp& e) {}
     void TypeChecker::operator()(ast::ArrayExp& e) {}
     void TypeChecker::operator()(ast::CallExp& e) {}
     void TypeChecker::operator()(ast::ForExp& e) {}
