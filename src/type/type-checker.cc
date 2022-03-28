@@ -205,7 +205,12 @@ namespace type
         check_types(e, "then clause", *e.then_clause_get().type_get(), "else clause", *e.else_clause_get()->type_get());
     }
 
-    void TypeChecker::operator()(ast::ArrayExp& e) {}
+    void TypeChecker::operator()(ast::ArrayExp& e) 
+    {
+      super_type::operator()(e);
+      check_types(e, "array", *e.init_get().type_get(), "arrtype", *e.type_name_get().type_get());
+    }
+
     void TypeChecker::operator()(ast::CallExp& e) 
     {
       super_type::operator()(e);
@@ -220,6 +225,7 @@ namespace type
           break;
         i++;
       }
+      e.type_set(def->type_get());
     }
 
     void TypeChecker::operator()(ast::ForExp& e) 
@@ -240,10 +246,16 @@ namespace type
         check_types(e, "body", *e.body_get().type_get(), "expected", Void::instance());
 
     }
-    void TypeChecker::operator()(ast::LetExp& e) {}
+
+    void TypeChecker::operator()(ast::SeqExp& e) {
+
+      super_type::operator()(e);
+      e.type_set(e.exps_get().at(e.exps_get().size() - 1)->type_get());
+    }
+
+
     void TypeChecker::operator()(ast::MethodCallExp& e) {}
     void TypeChecker::operator()(ast::ObjectExp& e) {}
-    void TypeChecker::operator()(ast::SeqExp& e) {}
   
 
   /*-----------------.
@@ -269,7 +281,11 @@ namespace type
   template <>
   void TypeChecker::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    e.type_set(e.result_get()->type_get());
+
+    if (e.result_get() != nullptr)
+      e.result_get()->accept(*this);
   }
 
   // Type check this function's body.
@@ -283,7 +299,8 @@ namespace type
         // Check for Nil types in the function body.
         if (!error_)
           {
-            // FIXME: Some code was deleted here.
+            // DONE: Some code was deleted here.
+            check_types(e, "body", *e.body_get()->type_get(), "expected", *e.result_get()->type_get());
           }
       }
   }
