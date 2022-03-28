@@ -195,11 +195,51 @@ namespace type
   }
 
     // FIXME: Some code was deleted here.
-    void TypeChecker::operator()(ast::IfExp& e) {}
+    void TypeChecker::operator()(ast::IfExp& e) 
+    {
+      super_type::operator()(e);
+      check_types(e, "condition", *e.test_get().type_get(), "expected", Int::instance());
+      if (e.else_clause_get() == nullptr)
+        check_types(e, "then clause", *e.then_clause_get().type_get(), "else clause default", Void::instance());
+      else if (!error_)
+        check_types(e, "then clause", *e.then_clause_get().type_get(), "else clause", *e.else_clause_get()->type_get());
+    }
+
     void TypeChecker::operator()(ast::ArrayExp& e) {}
-    void TypeChecker::operator()(ast::CallExp& e) {}
-    void TypeChecker::operator()(ast::ForExp& e) {}
-    void TypeChecker::operator()(ast::WhileExp& e) {}
+    void TypeChecker::operator()(ast::CallExp& e) 
+    {
+      super_type::operator()(e);
+      auto def = dynamic_cast<const ast::FunctionDec*>(e.def_get());
+      size_t i = 0;
+      const ast::VarChunk& formals = def->formals_get();
+      for (auto& arg : e.args_get())
+      {
+        auto x = formals.decs_get().at(i);
+        check_types(e, "arg", *arg->type_get(), "arg def", *x->type_get());
+        if (error_)
+          break;
+        i++;
+      }
+    }
+
+    void TypeChecker::operator()(ast::ForExp& e) 
+    {
+      super_type::operator()(e);
+      check_types(e, "var dec", *e.vardec_get().type_get(), "expected", Int::instance());
+      if (!error_)
+        check_types(e, "high", *e.hi_get().type_get(), "expected", Int::instance());
+      if (!error_)
+        check_types(e, "body", *e.body_get().type_get(), "expected", Void::instance());
+    }
+
+    void TypeChecker::operator()(ast::WhileExp& e) 
+    {
+      super_type::operator()(e);
+      check_types(e, "condition", *e.test_get().type_get(), "expected", Int::instance());
+      if (!error_)
+        check_types(e, "body", *e.body_get().type_get(), "expected", Void::instance());
+
+    }
     void TypeChecker::operator()(ast::LetExp& e) {}
     void TypeChecker::operator()(ast::MethodCallExp& e) {}
     void TypeChecker::operator()(ast::ObjectExp& e) {}
