@@ -40,13 +40,13 @@ namespace type
 
   const Record* TypeChecker::type(const ast::fields_type& e)
   {
-    auto res = new Record;
+    Record res;
     // DONE: Some code was deleted here.
-    for (auto& field : e)
+    for (ast::Field* field : e)
     {
-      // res->field_add(field->name_get(), field->type_get());
+      res.field_add(field->name_get(), *field->type_name_get().type_get());
     }
-    return res;
+    return &res;
   }
 
   const Record* TypeChecker::type(const ast::VarChunk& e)
@@ -117,15 +117,17 @@ namespace type
   void TypeChecker::operator()(ast::SimpleVar& e)
   {
     // DONE: Some code was deleted here.
-    // check_types(e, e.def_get()->type_name_get(), e.type_get(), )
+    e.type_set(e.def_get()->type_get());
   }
   void TypeChecker::operator()(ast::FieldVar& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    e.type_set(e.var_get().type_get());
   }
   void TypeChecker::operator()(ast::SubscriptVar& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    e.type_set(e.var_get().type_get());
   }
 
 
@@ -175,6 +177,7 @@ namespace type
     // DONE: Some code was deleted here.
 
     // Strings dubious
+    super_type::operator()(e);
     check_types(e, "left op", *e.left_get().type_get(), "right op", *e.right_get().type_get());
     // If any of the operands are of type Nil, set the `record_type_` to the
     // type of the opposite operand.
@@ -191,7 +194,7 @@ namespace type
       }
   }
 
-  // FIXME: Some code was deleted here.
+    // FIXME: Some code was deleted here.
     void TypeChecker::operator()(ast::IfExp& e) {}
     void TypeChecker::operator()(ast::ArrayExp& e) {}
     void TypeChecker::operator()(ast::CallExp& e) {}
