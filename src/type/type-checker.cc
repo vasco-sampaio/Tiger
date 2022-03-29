@@ -253,7 +253,6 @@ namespace type
       e.type_set(e.exps_get().at(e.exps_get().size() - 1)->type_get());
     }
 
-
     void TypeChecker::operator()(ast::MethodCallExp& e) {}
     void TypeChecker::operator()(ast::ObjectExp& e) {}
   
@@ -311,7 +310,9 @@ namespace type
 
   void TypeChecker::operator()(ast::VarDec& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    super_type::operator()(e);
+    check_types(e, "vartype", *e.type_name_get()->type_get(), "init type", *e.init_get()->type_get());
   }
 
   /*--------------------.
@@ -359,17 +360,27 @@ namespace type
 
   void TypeChecker::operator()(ast::NameTy& e)
   {
-    // FIXME: Some code was deleted here (Recognize user defined types, and built-in types).
+    // DONE: Some code was deleted here (Recognize user defined types, and built-in types).
+    if (e.name_get() == "int" || e.name_get() == "string" || e.name_get() == "void" || e.name_get() == "object")
+      return;
+    else if (e.def_get() != nullptr)
+      return;
+    error(e, "NameTy: Unrecognized type");
   }
 
   void TypeChecker::operator()(ast::RecordTy& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    for (auto& field : e.fields_get())
+    {
+      field->accept(*this);
+    }
   }
 
   void TypeChecker::operator()(ast::ArrayTy& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    e.base_type_get().accept(*this);
   }
 
 } // namespace type
