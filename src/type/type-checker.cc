@@ -281,10 +281,11 @@ namespace type
   void TypeChecker::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
   {
     // DONE: Some code was deleted here.
-    e.type_set(e.result_get()->type_get());
-
     if (e.result_get() != nullptr)
+    {
+      e.type_set(e.result_get()->type_get());
       e.result_get()->accept(*this);
+    }
   }
 
   // Type check this function's body.
@@ -298,8 +299,17 @@ namespace type
         // Check for Nil types in the function body.
         if (!error_)
           {
+
+            e.formals_get().accept(*this);
+
+            if (e.body_get() != nullptr)
+              e.body_get()->accept(*this);
             // DONE: Some code was deleted here.
-            check_types(e, "body", *e.body_get()->type_get(), "expected", *e.result_get()->type_get());
+
+            if (e.result_get() != nullptr)
+              check_types(e, "body", *e.body_get()->type_get(), "expected", *e.result_get()->type_get());
+            else
+              check_types(e, "body", *e.body_get()->type_get(), "expected", Void::instance());
           }
       }
   }
@@ -336,13 +346,14 @@ namespace type
     // We only process the head of the type declaration, to set its
     // name in E.  A declaration has no type in itself; here we store
     // the type declared by E.
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    e.ty_get().accept(*this);
   }
 
   // Bind the type body to its name.
   template <> void TypeChecker::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
   }
 
   /*------------------.
@@ -351,7 +362,19 @@ namespace type
 
   template <class D> void TypeChecker::chunk_visit(ast::Chunk<D>& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    for (auto& elt : e.decs_get())
+      {
+        visit_dec_header(*elt);
+        if (error_)
+          return;
+      }
+    for (auto& elt : e.decs_get())
+      {
+        visit_dec_body(*elt);
+        if (error_)
+          return;
+      }
   }
 
   /*-------------.
