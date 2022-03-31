@@ -66,7 +66,7 @@ namespace type
 
   void TypeChecker::error(const ast::Ast& ast, const std::string& msg)
   {
-    error_ << misc::error::error_type::type << ast.location_get() << ": " << msg
+    error_ << misc::error::error_type::type << ": " << msg
            << std::endl;
   }
 
@@ -76,7 +76,7 @@ namespace type
                                   const std::string& exp2,
                                   const Type& type2)
   {
-    error_ << misc::error::error_type::type << ast.location_get()
+    error_ << misc::error::error_type::type
            << ": type mismatch" << misc::incendl << exp1 << " type: " << type1
            << misc::iendl << exp2 << " type: " << type2 << misc::decendl;
   }
@@ -148,17 +148,13 @@ namespace type
   void TypeChecker::operator()(ast::IntExp& e)
   {
     // DONE: Some code was deleted here.
-    auto int_ptr = std::make_unique<Int>();
-    type_default(e, int_ptr.get());
-    created_type_default(e, int_ptr.release());
+    type_default(e, &Int::instance());
   }
 
   void TypeChecker::operator()(ast::StringExp& e)
   {
     // DONE: Some code was deleted here.
-    auto string_ptr = std::make_unique<String>();
-    type_default(e, string_ptr.get());
-    created_type_default(e, string_ptr.release());
+    type_default(e, &String::instance());
   }
 
   // Complex values.
@@ -177,7 +173,9 @@ namespace type
     // DONE: Some code was deleted here.
 
     // Strings dubious
-    super_type::operator()(e);
+    e.left_get().accept(*this);
+    e.right_get().accept(*this);
+
     check_types(e, "left op", *e.left_get().type_get(), "right op", *e.right_get().type_get());
     // If any of the operands are of type Nil, set the `record_type_` to the
     // type of the opposite operand.
@@ -197,7 +195,10 @@ namespace type
     // FIXME: Some code was deleted here.
     void TypeChecker::operator()(ast::IfExp& e) 
     {
-      super_type::operator()(e);
+      e.test_get().accept(*this);
+      e.then_clause_get().accept(*this);
+      if (e.else_clause_get() != nullptr)
+        e.else_clause_get()->accept(*this);
       check_types(e, "condition", *e.test_get().type_get(), "expected", Int::instance());
       if (e.else_clause_get() == nullptr)
         check_types(e, "then clause", *e.then_clause_get().type_get(), "else clause default", Void::instance());
@@ -207,13 +208,14 @@ namespace type
 
     void TypeChecker::operator()(ast::ArrayExp& e) 
     {
-      super_type::operator()(e);
+      e.type_name_get().accept(*this);
       check_types(e, "array", *e.init_get().type_get(), "arrtype", *e.type_name_get().type_get());
     }
 
     void TypeChecker::operator()(ast::CallExp& e) 
     {
-      super_type::operator()(e);
+      for (auto& x : e.args_get())
+        x->accept(*this);
       auto def = dynamic_cast<const ast::FunctionDec*>(e.def_get());
       size_t i = 0;
       const ast::VarChunk& formals = def->formals_get();
@@ -230,8 +232,11 @@ namespace type
 
     void TypeChecker::operator()(ast::ForExp& e) 
     {
-      super_type::operator()(e);
-      check_types(e, "var dec", *e.vardec_get().type_get(), "expected", Int::instance());
+      e.vardec_get().accept(*this);
+      e.hi_get().accept(*this);
+      e.body_get().accept(*this);
+      if (!error_)
+        check_types(e, "var dec", *e.vardec_get().type_get(), "expected", Int::instance());
       if (!error_)
         check_types(e, "high", *e.hi_get().type_get(), "expected", Int::instance());
       if (!error_)
@@ -240,7 +245,8 @@ namespace type
 
     void TypeChecker::operator()(ast::WhileExp& e) 
     {
-      super_type::operator()(e);
+      e.test_get().accept(*this);
+      e.body_get().accept(*this);
       check_types(e, "condition", *e.test_get().type_get(), "expected", Int::instance());
       if (!error_)
         check_types(e, "body", *e.body_get().type_get(), "expected", Void::instance());
@@ -249,8 +255,24 @@ namespace type
 
     void TypeChecker::operator()(ast::SeqExp& e) {
 
-      super_type::operator()(e);
-      e.type_set(e.exps_get().at(e.exps_get().size() - 1)->type_get());
+      for (auto& x : e.exps_get())
+        x->accept(*this);
+      if (e.exps_get().size() > 0)
+        e.type_set(e.exps_get().at(e.exps_get().size() - 1)->type_get());
+      else
+        e.type_set(&Void::instance());
+    }
+
+    void TypeChecker::operator()(ast::AssignExp& e)
+    {
+      if (e.var_get().type_get() == nullptr)
+      {
+        error(e, "variable is read only");
+        return;
+      }
+      e.var_get().accept(*this);
+      e.exp_get().accept(*this);
+  
     }
 
     void TypeChecker::operator()(ast::MethodCallExp& e) {}
@@ -302,8 +324,7 @@ namespace type
 
             e.formals_get().accept(*this);
 
-            if (e.body_get() != nullptr)
-              e.body_get()->accept(*this);
+            e.body_get()->accept(*this);
             // DONE: Some code was deleted here.
 
             if (e.result_get() != nullptr)
@@ -321,8 +342,19 @@ namespace type
   void TypeChecker::operator()(ast::VarDec& e)
   {
     // DONE: Some code was deleted here.
-    super_type::operator()(e);
-    check_types(e, "vartype", *e.type_name_get()->type_get(), "init type", *e.init_get()->type_get());
+    // `type_name' might be omitted.
+    if (e.type_name_get())
+      e.type_name_get()->accept(*this);
+
+    // `init' can be null in case of formal parameter.
+    if (e.init_get() == nullptr)
+      return;
+    e.init_get()->accept(*this);
+
+    if (e.type_name_get())
+      check_types(e, "vartype", *e.type_name_get()->type_get(), "init type", *e.init_get()->type_get());
+    else
+      check_types(e, "vartype", Int::instance(), "init type", *e.init_get()->type_get());
   }
 
   /*--------------------.
@@ -347,13 +379,14 @@ namespace type
     // name in E.  A declaration has no type in itself; here we store
     // the type declared by E.
     // DONE: Some code was deleted here.
-    e.ty_get().accept(*this);
+    //e.ty_get().accept(*this);
   }
 
   // Bind the type body to its name.
   template <> void TypeChecker::visit_dec_body<ast::TypeDec>(ast::TypeDec& e)
   {
     // DONE: Some code was deleted here.
+    e.ty_get().accept(*this);
   }
 
   /*------------------.

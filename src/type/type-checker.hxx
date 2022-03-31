@@ -27,7 +27,9 @@ namespace type
   {
     // DONE: Some code was deleted here.
     if (e.type_get() == nullptr)
+    {
       e.type_set(type);
+    }
   }
 
   template <typename NodeType>
