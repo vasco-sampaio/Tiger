@@ -1,15 +1,12 @@
-let
-    var x := 1
-    function func () =
+while 1 do
+    let
+        function f()=
         (
-            let
-                var i := 8
-            in
-                8
-            end
+            while (1) do
+            (
+                break
+            )
         )
-    var y := 8
-in
-    7 + y / -func() + x
-
-end
+    in
+        f()
+    end

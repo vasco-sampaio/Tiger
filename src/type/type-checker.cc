@@ -205,6 +205,7 @@ namespace type
         check_types(e, "then clause", *e.then_clause_get().type_get(), "else clause default", Void::instance());
       else if (!error_)
         check_types(e, "then clause", *e.then_clause_get().type_get(), "else clause", *e.else_clause_get()->type_get());
+      e.type_set(e.then_clause_get().type_get());
     }
 
     void TypeChecker::operator()(ast::ArrayExp& e) 
@@ -251,7 +252,7 @@ namespace type
       check_types(e, "condition", *e.test_get().type_get(), "expected", Int::instance());
       if (!error_)
         check_types(e, "body", *e.body_get().type_get(), "expected", Void::instance());
-
+      e.type_set(&Void::instance());
     }
 
     void TypeChecker::operator()(ast::SeqExp& e) {
@@ -266,14 +267,8 @@ namespace type
 
     void TypeChecker::operator()(ast::AssignExp& e)
     {
-      if (e.var_get().type_get() == nullptr)
-      {
-        error(e, "variable is read only");
-        return;
-      }
       e.var_get().accept(*this);
       e.exp_get().accept(*this);
-  
     }
 
     void TypeChecker::operator()(ast::LetExp& e)
@@ -286,6 +281,12 @@ namespace type
       }
       else
         e.type_set(&Void::instance());
+    }
+
+
+    void TypeChecker::operator()(ast::BreakExp& e)
+    {
+      e.type_set(&Void::instance());
     }
 
     void TypeChecker::operator()(ast::MethodCallExp& e) {}
@@ -316,6 +317,8 @@ namespace type
   void TypeChecker::visit_dec_header<ast::FunctionDec>(ast::FunctionDec& e)
   {
     // DONE: Some code was deleted here.
+    e.formals_get().accept(*this);
+
     if (e.result_get() != nullptr)
     {
       e.result_get()->accept(*this);
@@ -334,9 +337,6 @@ namespace type
         // Check for Nil types in the function body.
         if (!error_)
           {
-
-            e.formals_get().accept(*this);
-
             e.body_get()->accept(*this);
             // DONE: Some code was deleted here.
 
@@ -359,7 +359,10 @@ namespace type
     // DONE: Some code was deleted here.
     // `type_name' might be omitted.
     if (e.type_name_get())
+    {
       e.type_name_get()->accept(*this);
+      e.type_set(e.type_name_get()->type_get());
+    }
 
     // `init' can be null in case of formal parameter.
     if (e.init_get() == nullptr)
@@ -438,9 +441,20 @@ namespace type
   {
     // DONE: Some code was deleted here (Recognize user defined types, and built-in types).
     if (e.name_get() == "int" || e.name_get() == "string" || e.name_get() == "void" || e.name_get() == "object")
-      return;
+      {
+        if (e.name_get() == "int")
+          e.type_set(&Int::instance());
+        if (e.name_get() == "string")
+          e.type_set(&String::instance());
+        if (e.name_get() == "void")
+          e.type_set(&Void::instance());
+        return;
+      }
     else if (e.def_get() != nullptr)
+    {
+      e.type_set(e.def_get()->type_get());
       return;
+    }
     error(e, "NameTy: Unrecognized type");
   }
 

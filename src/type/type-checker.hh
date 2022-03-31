@@ -181,6 +181,7 @@ namespace type
     void operator()(ast::ObjectExp& e) override;
     void operator()(ast::SeqExp& e) override;
     void operator()(ast::AssignExp& e) override;
+    void operator()(ast::BreakExp& e) override;
   
     // ---------------- //
     // Visiting /Dec/.  //
