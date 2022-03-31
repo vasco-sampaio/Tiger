@@ -190,6 +190,7 @@ namespace type
         if (rightNil)
           rightNil->record_type_set(*(e.left_get().type_get()));
       }
+    e.type_set(&Int::instance());
   }
 
     // FIXME: Some code was deleted here.
@@ -275,6 +276,18 @@ namespace type
   
     }
 
+    void TypeChecker::operator()(ast::LetExp& e)
+    {
+      e.decs_get()->accept(*this);
+      if (e.body_get() != nullptr)
+      {
+        e.body_get()->accept(*this);
+        e.type_set(e.body_get()->type_get());
+      }
+      else
+        e.type_set(&Void::instance());
+    }
+
     void TypeChecker::operator()(ast::MethodCallExp& e) {}
     void TypeChecker::operator()(ast::ObjectExp& e) {}
   
@@ -305,8 +318,8 @@ namespace type
     // DONE: Some code was deleted here.
     if (e.result_get() != nullptr)
     {
-      e.type_set(e.result_get()->type_get());
       e.result_get()->accept(*this);
+      e.type_set(e.result_get()->type_get());
     }
   }
 
@@ -329,10 +342,12 @@ namespace type
 
             if (e.result_get() != nullptr)
               check_types(e, "body", *e.body_get()->type_get(), "expected", *e.result_get()->type_get());
-            else
-              check_types(e, "body", *e.body_get()->type_get(), "expected", Void::instance());
           }
+        if (e.result_get() == nullptr)
+          e.type_set(e.body_get()->type_get());
       }
+      else if (e.result_get() == nullptr)
+          e.type_set(&Void::instance());
   }
 
   /*---------------.
@@ -350,6 +365,11 @@ namespace type
     if (e.init_get() == nullptr)
       return;
     e.init_get()->accept(*this);
+
+
+    if (e.type_name_get() == nullptr)
+      e.type_set(e.init_get()->type_get());
+
 
     if (e.type_name_get())
       check_types(e, "vartype", *e.type_name_get()->type_get(), "init type", *e.init_get()->type_get());
