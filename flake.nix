@@ -57,6 +57,8 @@
                 perl
 
 
+                llvmPackages_12.llvm
+                pkgs.pkgsi686Linux.llvmPackages_11.clang
               ] ++ buildenvPkgs;
 
             buildInputs = with pkgs; [ doxygen gdb graphviz valgrind libxml2 ];
