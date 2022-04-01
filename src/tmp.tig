@@ -1,10 +1,6 @@
 let
-  type one = { tail : two }
-  type two = { tail : one }
-  function one(t : two) : one
-     = one { tail = t }
-  function two(t : one) : two
-     = two { tail = t }
-  var one := one(two(nil))
+  type a = { b: int, c: string, d:int }
+  var x : a := a{ b = 1, c = "cc", d = 5 }
 in
+  x.b
 end

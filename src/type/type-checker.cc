@@ -183,9 +183,10 @@ namespace type
           continue;
         for (auto& x : e.fields_get())
           x->init_get().accept(*this);
-        for (size_t i = 0; i < e.fields_get().size(); i++)
+        auto size = e.fields_get().size();
+        for (size_t i = 0; i < size; i++)
         {
-          check_types(e, "fieldDec", *dec->fields_get().at(dec->fields_get().size() - 1 - i)->type_name_get().type_get(), "fieldActual", *e.fields_get().at(i)->init_get().type_get());
+          check_types(e, "fieldDec", *dec->fields_get().at(size - 1 - i)->type_name_get().type_get(), "fieldActual", *e.fields_get().at(i)->init_get().type_get());
           if (error_)
             break;
         }
