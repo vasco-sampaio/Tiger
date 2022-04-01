@@ -260,6 +260,7 @@ namespace type
     void TypeChecker::operator()(ast::ForExp& e) 
     {
       e.vardec_get().accept(*this);
+      var_read_only_.insert(&e.vardec_get());
       e.hi_get().accept(*this);
       e.body_get().accept(*this);
       if (!error_)
@@ -292,6 +293,14 @@ namespace type
 
     void TypeChecker::operator()(ast::AssignExp& e)
     {
+      for (auto& x : var_read_only_)
+      {
+        auto var = dynamic_cast<ast::SimpleVar*>(&e.var_get());
+        if (var == nullptr)
+          break;
+        if (x == var->def_get())
+          error(e, "Variable is read only");
+      }
       e.var_get().accept(*this);
       e.exp_get().accept(*this);
     }

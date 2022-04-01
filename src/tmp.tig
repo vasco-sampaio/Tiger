@@ -1,8 +1,6 @@
 let
-  type rec = { i: string }
-  function f(x: int, y: int): rec = rec{ i = x + y }
-  var a : rec := f(1, 2)
+   var x := 2
 in
-  a.i
+   for i := 2 to 5 do
+    x := x + i
 end
-
