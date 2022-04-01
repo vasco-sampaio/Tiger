@@ -236,7 +236,26 @@ namespace type
     void TypeChecker::operator()(ast::ArrayExp& e) 
     {
       e.type_name_get().accept(*this);
-      check_types(e, "array", *e.init_get().type_get(), "arrtype", *e.type_name_get().type_get());
+      e.init_get().accept(*this);
+      e.size_get().accept(*this);
+
+      bool set = false;
+      for (auto& x : created_types_)
+      {
+        if (x->name_get() == e.type_name_get().name_get())
+        {
+          auto dec = dynamic_cast<ast::ArrayTy*>(&(x->ty_get()));
+          if (dec == nullptr) 
+            continue;
+          if (!set)
+          {
+            e.type_set(dec->type_get());
+            set = true;
+          }
+          check_types(e, "array", *e.init_get().type_get(), "arrtype", *dec->base_type_get().type_get());
+          break;
+        }
+      }
     }
 
     void TypeChecker::operator()(ast::CallExp& e) 
@@ -409,7 +428,6 @@ namespace type
     if (e.type_name_get() == nullptr)
       e.type_set(e.init_get()->type_get());
 
-
     if (e.type_name_get())
       check_types(e, "vartype", *e.type_name_get()->type_get(), "init type", *e.init_get()->type_get());
     else
@@ -508,6 +526,7 @@ namespace type
   {
     // DONE: Some code was deleted here.
     e.base_type_get().accept(*this);
+    e.type_set(new Array(*e.base_type_get().type_get()));
   }
 
 } // namespace type
