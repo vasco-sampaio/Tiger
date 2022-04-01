@@ -15,7 +15,7 @@ namespace type
     // DONE: Some code was deleted here.
     public:
     
-    Array(Type& elements_type);
+    Array(const Type& elements_type);
 
     void accept(ConstVisitor& v) const override;
     void accept(Visitor& v) override;

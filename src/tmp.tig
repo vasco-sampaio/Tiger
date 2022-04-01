@@ -1,7 +1,6 @@
 let
-  var one := 1
-  var two := 2
-  function incr(x: int) : int = x + one
+  type a = { b: int, c: string, d:int }
+  var x : a := a{ b = 1, c = "cc", d = 5 }
 in
-  incr(two)
+  x.b
 end

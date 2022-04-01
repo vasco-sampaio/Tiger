@@ -10,8 +10,7 @@ namespace type
 
   inline const Type& Attribute::type_get() const
   {
-    // DONE: Some code was deleted here.
-    return *(def_->type_get());
+    // FIXME: Some code was deleted here.
   }
 
   inline const ast::VarDec* Attribute::def_get() const { return def_; }

@@ -62,8 +62,7 @@ namespace type
     void def_set(ast::MethodDec* def);
     /** \} */
 
-    // DONE: Some code was deleted here (Special implementation of "compatible_with" for type::Method).
-    bool compatible_with(const Type& other) const override;
+    // FIXME: Some code was deleted here (Special implementation of "compatible_with" for type::Method).
 
   private:
     /// Method's identifier.

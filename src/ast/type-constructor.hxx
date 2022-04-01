@@ -21,5 +21,4 @@ namespace ast
   {
     return type_;
   }
-
 } // namespace ast

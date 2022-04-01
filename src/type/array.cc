@@ -10,7 +10,7 @@ namespace type
 {
   // DONE: Some code was deleted here.
 
-  Array::Array(Type& elements_type)
+  Array::Array(const Type& elements_type)
     : elements_type_(elements_type)
   {}
 

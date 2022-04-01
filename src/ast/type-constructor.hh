@@ -21,6 +21,7 @@ namespace ast
     TypeConstructor()
     {}
 
+
     ~TypeConstructor()
     {}
 
