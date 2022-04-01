@@ -267,11 +267,8 @@ namespace type
       const ast::VarChunk& formals = def->formals_get();
       for (auto& arg : e.args_get())
       {
-        auto x = formals.decs_get().at(i);
+        auto x = formals.decs_get().at(i++);
         check_types(e, "arg", *arg->type_get(), "arg def", *x->type_get());
-        if (error_)
-          break;
-        i++;
       }
       e.type_set(def->type_get());
     }
