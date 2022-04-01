@@ -165,7 +165,32 @@ namespace type
     // If any error occured, there's no need to set any nil types.
     // If there are any record initializations, set the `record_type_`
     // of the `Nil` to the expected type.
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    bool set = false;
+    for (auto& x : created_types_)
+    {
+      if (x->name_get() == e.type_name_get().name_get())
+      {
+        auto dec = dynamic_cast<ast::RecordTy*>(&(x->ty_get()));
+        if (dec == nullptr) 
+          continue;
+        if (!set)
+        {
+          e.type_set(dec->type_get());
+          set = true;
+        }
+        if (e.fields_get().size() != dec->fields_get().size())
+          continue;
+        for (size_t i = 0; i < e.fields_get().size(); i++)
+        {
+          e.fields_get().at(i)->init_get().accept(*this);
+          check_types(e, "fieldDec", *dec->fields_get().at(i)->type_name_get().type_get(), "fieldActual", *e.fields_get().at(i)->init_get().type_get());
+          if (error_)
+            break;
+        }
+        break;
+      }
+    }
   }
 
   void TypeChecker::operator()(ast::OpExp& e)
@@ -402,7 +427,7 @@ namespace type
     // name in E.  A declaration has no type in itself; here we store
     // the type declared by E.
     // DONE: Some code was deleted here.
-    //e.ty_get().accept(*this);
+    created_types_.push_back(&e);
   }
 
   // Bind the type body to its name.
@@ -452,7 +477,7 @@ namespace type
       }
     else if (e.def_get() != nullptr)
     {
-      e.type_set(e.def_get()->type_get());
+      e.type_set(e.def_get()->ty_get().type_get());
       return;
     }
     error(e, "NameTy: Unrecognized type");
@@ -465,6 +490,7 @@ namespace type
     {
       field->accept(*this);
     }
+    e.type_set(new Record());
   }
 
   void TypeChecker::operator()(ast::ArrayTy& e)

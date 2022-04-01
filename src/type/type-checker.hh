@@ -243,6 +243,8 @@ namespace type
     misc::error error_;
     /// Set of for index variable definitions, which are read only.
     misc::set<const ast::VarDec*> var_read_only_;
+  private:
+    std::vector<ast::TypeDec*> created_types_;
   };
 
   /// Visit the lhs of an ast::FunctionDec.
