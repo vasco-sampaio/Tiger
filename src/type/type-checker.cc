@@ -268,7 +268,7 @@ namespace type
       if (!error_)
         check_types(e, "high", *e.hi_get().type_get(), "expected", Int::instance());
       if (!error_)
-        check_types(e, "body", *e.body_get().type_get(), "expected", Void::instance());
+        check_types(e, "forbody", *e.body_get().type_get(), "expected", Void::instance());
     }
 
     void TypeChecker::operator()(ast::WhileExp& e) 
@@ -293,6 +293,8 @@ namespace type
 
     void TypeChecker::operator()(ast::AssignExp& e)
     {
+      e.var_get().accept(*this);
+      e.exp_get().accept(*this);
       for (auto& x : var_read_only_)
       {
         auto var = dynamic_cast<ast::SimpleVar*>(&e.var_get());
@@ -301,8 +303,8 @@ namespace type
         if (x == var->def_get())
           error(e, "Variable is read only");
       }
-      e.var_get().accept(*this);
-      e.exp_get().accept(*this);
+      check_types(e, "vardec", *e.var_get().type_get(), "exp", *e.exp_get().type_get());
+      e.type_set(&Void::instance());
     }
 
     void TypeChecker::operator()(ast::LetExp& e)
