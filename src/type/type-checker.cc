@@ -181,10 +181,11 @@ namespace type
         }
         if (e.fields_get().size() != dec->fields_get().size())
           continue;
+        for (auto& x : e.fields_get())
+          x->init_get().accept(*this);
         for (size_t i = 0; i < e.fields_get().size(); i++)
         {
-          e.fields_get().at(i)->init_get().accept(*this);
-          check_types(e, "fieldDec", *dec->fields_get().at(i)->type_name_get().type_get(), "fieldActual", *e.fields_get().at(i)->init_get().type_get());
+          check_types(e, "fieldDec", *dec->fields_get().at(dec->fields_get().size() - 1 - i)->type_name_get().type_get(), "fieldActual", *e.fields_get().at(i)->init_get().type_get());
           if (error_)
             break;
         }
@@ -265,10 +266,12 @@ namespace type
       auto def = dynamic_cast<const ast::FunctionDec*>(e.def_get());
       size_t i = 0;
       const ast::VarChunk& formals = def->formals_get();
-      for (auto& arg : e.args_get())
+      for (size_t i = 0; i < e.args_get().size(); i++)
       {
-        auto x = formals.decs_get().at(i++);
-        check_types(e, "arg", *arg->type_get(), "arg def", *x->type_get());
+        auto x = formals.decs_get().at(formals.decs_get().size() - 1 - i);
+        check_types(e, "arg", *e.args_get().at(i)->type_get(), "arg def", *x->type_get());
+        if (error_)
+          break;
       }
       e.type_set(def->type_get());
     }
