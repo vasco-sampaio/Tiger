@@ -1,3 +1,16 @@
+2022-03-21  Etienne Renault  <renault@lrde.epita.fr>
+
+	Version 1.91.d for 2024-tc-4.0
+
+	* .last-cl-gen, ChangeLog, NEWS.txt,
+	configure.ac: Here.
+
+2022-03-16  Clément Démoulins  <demoulins@lrde.epita.fr>
+
+	pre-commit: fix old protocol
+
+	* .pre-commit-config.yaml: here.
+
 2022-03-10  Etienne Renault  <renault@lrde.epita.fr>
 
 	Version 1.91.c for 2024-tc-3.0
