@@ -50,7 +50,7 @@ namespace ast
     /// Return the initial value (expression) assigned to the variable.
     Exp* init_get();
     /** \} */
-
+    
   protected:
     /// Optional type of the declared variable.
     NameTy* type_name_;

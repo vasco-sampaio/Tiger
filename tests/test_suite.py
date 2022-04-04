@@ -36,6 +36,9 @@ def run_shellTC2(shell: str, stdin: str) -> sp.CompletedProcess:
 def run_shellTC3(shell: str, stdin: str, flags: str) -> sp.CompletedProcess:
     return sp.run([shell, "-o", flags, stdin], capture_output=True, text=True)
 
+def run_shellTC4(shell: str, stdin: str, flags: str) -> sp.CompletedProcess:
+    return sp.run([shell, "-o", flags, stdin], capture_output=True, text=True)
+
 def perform_checks(expected, actual: sp.CompletedProcess):
     assert expected == actual.returncode, \
             f"Exited with {actual.returncode} expected {expected}"
@@ -60,6 +63,7 @@ if __name__ == "__main__":
     print(f"Testing {binary_path}")
     suceed = 0
     total = 0
+    print("TESTS TC1:\n")
     for i in range(1,2):
         for file in os.listdir("samples/tc"+str(i)+"/tests/good"):
             expected = 0
@@ -97,6 +101,7 @@ if __name__ == "__main__":
                 print(f"{OK_TAG} {file}")
                 suceed += 1
             total += 1
+    print("TESTS TC2:\n")
     for file in os.listdir("samples/tc2/tests/files"):
             sh_proc = run_shellTC2(binary_path, "samples/tc2/tests/files/" + file)
             try:
@@ -119,6 +124,7 @@ if __name__ == "__main__":
                 print(f"{OK_TAG} {file} 2")
                 suceed += 1
             total += 1
+    print("BAD:")
     for file in os.listdir("samples/tc2/tests/good"):
             sh_proc = run_shellTC2(binary_path, "samples/tc2/tests/good/" + file)
             try:
@@ -141,6 +147,7 @@ if __name__ == "__main__":
                 print(f"{OK_TAG} {file} 2")
                 suceed += 1
             total += 1
+    print("TESTS TC3:\n")
     for file in os.listdir("samples/tc3/tests/good"):
             sh_proc = run_shellTC3(binary_path, "samples/tc3/tests/good/" + file, "-bA")
             try:
@@ -163,6 +170,7 @@ if __name__ == "__main__":
                 print(f"{OK_TAG} {file} 2")
                 suceed += 1
             total += 1
+    print("BAD:")
     for file in os.listdir("samples/tc3/tests/bind_error"):
             sh_proc = run_shellTC3(binary_path, "samples/tc3/tests/bind_error/" + file, "-bA")
             try:
@@ -173,7 +181,29 @@ if __name__ == "__main__":
                 print(f"{OK_TAG} {file} 1")
                 suceed += 1
             total += 1
-    
+    print("TESTS TC4:\n")
+    for file in os.listdir("samples/tc4/tests/good"):
+            sh_proc = run_shellTC4(binary_path, "samples/tc4/tests/good/" + file, "-T")
+            try:
+                compare_code(sh_proc, 0)
+            except AssertionError as err:
+                print(f"{KO_TAG} {file} 1\n{err}")
+            else:
+                print(f"{OK_TAG} {file} 1")
+                suceed += 1
+            total += 1
+    print("BAD:")
+    for file in os.listdir("samples/tc4/tests/badtype"):
+            sh_proc = run_shellTC4(binary_path, "samples/tc4/tests/badtype/" + file, "-T")
+            try:
+                compare_code(sh_proc, 5)
+            except AssertionError as err:
+                print(f"{KO_TAG} {file} 1\n{err}")
+            else:
+                print(f"{OK_TAG} {file} 1")
+                suceed += 1
+            total += 1
+
     print()
     print(f"{OK_TAG}" "Suceed: " + str(suceed))
     print(f"{KO_TAG}" "Failed: " + str(total - suceed))

@@ -4,6 +4,7 @@
  */
 #pragma once
 
+#include <ostream>
 #include <misc/singleton.hh>
 #include <type/fwd.hh>
 #include <type/type.hh>
@@ -18,7 +19,17 @@ namespace type
     bool compatible_with(const Type& other) const override;
     void accept(ConstVisitor& v) const override;
     void accept(Visitor& v) override;
+    std::ostream& operator<<(std::ostream& os)
+    {
+      std::cout << "HERE" << std::endl;
+      return os << "int";
+    }
   };
+
+  inline std::ostream& operator<<(std::ostream& os, Int&)
+  {
+    return os << "int";
+  }
 
   class String : public misc::Singleton<String>, public Type
   {
@@ -28,6 +39,11 @@ namespace type
     void accept(Visitor& v) override;
   };
 
+  inline std::ostream& operator<<(std::ostream& os, String&)
+  {
+    return os << "string";
+  }
+
   class Void : public misc::Singleton<Void>, public Type
   {
     public:
@@ -35,4 +51,9 @@ namespace type
     void accept(ConstVisitor& v) const override;
     void accept(Visitor& v) override;
   };
+
+  inline std::ostream& operator<<(std::ostream& os, Void&)
+  {
+    return os << "void";
+  }
 } // namespace type

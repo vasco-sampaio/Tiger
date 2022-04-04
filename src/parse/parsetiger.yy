@@ -290,7 +290,7 @@ exp:
 |   lvalue      { $$ = $1; }
 |   ID LPAREN RPAREN   { $$ = tp.td_.make_CallExp(@$, $1, new ast::exps_type()); }
 |   ID LPAREN function_param RPAREN { $$ = tp.td_.make_CallExp(@$, $1, $3); }
-|   MINUS exp  %prec UMINUS { $$ = tp.td_.make_OpExp(@$, tp.td_.make_IntExp(@1, 0), ast::OpExp::Oper::sub, $2); }
+|   MINUS exp  %prec UMINUS { $$ = tp.td_.make_OpExp(@$, tp.td_.make_IntExp(@$, 0), ast::OpExp::Oper::sub, $2); }
 |   exp PLUS exp      { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::add, $3); }
 |   exp MINUS exp     { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::sub, $3); }
 |   exp TIMES exp     { $$ = tp.td_.make_OpExp(@$, $1, ast::OpExp::Oper::mul, $3); }
