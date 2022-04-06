@@ -24,7 +24,23 @@ namespace desugar
   `-----------------------------*/
   void DesugarVisitor::operator()(const ast::OpExp& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    auto op = e.oper_get();
+    ast::Exp* left = recurse(e.left_get());
+    ast::Exp* right = recurse(e.right_get());
+    if (left->type_get() == &type::String::instance() && right->type_get() == &type::String::instance())
+    {
+      std::vector<ast::Exp*> exps({left, right});
+      if (op == ast::OpExp::Oper::eq)
+      {
+        result_ = new ast::CallExp(e.location_get(), "streq", &exps);
+      }
+      else
+      {
+        auto call = new ast::CallExp(e.location_get(), "strcmp", &exps);
+        result_ = new ast::OpExp(e.location_get(), call, op, new ast::IntExp(e.location_get(), 0));
+      }
+    }
   }
 
   /*----------------------.

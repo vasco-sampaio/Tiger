@@ -17,7 +17,7 @@ old_library='libtc.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -lboost_system -lboost_program_options -lboost_graph /run/current-system/sw/lib/libstdc++.la'
+dependency_libs=' -L/nix/store/pnb7rpppsxbfqd41z69pdkzjjxg7h2lx-llvm-12.0.1-lib/lib -lLLVM-12 -lboost_system -lboost_program_options -lboost_graph /run/current-system/sw/lib/libstdc++.la'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''

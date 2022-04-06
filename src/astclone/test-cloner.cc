@@ -17,7 +17,7 @@ const char* program_name = "test-cloner";
 
 static void clone_ast(const std::string& s)
 {
-  /*ast::Exp* e = parse::parse(s);
+  ast::Exp* e = parse::parse(s);
 
   std::cout << *e << '\n';
 
@@ -25,14 +25,14 @@ static void clone_ast(const std::string& s)
   clone(e);
   delete e;
   std::cout << *clone.result_get() << '\n';
-  delete clone.result_get();*/
+  delete clone.result_get();
 }
 
 int main()
 {
-  /*std::cout << "First test...\n";
+  std::cout << "First test...\n";
   clone_ast("( (a := 5); (a + 1) )");
 
   std::cout << "Second test...\n";
-  clone_ast("let function f() : int = g(a) in f() end");*/
+  clone_ast("let function f() : int = g(a) in f() end");
 }
