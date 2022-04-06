@@ -2,4 +2,34 @@
 for i := 0 to 42 do
   for j := 0 to 51 do
     ((i);
-FAIL src/desugar/test-for-loops-desugar (exit status: 139)
+    (j))
+/* === Desugared tree...  */
+let
+  var _lo := 0
+  var _hi := 42
+  var i := _lo
+in
+  if (i >= _hi)
+    then while(1) do
+      ((let
+        var _lo := 0
+        var _hi := 51
+        var j := _lo
+      in
+        if (j >= _hi)
+          then while(1) do
+            ((((i);
+            (j)));
+            (if (j = _hi)
+              then break
+              );
+            ((j := (j + 1))))
+          
+      end);
+      (if (i = _hi)
+        then break
+        );
+      ((i := (i + 1))))
+    
+end
+PASS src/desugar/test-for-loops-desugar (exit status: 0)

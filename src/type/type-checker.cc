@@ -289,6 +289,7 @@ namespace type
         check_types(e, "high", *e.hi_get().type_get(), "expected", Int::instance());
       if (!error_)
         check_types(e, "forbody", *e.body_get().type_get(), "expected", Void::instance());
+      e.type_set(&Void::instance());
     }
 
     void TypeChecker::operator()(ast::WhileExp& e) 

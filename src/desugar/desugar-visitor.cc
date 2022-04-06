@@ -95,9 +95,13 @@ namespace desugar
 
     VarDec* lo = new VarDec(location, "_lo", vardec->type_name_get(), vardec->init_get());
     VarDec* new_hi = new VarDec(location, "_hi", vardec->type_name_get(), hi);
-    VarDec* i_ = new VarDec(location, "i", vardec->type_name_get(), lo->init_get());
 
-    SimpleVar* simple_i = new SimpleVar(location, "i");
+    SimpleVar* simple_lo = new SimpleVar(location, "_lo");
+    simple_lo->def_set(lo);
+
+    VarDec* i_ = new VarDec(location, vardec->name_get(), vardec->type_name_get(), simple_lo);
+
+    SimpleVar* simple_i = new SimpleVar(location, vardec->name_get());
     simple_i->def_set(i_);
 
     SimpleVar* simple_hi = new SimpleVar(location, "_hi");
@@ -111,16 +115,21 @@ namespace desugar
     OpExp* comp = new ast::OpExp(location, simple_i, ast::OpExp::Oper::eq, simple_hi);
     IfExp* ifexp = new IfExp(location, comp, break_exp, nullptr);
 
-    auto tmp = std::vector<ast::Exp*>({body, ifexp, assign});
-    SeqExp* seq = new SeqExp(location, &tmp);
+    SeqExp* seq = new SeqExp(location, new std::vector<ast::Exp*>({body, ifexp, assign}));
     WhileExp* whileExp = new WhileExp(location, new IntExp(location, 1), seq);
 
     IfExp* finalIf = new IfExp(location, test, whileExp, nullptr);
 
     ChunkList* decs = new ChunkList(location);
-    decs->emplace_back(lo);
-    decs->emplace_back(new_hi);
-    decs->emplace_back(i_);
+    auto varchunk = new VarChunk(location);
+    varchunk->emplace_back(*lo);
+    decs->emplace_back(varchunk);
+    auto varchunk1 = new VarChunk(location);
+    varchunk1->emplace_back(*new_hi);
+    decs->emplace_back(varchunk1);
+    auto varchunk2 = new VarChunk(location);
+    varchunk2->emplace_back(*i_);
+    decs->emplace_back(varchunk2);
     result_ = new LetExp(location, decs, finalIf);
   }
 
