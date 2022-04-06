@@ -39,6 +39,9 @@ def run_shellTC3(shell: str, stdin: str, flags: str) -> sp.CompletedProcess:
 def run_shellTC4(shell: str, stdin: str, flags: str) -> sp.CompletedProcess:
     return sp.run([shell, "-o", flags, stdin], capture_output=True, text=True)
 
+def run_shellTC5(shell: str, stdin: str, flags: str) -> sp.CompletedProcess:
+    return sp.run([shell, "--desugar-for", "--desugar-string-cmp", "--desugar", flags, stdin], capture_output=True, text=True)
+
 def perform_checks(expected, actual: sp.CompletedProcess):
     assert expected == actual.returncode, \
             f"Exited with {actual.returncode} expected {expected}"
@@ -201,6 +204,29 @@ if __name__ == "__main__":
                 print(f"{KO_TAG} {file} 1\n{err}")
             else:
                 print(f"{OK_TAG} {file} 1")
+                suceed += 1
+            total += 1
+    print("TESTS TC5:\n")
+    for file in os.listdir("samples/tc5/tests/good"):
+            sh_proc = run_shellTC5(binary_path, "samples/tc5/tests/good/" + file, "-A")
+            try:
+                compare_code(sh_proc, 0)
+            except AssertionError as err:
+                print(f"{KO_TAG} {file} 1\n{err}")
+            else:
+                print(f"{OK_TAG} {file} 1")
+                suceed += 1
+            total += 1
+            text_file = open("tmp.tig", "w")
+            n = text_file.write(sh_proc.stdout)
+            text_file.close()
+            sh_proc2 = run_shellTC5(binary_path, "tmp.tig", "-TA")
+            try:
+                compare_code(sh_proc2, 0)
+            except AssertionError as err:
+                print(f"{KO_TAG} {file} 2\n{err}")
+            else:
+                print(f"{OK_TAG} {file} 2")
                 suceed += 1
             total += 1
 
