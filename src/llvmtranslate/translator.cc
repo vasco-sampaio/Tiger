@@ -304,7 +304,7 @@ namespace llvmtranslate
 
     // Translate the body inside the body BasicBlock
     builder_.SetInsertPoint(body_bb);
-    // Don't store the return value, is should be void.
+    // Don't store the return value, it should be void.
     translate(e.body_get());
 
     // Go back to the Test BasicBlock
@@ -352,11 +352,11 @@ namespace llvmtranslate
     bool is_primitive = e.body_get() == nullptr;
 
     // Rename "_main" to "tc_main"
-    // FIXME : Quick and dirty
+    // FIXME : Quick and dirty ( already is???? )
     auto name = is_main ? "tc_main" : e.name_get();
 
     // Prefix all the primitives with "tc_"
-    // FIXME : Quick and dirty
+    // FIXME : Quick and dirty ( already is???? )
     if (is_primitive)
       name = "tc_" + name.get();
 

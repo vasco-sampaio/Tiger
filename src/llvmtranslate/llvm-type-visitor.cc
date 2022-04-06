@@ -44,7 +44,7 @@ namespace llvmtranslate
   {
     // Strings are pointers to characters in LLVM.
     // DONE: Some code was deleted here.
-    type_ = llvm::PointerType::getInt1PtrTy(ctx_);
+    type_ = llvm::PointerType::getInt8PtrTy(ctx_);
   }
 
   void LLVMTypeVisitor::operator()(const type::Named& e)
