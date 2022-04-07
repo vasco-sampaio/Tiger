@@ -1,0 +1,6 @@
+let
+    function one(hd : int, tail : two) : int = 
+        hd
+in
+    one(4)
+end

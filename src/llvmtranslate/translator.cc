@@ -194,7 +194,8 @@ namespace llvmtranslate
 
   void Translator::operator()(const ast::SimpleVar& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    value_ = builder_.CreateLoad(access_var(e), e.name_get().get());
   }
 
   void Translator::operator()(const ast::FieldVar& e)
@@ -214,7 +215,8 @@ namespace llvmtranslate
 
   void Translator::operator()(const ast::IntExp& e)
   {
-    // FIXME: Some code was deleted here (Integers in Tiger are all 32bit signed).
+    // DONE: Some code was deleted here (Integers in Tiger are all 32bit signed).
+    value_ = llvm::getSigned(access_var(e), e.value_get());
   }
 
   void Translator::operator()(const ast::StringExp& e)
@@ -255,7 +257,34 @@ namespace llvmtranslate
 
   void Translator::operator()(const ast::OpExp& e)
   {
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+    llvm::Value* l_val = translate(e.left_get());
+    llvm::Value* r_val = translate(e.right_get());
+
+    switch (e.oper_get())
+    {
+      case ast::OpExp::Oper::add:
+        value_ = builder_.CreateAdd(l_val, r_val, "add");
+      case ast::OpExp::Oper::sub:
+        value_ = builder_.CreateSub(l_val, r_val, "sub");
+      case ast::OpExp::Oper::mul:
+        value_ = builder_.CreateMul(l_val, r_val, "mul");
+      case ast::OpExp::Oper::div:
+        value_ = builder_.CreateUDiv(l_val, r_val, "div");
+      
+      case ast::OpExp::Oper::eq:
+        value_ = builder_.CreateICmpEQ(l_val, r_val, "eq");
+      case ast::OpExp::Oper::ne:
+        value_ = builder_.CreateICmpNE(l_val, r_val, "ne");
+      case ast::OpExp::Oper::gt:
+        value_ = builder_.CreateICmpSGT(l_val, r_val, "gt");
+      case ast::OpExp::Oper::ge:
+        value_ = builder_.CreateICmpSGE(l_val, r_val, "ge");
+      case ast::OpExp::Oper::lt:
+        value_ = builder_.CreateICmpSLT(l_val, r_val, "lt");
+      case ast::OpExp::Oper::le:
+        value_ = builder_.CreateICmpSLE(l_val, r_val, "le");
+    }
     // The comparison instructions returns an i1, and we need an i32, since everything
     // is an i32 in Tiger. Use a zero-extension to avoid this.
     value_ = builder_.CreateZExtOrTrunc(value_, i32_t(ctx_), "op_zext");
@@ -445,7 +474,10 @@ namespace llvmtranslate
   void Translator::operator()(const ast::VarDec& e)
   {
     // Void var types are actually Ints represented by a 0
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
+
+    //auto alloc = create_alloca();
+    //auto store = CreateStore();
   }
 
 } // namespace llvmtranslate
