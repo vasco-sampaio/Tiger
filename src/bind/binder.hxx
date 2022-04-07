@@ -116,6 +116,17 @@ namespace bind
   /// Check a Function or Type declaration header.
   template <> inline void Binder::visit_dec_header(ast::FunctionDec& e)
   {
+    if (e.name_get() == "_main")
+    {
+      if (main_ > 0)
+      {
+        redefinition(e, e);
+        return;
+      }
+      main_++;
+    }
+  
+
     func_map_.put(e.name_get(), &e);
 
     if (e.result_get() != nullptr)

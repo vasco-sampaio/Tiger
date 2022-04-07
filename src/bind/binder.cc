@@ -42,6 +42,11 @@ namespace bind
   void Binder::check_main(const ast::FunctionDec& e)
   {
     // DONE: Some code was deleted here.
+    if (e.name_get() == "_main")
+    {
+      redefinition(e, e);
+      return;
+    }
 
   }
 

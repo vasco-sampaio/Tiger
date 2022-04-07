@@ -1,6 +1,5 @@
-for i := 0 to 42 do
-  for j := 0 to 51 do
-    (
-    print_int(i);
-    print_int(j)
-    )
+let
+    function _main() : int = 1
+in
+    _main()
+end

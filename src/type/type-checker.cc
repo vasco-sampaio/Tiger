@@ -202,7 +202,7 @@ namespace type
     // Strings dubious
     e.left_get().accept(*this);
     e.right_get().accept(*this);
-
+    
     check_types(e, "left op", *e.left_get().type_get(), "right op", *e.right_get().type_get());
     // If any of the operands are of type Nil, set the `record_type_` to the
     // type of the opposite operand.
@@ -216,11 +216,13 @@ namespace type
         auto rightNil = dynamic_cast<const Nil*>(e.right_get().type_get());
         if (rightNil)
           rightNil->record_type_set(*(e.left_get().type_get()));
+        if (leftNil != nullptr && rightNil != nullptr)
+          error(e, "Invalid nil arithmetic");
       }
     e.type_set(&Int::instance());
   }
 
-    // FIXME: Some code was deleted here.
+    // DONE: Some code was deleted here.
     void TypeChecker::operator()(ast::IfExp& e) 
     {
       e.test_get().accept(*this);
@@ -405,6 +407,8 @@ namespace type
       }
       else if (e.result_get() == nullptr)
           e.type_set(&Void::instance());
+    if (e.name_get() == "_main")
+      e.type_set(&Void::instance());
   }
 
   /*---------------.
