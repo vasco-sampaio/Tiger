@@ -216,7 +216,7 @@ namespace llvmtranslate
   void Translator::operator()(const ast::IntExp& e)
   {
     // DONE: Some code was deleted here (Integers in Tiger are all 32bit signed).
-    value_ = llvm::getSigned(access_var(e), e.value_get());
+    // value_ = llvm::getSigned(access_var(e), e.value_get());
   }
 
   void Translator::operator()(const ast::StringExp& e)
@@ -474,7 +474,7 @@ namespace llvmtranslate
   void Translator::operator()(const ast::VarDec& e)
   {
     // Void var types are actually Ints represented by a 0
-    // DONE: Some code was deleted here.
+    // FIXME: Some code was deleted here.
 
     //auto alloc = create_alloca();
     //auto store = CreateStore();
