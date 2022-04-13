@@ -76,9 +76,23 @@ namespace type
                                   const std::string& exp2,
                                   const Type& type2)
   {
+    std::string t1;
+    if (type1.compatible_with(Int::instance()))
+      t1 = "int";
+    else if (type1.compatible_with(Void::instance()))
+      t1 = "void";
+    else
+      t1 = "string";
+    std::string t2;
+    if (type2.compatible_with(Int::instance()))
+      t2 = "int";
+    else if (type2.compatible_with(Void::instance()))
+      t2 = "void";
+    else
+      t2 = "string";
     error_ << misc::error::error_type::type
-           << ": type mismatch" << misc::incendl << exp1 << " type: " << type1
-           << misc::iendl << exp2 << " type: " << type2 << misc::decendl;
+           << ": type mismatch" << misc::incendl << exp1 << " type: " << t1
+           << misc::iendl << exp2 << " type: " << t2 << misc::decendl;
   }
 
   void TypeChecker::check_types(const ast::Ast& ast,
@@ -304,14 +318,16 @@ namespace type
       e.type_set(&Void::instance());
     }
 
-    void TypeChecker::operator()(ast::SeqExp& e) {
-
+    void TypeChecker::operator()(ast::SeqExp& e) 
+    {
       for (auto& x : e.exps_get())
         x->accept(*this);
       if (e.exps_get().size() > 0)
         e.type_set(e.exps_get().at(e.exps_get().size() - 1)->type_get());
       else
+      {
         e.type_set(&Void::instance());
+      }
     }
 
     void TypeChecker::operator()(ast::AssignExp& e)
@@ -436,8 +452,6 @@ namespace type
 
     if (e.type_name_get())
       check_types(e, "vartype", *e.type_name_get()->type_get(), "init type", *e.init_get()->type_get());
-    else
-      check_types(e, "vartype", Int::instance(), "init type", *e.init_get()->type_get());
   }
 
   /*--------------------.

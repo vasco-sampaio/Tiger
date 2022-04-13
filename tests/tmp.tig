@@ -14,20 +14,18 @@ primitive concat(fst_13 : string, snd_14 : string) : string
 primitive not(boolean_15 : int) : int
 primitive exit(status_16 : int)
 function _main() =
-  (
-    ((let
-      var _lo := 0
-      var _hi := 10
-      var i_17 := _lo
-    in
-      if (i_17 >= _hi)
-        then while(1) do
-          ((print_int(i_17));
-          (if (i_17 = _hi)
-            then break
-            );
-          ((i_17 := (i_17 + 1))))
-        
-    end);
-    ())
-  )
+  (let
+    var _lo := 0
+    var _hi := 10
+    var i_17 := _lo
+  in
+    (if (i_17 >= _hi)
+      then (while(1) do
+        (print_int(i_17);
+        (if (i_17 = _hi)
+          then break
+          );
+        (i_17 := (i_17 + 1))))
+      )
+  end;
+  ())

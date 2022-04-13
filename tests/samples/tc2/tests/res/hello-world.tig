@@ -1,6 +1,4 @@
 /* == Abstract Syntax Tree. == */
 function _main() =
-  (
-    ((print("Hello, World!"));
-    ())
-  )
+  (print("Hello, World!");
+  ())
